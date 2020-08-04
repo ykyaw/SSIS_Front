@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    string errmsg = (string)ViewData["errmsg"];
+}
+
+<h1>Login Index</h1>
+<span id="errmsg" style="color:red">@errmsg</span>
+<form action="/Login/Verify" method="post" onsubmit="return validate()">
+    <label>Username:</label>
+    <input type="text" name="username" />
+    <label>Password:</label>
+    <input type="password" name="plainPassword" />
+    <input type="hidden" name="password" id="password"/>
+    <button id="loginBtn">sign in</button>
+</form>
+
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/lib/crypto/core-min.js"></script>
+<script src="~/lib/crypto/sha256.js"></script>
+<script src="~/js/login.js"></script>
+
