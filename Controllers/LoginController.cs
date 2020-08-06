@@ -4,12 +4,13 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using SSIS_FRONT.Components;
 using SSIS_FRONT.Models;
-using SSIS_FRONT.Utils.Http.APIGateway.Services;
+using SSIS_FRONT.Utils.Http;
 
 namespace SSIS_FRONT.Controllers
 {
@@ -37,15 +38,15 @@ namespace SSIS_FRONT.Controllers
             string url = cfg.GetValue<string>("Hosts:Boot") + "/Login/Verify";
             Result result = new Result();
             result.Value = user;
-            result = post.GetData(url, result, Request);
-            bool isLogin = Convert.ToBoolean(result.Value.ToString());
-            if (isLogin)
+            result = post.GetData(url, result, Request,Response);
+            if (result.Value!=null&&!string.IsNullOrEmpty(result.Value.ToString()))
             {
-                return RedirectToAction("Index", "Login");
+                string token = result.Value.ToString();
+                return RedirectToAction("Privacy", "Home");
             }
             else
             {
-                return RedirectToAction("Index","Home",new { isLogin=isLogin});
+                return RedirectToAction("Index","Home",new { isLogin=false});
             }
             
         }

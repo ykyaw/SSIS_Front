@@ -7,7 +7,8 @@ namespace SSIS_FRONT.Models
 {
     public class User
     {
-        public int id { get; set; }
+        public int id { set; get; }
+        public string email { get; set; }
 
         public string username { get; set; }
 

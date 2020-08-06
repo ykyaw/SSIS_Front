@@ -6,14 +6,15 @@
 <h1>Login Index</h1>
 <span id="errmsg" style="color:red">@errmsg</span>
 <form action="/Login/Verify" method="post" onsubmit="return validate()">
-    <label>Username:</label>
-    <input type="text" name="username" />
+    <label>email:</label>
+    <input type="text" name="email" />
     <label>Password:</label>
     <input type="password" name="plainPassword" />
-    <input type="hidden" name="password" id="password"/>
+    <input type="hidden" name="password" id="password" />
     <button id="loginBtn">sign in</button>
 </form>
 
+<button id="withoutToken">Test token</button>
 
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -21,4 +22,5 @@
 <script src="~/lib/crypto/core-min.js"></script>
 <script src="~/lib/crypto/sha256.js"></script>
 <script src="~/js/login.js"></script>
+<script src="~/js/testToken.js"></script>
 

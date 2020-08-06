@@ -70,3 +70,13 @@ function Delete(url) {
 }
 
 
+function GetToken() {
+    let name = "token=";
+    let ca = document.cookie.split(";");
+    for (let value of ca) {
+        if (value.trim().includes(name)) {
+            return value.trim().substring(name.length, value.trim().length);
+        }
+    }
+    return "";
+}

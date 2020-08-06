@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SSIS_FRONT.Utils.Http.APIGateway.Services;
+using SSIS_FRONT.Utils.Http;
 
 namespace SSIS_FRONT
 {
