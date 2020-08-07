@@ -12,6 +12,12 @@ namespace SSIS_FRONT.Components
 {
     public class Result
     {
-        public Object Value { set; get; }
+        public int code { get; set; } = 200;
+
+        public object data { get; set; }
+
+        public string msg { get; set; }
+
+        public string sub_msg { get; set; }
     }
 }

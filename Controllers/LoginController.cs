@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using SSIS_FRONT.Components;
 using SSIS_FRONT.Models;
-using SSIS_FRONT.Utils.Http;
+using SSIS_FRONT.Utils;
 
 namespace SSIS_FRONT.Controllers
 {
@@ -19,13 +19,11 @@ namespace SSIS_FRONT.Controllers
 
         protected HttpClient httpClient;
         protected IConfiguration cfg;
-        protected Post post;
 
-        public LoginController(HttpClient httpClient, IConfiguration cfg,Post post)
+        public LoginController(HttpClient httpClient, IConfiguration cfg)
         {
             this.httpClient = httpClient;
             this.cfg = cfg;
-            this.post = post;
         }
 
         public IActionResult Index()
@@ -36,19 +34,20 @@ namespace SSIS_FRONT.Controllers
         public IActionResult Verify(User user)
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/Login/Verify";
-            Result result = new Result();
-            result.Value = user;
-            result = post.GetData(url, result, Request,Response);
-            if (result.Value!=null&&!string.IsNullOrEmpty(result.Value.ToString()))
+            Result result = HttpUtils.Post(url, user,Request,Response);
+            if (result.code != 200)
             {
-                string token = result.Value.ToString();
+                return RedirectToAction("Index", "Home", new { isLogin = false });
+            }
+            string token = result.data.ToString();
+            if (!string.IsNullOrEmpty(token))
+            {
                 return RedirectToAction("Privacy", "Home");
             }
             else
             {
-                return RedirectToAction("Index","Home",new { isLogin=false});
+                return RedirectToAction("Index", "Home", new { isLogin = false });
             }
-            
         }
     }
 }

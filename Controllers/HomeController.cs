@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using SSIS_FRONT.Components;
 using SSIS_FRONT.Models;
-using SSIS_FRONT.Utils.Http;
+using SSIS_FRONT.Utils;
 
 namespace SSIS_FRONT.Controllers
 {
@@ -18,14 +18,12 @@ namespace SSIS_FRONT.Controllers
         private readonly ILogger<HomeController> _logger;
         protected HttpClient httpClient;
         protected IConfiguration cfg;
-        protected Post post;
 
-        public HomeController(ILogger<HomeController> logger, HttpClient httpClient, IConfiguration cfg, Post post)
+        public HomeController(ILogger<HomeController> logger, HttpClient httpClient, IConfiguration cfg)
         {
             _logger = logger;
             this.httpClient = httpClient;
             this.cfg = cfg;
-            this.post = post;
         }
 
         public IActionResult Index(bool isLogin=true)
@@ -48,20 +46,20 @@ namespace SSIS_FRONT.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public string WithoutToken()
+        public Result WithoutToken()
         {
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/Login/Index";
-            Result result = new Result();
-            result = post.GetData(url, result, Request,Response);
-            return result.Value.ToString();
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/Login/Test";
+            User user = new User() { email = "123@tt.com", password = "123" };
+            Result result = HttpUtils.Post(url, user, Request,Response);
+            return result;
         }
 
-        public string WithToken()
+        public Result WithToken()
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/Login/Index";
-            Result result = new Result();
-            result = post.GetData(url, result, Request,Response);
-            return result.Value.ToString();
+            User user = new User() { email = "123@tt.com", password = "123" };
+            Result result = HttpUtils.Post(url, user, Request,Response);
+            return result;
         }
     }
 }
