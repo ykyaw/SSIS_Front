@@ -31,7 +31,7 @@ namespace SSIS_FRONT.Controllers
             return View();
         }
 
-        public IActionResult Verify(User user)
+        public IActionResult Verify(Employee user)
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/Login/Verify";
             Result<Object> result = HttpUtils.Post(url, user,Request,Response);
