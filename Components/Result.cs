@@ -14,7 +14,7 @@ namespace SSIS_FRONT.Components
     {
         public int code { get; set; } = 200;
 
-        public T data { get; set; }
+        public T data { get; set; } 
 
         public string msg { get; set; }
 
