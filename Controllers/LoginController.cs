@@ -34,7 +34,7 @@ namespace SSIS_FRONT.Controllers
         public IActionResult Verify(User user)
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/Login/Verify";
-            Result result = HttpUtils.Post(url, user,Request,Response);
+            Result<Object> result = HttpUtils.Post(url, user,Request,Response);
             if (result.code != 200)
             {
                 return RedirectToAction("Index", "Home", new { isLogin = false });

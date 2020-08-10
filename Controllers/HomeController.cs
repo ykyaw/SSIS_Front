@@ -46,19 +46,19 @@ namespace SSIS_FRONT.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public Result WithoutToken()
+        public Result<User> WithoutToken()
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/Login/Test";
             User user = new User() { email = "123@tt.com", password = "123" };
-            Result result = HttpUtils.Post(url, user, Request,Response);
+            Result<User> result = HttpUtils.Post(url, user,new User(), Request,Response);
             return result;
         }
 
-        public Result WithToken()
+        public Result<Object> WithToken()
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/Login/Index";
             User user = new User() { email = "123@tt.com", password = "123" };
-            Result result = HttpUtils.Post(url, user, Request,Response);
+            Result<Object> result = HttpUtils.Post(url, user, Request,Response);
             return result;
         }
     }

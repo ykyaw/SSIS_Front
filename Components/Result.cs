@@ -10,11 +10,11 @@ using System.Threading.Tasks;
  */
 namespace SSIS_FRONT.Components
 {
-    public class Result
+    public class Result<T>
     {
         public int code { get; set; } = 200;
 
-        public object data { get; set; }
+        public T data { get; set; }
 
         public string msg { get; set; }
 
