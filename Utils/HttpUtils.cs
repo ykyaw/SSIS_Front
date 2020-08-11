@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using SSIS_FRONT.Common;
 using SSIS_FRONT.Components;
 using System;
@@ -399,7 +400,7 @@ namespace SSIS_FRONT.Utils
                         }
                     }
                     string content = await response.Content.ReadAsStringAsync();
-                    result = System.Text.Json.JsonSerializer.Deserialize<Result<T>>(content);
+                    result = JsonConvert.DeserializeObject<Result<T>>(content);
                 }
                 else if (response.StatusCode.GetHashCode() == CommonConstant.ErrorCode.INVALID_TOKEN)
                 {

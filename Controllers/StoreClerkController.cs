@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using SSIS_FRONT.Common;
 using SSIS_FRONT.Components;
 using SSIS_FRONT.Models;
@@ -75,72 +76,156 @@ namespace SSIS_FRONT.Controllers
             return View();
         }
 
-        public IActionResult RetrieveForm(string date)
+        public IActionResult RetrieveForm(long date)
         {
-            //TODO call server api to generate this date retrieval form
-            List<RequisitionDetail> requisitionDetails = new List<RequisitionDetail>();
-            RequisitionDetail rd1 = new RequisitionDetail()
+            //List<RequisitionDetail> requisitionDetails = new List<RequisitionDetail>();
+            //RequisitionDetail rd1 = new RequisitionDetail()
+            //{
+            //    Id=1,
+            //    Product = new Product()
+            //    {
+            //        Id = "1",
+            //        Category = new Category()
+            //        {
+            //            Id = 1,
+            //            Name = "pencils",
+            //            BinNo = "A7"
+            //        }
+            //    },
+            //    Requisition = new Requisition()
+            //    {
+            //        Id = 1,
+            //        Department = new Department()
+            //        {
+            //            Id = "1",
+            //            Name = "English"
+            //        }
+            //    },
+            //    QtyNeeded = 5,
+            //};
+            //RequisitionDetail rd2 = new RequisitionDetail()
+            //{
+            //    Id=2,
+            //    Product = new Product()
+            //    {
+            //        Id = "1",
+            //        Category = new Category()
+            //        {
+            //            Id = 1,
+            //            Name = "pencils",
+            //            BinNo = "A7"
+            //        }
+            //    },
+            //    Requisition = new Requisition()
+            //    {
+            //        Id = 2,
+            //        Department = new Department()
+            //        {
+            //            Id = "2",
+            //            Name = "Math"
+            //        }
+            //    },
+            //    QtyNeeded = 3,
+            //};
+            //RequisitionDetail rd3 = new RequisitionDetail()
+            //{
+            //    Id=3,
+            //    Product = new Product()
+            //    {
+            //        Id = "2",
+            //        Category = new Category()
+            //        {
+            //            Id = 1,
+            //            Name = "pen",
+            //            BinNo = "B9"
+            //        }
+            //    },
+            //    Requisition = new Requisition()
+            //    {
+            //        Id = 3,
+            //        Department = new Department()
+            //        {
+            //            Id = "2",
+            //            Name = "Math"
+            //        }
+            //    },
+            //    QtyNeeded = 10,
+            //};
+            //RequisitionDetail rd4 = new RequisitionDetail()
+            //{
+            //    Id=4,
+            //    Product = new Product()
+            //    {
+            //        Id = "2",
+            //        Category = new Category()
+            //        {
+            //            Id = 1,
+            //            Name = "pen",
+            //            BinNo = "B9"
+            //        }
+            //    },
+            //    Requisition = new Requisition()
+            //    {
+            //        Id = 4,
+            //        Department = new Department()
+            //        {
+            //            Id = "1",
+            //            Name = "English"
+            //        }
+            //    },
+            //    QtyNeeded = 20,
+            //};
+            //requisitionDetails.Add(rd1);
+            //requisitionDetails.Add(rd2);
+            //requisitionDetails.Add(rd3);
+            //requisitionDetails.Add(rd4);
+            //Retrieval retrieval = new Retrieval()
+            //{
+            //    Id = 128939232,
+            //    Status = CommonConstant.RetrievalFormStatus.CREATING,
+            //    Clerk = new Employee()
+            //    {
+            //        Name = "Esther",
+            //        Id = 1
+            //    },
+            //    RequisitionDetails = requisitionDetails,
+            //    DisbursedDate = date
+            //};
+            //string json = JsonConvert.SerializeObject(retrieval); 
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/ret";
+            Result<Retrieval> result = HttpUtils.Post(url, date,new Retrieval(), Request, Response);
+            Dictionary<string, List<RequisitionDetail>> categoryByProduct = new Dictionary<string, List<RequisitionDetail>>();
+            foreach (RequisitionDetail detail in result.data.RequisitionDetails)
             {
-                Product = new Product()
+                if (categoryByProduct.ContainsKey(detail.Product.Id))
                 {
-                    Id = "1",
-                    Category = new Category()
-                    {
-                        Id = 1,
-                        Name = "pencils",
-                        BinNo = "A7"
-                    }
-                },
-                Requisition = new Requisition()
+                    categoryByProduct[detail.Product.Id].Add(detail);
+                }
+                else
                 {
-                    Id = 1,
-                    Department = new Department()
-                    {
-                        Id = "1",
-                        Name = "English"
-                    }
-                },
-                QtyNeeded = 5,
-            };
-            RequisitionDetail rd2 = new RequisitionDetail()
-            {
-                Product = new Product()
-                {
-                    Id = "1",
-                    Category = new Category()
-                    {
-                        Id = 1,
-                        Name = "pencils",
-                        BinNo = "A7"
-                    }
-                },
-                Requisition = new Requisition()
-                {
-                    Id = 2,
-                    Department = new Department()
-                    {
-                        Id = "2",
-                        Name = "Math"
-                    }
-                },
-                QtyNeeded = 3,
-            };
-            requisitionDetails.Add(rd1);
-            requisitionDetails.Add(rd2);
-            Retrieval retrieval = new Retrieval()
-            {
-                Id = 128939232,
-                Status = CommonConstant.RetrievalFormStatus.CREATING,
-                Clerk = new Employee()
-                {
-                    Name = "Esther",
-                    Id = 1
-                },
-                RequisitionDetails = requisitionDetails,
-                DisbursedDate= 1597117622432
-            };
-            ViewData["Retrieval"] = retrieval;
+                    categoryByProduct.Add(detail.Product.Id, new List<RequisitionDetail>());
+                    categoryByProduct[detail.Product.Id].Add(detail);
+                }
+            }
+            ViewData["categoryByProduct"] = categoryByProduct;
+            ViewData["Retrieval"] = result.data;
             return View();
+        }
+
+        [HttpPut]
+        public bool Retrieval([FromBody] Retrieval retrieval)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/ret";
+            Result<Object> result = HttpUtils.Put(url, retrieval, Request, Response);
+            return (bool)result.data;
+        }
+
+        [HttpPut]
+        public bool FinaliseRetrieval([FromBody] Retrieval retrieval)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/ret/finalise";
+            Result<Object> result = HttpUtils.Put(url, retrieval, Request, Response);
+            return (bool)result.data;
         }
     }
 }

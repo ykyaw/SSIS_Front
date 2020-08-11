@@ -5,8 +5,12 @@
 
 <h1>Generate Retrieve Form</h1>
 
-<form action="/StoreClerk/RetrieveForm" method="post">
+<form action="/StoreClerk/RetrieveForm" method="post" onsubmit="return dateTransform()">
     <span>Enter planned date of disbursement: </span>
-    <input type="date" name="date"/>
+    <input type="date" />
+    <input type="hidden" id="date" name="date"/>
     <button type="submit">Generate</button>
 </form>
+
+
+<script src="~/js/GenerateRetrieval.js"></script>
