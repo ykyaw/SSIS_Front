@@ -15,6 +15,11 @@ namespace SSIS_FRONT.Controllers
     {
         protected HttpClient httpClient;
         protected IConfiguration cfg;
+        public StoreClerkController(HttpClient httpClient, IConfiguration cfg)
+        {
+            this.httpClient = httpClient;
+            this.cfg = cfg;
+        }
         public IActionResult Index()
         {
             return View();
