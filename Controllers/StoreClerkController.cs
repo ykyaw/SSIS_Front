@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using SSIS_FRONT.Common;
+using SSIS_FRONT.Components;
 using SSIS_FRONT.Models;
+using SSIS_FRONT.Utils;
 
 namespace SSIS_FRONT.Controllers
 {
@@ -14,16 +16,23 @@ namespace SSIS_FRONT.Controllers
     {
         protected HttpClient httpClient;
         protected IConfiguration cfg;
+        public StoreClerkController(HttpClient httpClient, IConfiguration cfg)
+        {
+            this.httpClient = httpClient;
+            this.cfg = cfg;
+        }
         public IActionResult Index()
         {
             return View();
         }
         public IActionResult Catalogue()
         {
-            List<Product> products = new List<Product>();
-            ViewData["products"] = products;
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/getcatalogue";
+            Result<List<Product>> result = HttpUtils.Get(url, new List<Product>(), Request, Response);
+            ViewData["products"] = result.data;
             return View();
         }
+
         public List<PurchaseOrderDetail> DeliveryOrder()
         {
             return null;
@@ -127,7 +136,8 @@ namespace SSIS_FRONT.Controllers
                     Name = "Esther",
                     Id = 1
                 },
-                RequisitionDetails = requisitionDetails
+                RequisitionDetails = requisitionDetails,
+                DisbursedDate= 1597117622432
             };
             ViewData["Retrieval"] = retrieval;
             return View();
