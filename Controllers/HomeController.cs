@@ -46,7 +46,7 @@ namespace SSIS_FRONT.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public Result<Employee> WithoutToken()
+        public Result<Employee> WithoutToken(Employee emp)
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/Login/Test";
             Employee user = new Employee() { Email = "123@tt.com", Password = "123" };
