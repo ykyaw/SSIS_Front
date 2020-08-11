@@ -1,0 +1,36 @@
+﻿@using SSIS_FRONT.Models;
+
+@{
+    List<Product> products = (List<Product>)ViewData["products"];
+}
+<h4>Stationery Catalogue</h4>
+
+<!-- Search box and button -->
+
+<table>
+    <thead>
+        <tr>
+            <th>Item code</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Reorder Level</th>
+            <th>Reorder Quantity</th>
+            <th>Unit of Measure</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in products)
+        {
+            <tr>
+                <td>@product.Id</td>
+                <td>@product.Category.Name</td>
+                <td>@product.Description</td>
+                <td>@product.ReorderLvl</td>
+                <td>@product.ReorderQty</td>
+                <td>@product.Uom</td>
+                <td><a class="button" href="/StoreClerk/StockCard/@product.Id">Stock Card</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

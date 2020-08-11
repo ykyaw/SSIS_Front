@@ -10,9 +10,9 @@ namespace SSIS_FRONT.Models
     public class Transaction
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { get; set; }
+        public int Id { get; set; }
         [Required]
-        public string ProductID { get; set; }
+        public string ProductId { get; set; }
         [Required]
         public long Date { get; set; }
         [Required]
@@ -25,7 +25,7 @@ namespace SSIS_FRONT.Models
         public string RefCode { get; set; }
 
         // FKs
-        [ForeignKey("ProductID")]
+        [ForeignKey("ProductId")]
         public Product Product { get; set; }
         [ForeignKey("UpdatedByEmpId")]
         public Employee UpdatedByEmp { get; set; }

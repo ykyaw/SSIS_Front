@@ -29,6 +29,7 @@ namespace SSIS_FRONT.Models
         [Required]
         public string Status { get; set; }
         public string Remarks { get; set; }
+        public int? RetrievalId { get; set; }
 
         // FKs
         [ForeignKey("CreatedByClerkId")]
