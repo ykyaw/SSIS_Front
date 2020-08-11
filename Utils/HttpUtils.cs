@@ -11,6 +11,9 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
+/**
+ * @author WUYUDING
+ */
 namespace SSIS_FRONT.Utils
 {
 
@@ -19,6 +22,9 @@ namespace SSIS_FRONT.Utils
          */
         public class HttpUtils
         {
+            /**
+             * when we don't need to change the result value, use this method without pass the result type
+             */
             public static Result<Object> Post<T>(string url,T value, HttpRequest request,HttpResponse httpResponse)
             {
                 Result<Object> result = null;
@@ -69,6 +75,9 @@ namespace SSIS_FRONT.Utils
                 return result;
          }
 
+        /**
+        * when we need to change the result value, use this method with pass the result type
+        */
         public static Result<K> Post<T,K>(string url, T value,K type, HttpRequest request, HttpResponse httpResponse)
         {
             Result<K> result = null;

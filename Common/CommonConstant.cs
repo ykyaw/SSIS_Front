@@ -11,5 +11,10 @@ namespace SSIS_FRONT.Common
         {
             public static readonly int INVALID_TOKEN = 510;
         }
+
+        public static class RetrievalFormStatus
+        {
+            public static readonly string CREATING = "creating";
+        }
     }
 }

@@ -9,21 +9,19 @@ namespace SSIS_FRONT.Models
 {
     public class Product
     {
-        [Key]
         public string Id { get; set; }
-        [Required]
         public string Description { get; set; }
-        [Required]
-        public string CategoryId { get; set; }
-        [Required]
+        public int? CategoryId { get; set; }
         public int ReorderLvl { get; set; }
-        [Required]
         public int ReorderQty { get; set; }
-        [Required]
         public string Uom { get; set; }
-
-        // FKs
-        [ForeignKey("CategoryId")]
-        public Category Category { get; set; }
+        public virtual Category Category { get; set; }
+        public Product() { }
+        public Product(string Id, string Description, int CategoryId)
+        {
+            this.Id = Id;
+            this.Description = Description;
+            this.CategoryId = CategoryId;
+        }
     }
 }
