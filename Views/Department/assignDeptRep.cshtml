@@ -1,0 +1,69 @@
+﻿
+@using SSIS_FRONT.Models;
+
+@{
+    
+    List<Employee> employees = (List<Employee>)ViewData["employees"];
+}
+    
+    <form action="/Department/assignDeptRep" method="post">
+
+        <table>
+            <tr>
+                <td>Assigned Department Representative: </td>
+                <td></td>
+            </tr>
+        </table>
+        <h4 style="text-align:center;">Employee List</h4>
+        <br />
+        <table class="table table-striped noborder" style="margin: 100px auto 30px;">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var employee in employees)
+                {
+                    <tr>
+
+                        <td>
+                            <input type="radio" id="empname" name="empname" value="empname">
+                            <label for="empname">@employee.Name</label>
+
+                        </td>
+
+
+                    </tr>
+                }
+                </tbody>
+            
+        </table>
+
+
+            
+
+            
+
+
+            
+
+
+            <br />
+            <br />
+
+            <table class="noborder" style="margin-left:auto; margin-right:auto;">
+
+                <tr>
+                    
+                    <td style="text-align:center;">
+                        <input type="submit" class="btn btn-info" value="Assign as Dept Representative" />
+                    </td>
+                </tr>
+
+            </table>
+
+           
+    </form>
+    
+
