@@ -5,7 +5,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using SSIS_FRONT.Components;
 using SSIS_FRONT.Models;
+using SSIS_FRONT.Utils;
 
 namespace SSIS_FRONT.Controllers
 {
@@ -19,8 +21,9 @@ namespace SSIS_FRONT.Controllers
         }
         public IActionResult Catalogue()
         {
-            List<Product> products = new List<Product>;
-            ViewData["products"] = products;
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/getcatalogue";
+            Result<List<Product>> result = HttpUtils.Get(url, new List<Product>(), Request, Response);
+            ViewData["products"] = result.data;
             return View();
         }
         public List<PurchaseOrderDetail> DeliveryOrder()
