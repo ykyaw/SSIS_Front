@@ -9,28 +9,19 @@ namespace SSIS_FRONT.Models
 {
     public class Employee
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [Required]
-        [MaxLength(30)]
         public string Name { get; set; }
-        [Required]
         public string Email { get; set; }
-        [Required]
         public string Password { get; set; }
-        [Required]
         public int PhoneNo { get; set; }
-        [Required]
         public string DepartmentId { get; set; }
-        [Required]
         public int ManagerId { get; set; }
         public long? DelegateFromDate { get; set; }
         public long? DelegateToDate { get; set; }
+        public string Role { get; set; }
 
         // FKs
-        [ForeignKey("DepartmentId")]
         public Department Department { get; set; }
-        [ForeignKey("ManagerId")]
         public Employee Manager { get; set; }
     }
 }

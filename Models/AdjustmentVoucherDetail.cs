@@ -14,6 +14,7 @@ namespace SSIS_FRONT.Models
         public string ProductId { get; set; }
         public int QtyAdjusted { get; set; }
         public double TotalPrice { get; set; }
+        public string Reason { get; set; }
 
         // FKs
         public AdjustmentVoucher AdjustmentVoucher { get; set; }

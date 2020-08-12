@@ -1,7 +1,29 @@
 ﻿
 @{
     ViewData["Title"] = "Vouchers";
+    List<AdjustmentVoucher> vouchers = (List<AdjustmentVoucher>)ViewData["Vouchers"];
 }
 
-<h1>Vouchers</h1>
+<h1>Adjustment Voucher List</h1>
 
+<input type="text" placeholder="search" id="search"/> 
+
+<table>
+    <tr>
+        <th>Voucher#</th>
+        <th>Date Issued</th>
+        <th>Status</th>
+        <th></th>
+    </tr>
+    @foreach(AdjustmentVoucher voucher in vouchers)
+    {
+        <tr class="voucher">
+            <td>@voucher.Id</td>
+            <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(voucher.InitiatedDate)</td>
+            <td>@voucher.Status</td>
+            <td><a href="/Voucher/@voucher.Id">Details</a></td>
+        </tr>
+    }
+</table>
+
+<script src="~/js/vouchers.js"></script>
