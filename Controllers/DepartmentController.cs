@@ -53,8 +53,83 @@ namespace SSIS_FRONT.Controllers
             return View();
         }
 
-        public IActionResult viewRequisition()
+        public IActionResult viewRequisitionDeptHead()
         {
+            List<Requisition> requisitions = new List<Requisition>();
+            ViewData["requisitions"] = requisitions;
+
+            Requisition r1 = new Requisition();
+            r1.Id = 1;
+            r1.CreatedDate = 12082020;
+            //r1.Department.Name = "English";
+            r1.Status = "Pending Approval";
+            requisitions.Add(r1);
+
+            Requisition r2 = new Requisition();
+            r2.Id = 2;
+            r2.CreatedDate = 15082020;
+            //r2.Department.Name = "Science";
+            r2.Status = "Approved";
+            requisitions.Add(r2);
+
+            Requisition r3 = new Requisition();
+            r3.Id = 3;
+            r3.CreatedDate = 17082020;
+            //r3.Department.Name = "History";
+            r3.Status = "Rejected";
+            requisitions.Add(r3);
+
+            return View();
+        }
+
+        public IActionResult viewRequisitionDeptRep()
+        {
+            List<Requisition> requisitions = new List<Requisition>();
+            ViewData["requisitions"] = requisitions;
+
+            Requisition r1 = new Requisition();
+            r1.Id = 1;
+            r1.CreatedDate = 12082020;
+            //r1.Department.Name = "English";
+            r1.Status = "Approved";
+            requisitions.Add(r1);
+
+            Requisition r2 = new Requisition();
+            r2.Id = 2;
+            r2.CreatedDate = 15082020;
+            //r2.Department.Name = "Science";
+            r2.Status = "Confirmed";
+            requisitions.Add(r2);
+
+            Requisition r3 = new Requisition();
+            r3.Id = 3;
+            r3.CreatedDate = 17082020;
+            //r3.Department.Name = "History";
+            r3.Status = "Completed";
+            requisitions.Add(r3);
+
+
+            return View();
+        }
+
+        public IActionResult viewRfApprovedDetailDeptRep()
+        {
+            List<RequisitionDetail> requisitionDetail = new List<RequisitionDetail>();
+            ViewData["requisitionDetail"] = requisitionDetail;
+            return View();
+        }
+
+        public IActionResult viewRfCompletedDetailDeptRep()
+        {
+            List<RequisitionDetail> requisitionDetail = new List<RequisitionDetail>();
+            ViewData["requisitionDetail"] = requisitionDetail;
+            return View();
+        }
+
+        public IActionResult viewRfConfirmedDetailDeptRep()
+        {
+            List<RequisitionDetail> requisitionDetail = new List<RequisitionDetail>();
+            ViewData["requisitionDetail"] = requisitionDetail;
             return View();
         }
 
