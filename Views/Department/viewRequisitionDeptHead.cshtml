@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewData["Title"] = "viewRequisition";
+    List<Requisition> requisitions = (List<Requisition>)ViewData["requisitions"];
+}
+
+
+    <input type="submit" value="return to reqStationery" />
+    <form action="/Department/reqStationery" method="post">
+
+        <div class="form-inline">
+
+
+            <div class="form-group mx-sm-3 mb-2">
+                <label for="search" class="sr-only">search</label>
+                <input type="text" class="form-control input-sm" id="search" value="       ">
+            </div>
+
+            <button type="button" class="btn btn-outline-primary mb-2">Search</button>
+
+            <div class="form-group mb-2">
+                <label for="filterBy" class="sr-only text-right">Filter by</label>
+                <input type="text" readonly class="form-control-plaintext" id="filterBy" value="           Filter by:">
+
+            </div>
+            <div class="form-group mx-sm-3 mb-2">
+                <label for="selectDept" class="sr-only">Select Department</label>
+                <select class="form-control">
+                    <option>
+                        Select Department
+                    </option>
+                    @foreach (var requisition in requisitions)
+                    {
+                        <option>
+                            @requisition.Department
+                        </option>
+                    }
+                </select>
+            </div>
+            <button type="button" class="btn btn-outline-primary mb-2">Filter</button>
+
+        </div>
+
+        <h1 style="text-align:center">Requisition Forms</h1>
+
+        <table class="table table-striped noborder" style="margin: 100px auto 30px;">
+            <thead class="noborder">
+                <tr class="noborder">
+                    <th class="noborder">Form ID</th>
+                    <th class="noborder">Requested Date</th>
+                    <th class="noborder">Department</th>
+                    <th class="noborder">Status</th>
+                    <th class="noborder"> </th>
+                </tr>
+            </thead>
+            <tbody class="noborder">
+                @foreach (var req in requisitions)
+                { 
+                    <tr class="noborder">
+                        <td class="noborder">@req.Id</td>
+                        <td class="noborder">@req.CreatedDate</td>
+                        <td class="noborder"></td>
+                        <td class="noborder">@req.Status</td>
+                        <td class="noborder">
+                            <a href="/viewRequisitionDetail/"
+                               class="button btn btn-outline-info">Detail</a>
+                        </td>                    
+                     </tr>
+                 }
+                    
+            </tbody>
+        </table>
+
+
+
+    </form>
+    

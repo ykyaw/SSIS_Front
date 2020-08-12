@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewData["Title"] = "viewRfPendingApprDetailDeptHead";
+    List<RequisitionDetail> requisitionDetail = (List<RequisitionDetail>)ViewData["requisitionDetail"];
+}
+
+<h1 style="text-align:center">Requisition Form</h1>
+<form action="/Department/viewRequisitionDeptHead" method="post">
+
+    <table class="noborder">
+        <tr class="noborder">
+            <td class="noborder">Form ID:</td>
+            <td class="noborder"></td>
+        </tr>
+
+        <tr class="noborder">
+            <td class="noborder">Employee Name:</td>
+            <td class="noborder"></td>
+        </tr>
+
+        <tr class="noborder">
+            <td class="noborder">Requested Date:</td>
+            <td class="noborder"></td>
+        </tr>
+
+        <tr class="noborder">
+            <td class="noborder">Status:</td>
+            <td class="noborder"></td>
+        </tr>
+    </table>
+
+    <table class="table table-striped noborder" style="margin: 100px auto 30px;">
+        <thead class="noborder">
+            <tr class="noborder">
+                <th class="noborder">Description</th>
+                <th class="noborder">Quantity</th>
+            </tr>
+        </thead>
+        <tbody class="noborder">
+            @foreach (var reqDetail in requisitionDetail)
+            {
+                <tr class="noborder">
+                    <td class="noborder"></td>
+                    <td class="noborder"></td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+
+    <div class="form-group">
+        <label for="reason">Reason</label>
+        <textarea class="form-control" id="reason" rows="2"></textarea>
+    </div>
+
+    <table style="margin-left:auto; margin-right:auto;" class="noborder">
+
+        <tr class="noborder">
+            <td class="noborder">
+                <input type="submit" class="btn btn-danger" value="Reject" />
+            </td>
+            <td class="noborder">
+                <input type="submit" class="btn btn-success" value="Approve" />
+            </td>
+            @*to check condition for reject and approve*@
+        </tr>
+
+    </table>
+
+
+
+
+</form>

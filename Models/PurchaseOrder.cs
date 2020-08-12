@@ -24,6 +24,7 @@ namespace SSIS_FRONT.Models
         public long? ReceivedDate { get; set; }
         [Required]
         public string Status { get; set; }
+        public int? CollectionPointId { get; set; }
 
         // FKs
         [ForeignKey("SupplierId")]
@@ -34,5 +35,7 @@ namespace SSIS_FRONT.Models
         public Employee ApprovedBySup { get; set; }
         [ForeignKey("ReceivedByClerkId")]
         public Employee ReceivedByClerk { get; set; }
+        [ForeignKey("CollectionPointId")]
+        public CollectionPoint CollectionPoint { get; set; }
     }
 }

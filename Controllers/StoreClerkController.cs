@@ -28,9 +28,21 @@ namespace SSIS_FRONT.Controllers
         }
         public IActionResult Catalogue()
         {
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/getcatalogue";
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/catalogue";
             Result<List<Product>> result = HttpUtils.Get(url, new List<Product>(), Request, Response);
             ViewData["products"] = result.data;
+            return View();
+        }
+        [Route("StoreClerk/StockCard/{productId}")]
+        public IActionResult StockCard(string productId)
+        {
+            string url1 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/sc/" + productId;
+            Result<List<Transaction>> result1 = HttpUtils.Get(url1, new List<Transaction>(), Request, Response);
+            ViewData["transactions"] = result1.data;
+
+            string url2 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/supplier/﻿" + productId;
+            Result<List<TenderQuotation>> result2 = HttpUtils.Get(url2, new List<TenderQuotation>(), Request, Response);
+            ViewData["tenderquotations"] = result2.data;
             return View();
         }
 
@@ -62,13 +74,12 @@ namespace SSIS_FRONT.Controllers
         {
             return null;
         }
-        public List<Requisition> Requisition()
+        public IActionResult Requisition()
         {
-            return null;
-        }
-        public List<Transaction> StockCard(string ProductId)
-        {
-            return null;
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/rf";
+            Result<List<Requisition>> result = HttpUtils.Get(url, new List<Requisition>(), Request, Response);
+            ViewData["requisitions"] = result.data;
+            return View();
         }
 
         public IActionResult GenerateRetrieveForm()
