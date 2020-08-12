@@ -154,6 +154,20 @@ namespace SSIS_FRONT.Controllers
             return View();
         }
 
+        public IActionResult updateCollectionPoint()
+        {
+            List<CollectionPoint> collectionPoints = new List<CollectionPoint>();
+            ViewData["collectionPoint"] = collectionPoints;
+
+            CollectionPoint c1 = new CollectionPoint();
+            c1.Id = 1;
+            c1.Location = "Management School";
+            c1.CollectionTime = "11:00am";
+            collectionPoints.Add(c1);
+
+            return View();
+        }
+
         public IActionResult assignDeptRep()
         {
             
