@@ -8,26 +8,26 @@
     
     <form action="/Department/assignDeptRep" method="post">
 
-        <table>
-            <tr>
-                <td>Assigned Department Representative: </td>
-                <td></td>
+        <table class="noborder">
+            <tr class="noborder">
+                <td class="noborder">Assigned Department Representative: </td>
+                <td class="noborder"></td>
             </tr>
         </table>
         <h4 style="text-align:center;">Employee List</h4>
         <br />
         <table class="table table-striped noborder" style="margin: 100px auto 30px;">
-            <thead>
-                <tr>
-                    <th>Name</th>
+            <thead class="noborder">
+                <tr class="noborder">
+                    <th class="noborder">Name</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="noborder">
                 @foreach (var employee in employees)
                 {
-                    <tr>
+                    <tr class="noborder">
 
-                        <td>
+                        <td class="noborder">
                             <input type="radio" id="empname" name="empname" value="empname">
                             <label for="empname">@employee.Name</label>
 
@@ -54,9 +54,9 @@
 
             <table class="noborder" style="margin-left:auto; margin-right:auto;">
 
-                <tr>
+                <tr class="noborder">
                     
-                    <td style="text-align:center;">
+                    <td style="text-align:center;" class="noborder">
                         <input type="submit" class="btn btn-info" value="Assign as Dept Representative" />
                     </td>
                 </tr>

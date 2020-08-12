@@ -9,29 +9,29 @@
 
 <form action="/Department/viewRequisition" method="post">
 
-    <table>
-        <tr>
-            <td>Form ID:</td>
-            <td></td>
+    <table class="noborder">
+        <tr class="noborder">
+            <td class="noborder">Form ID:</tdclass="noborder">
+            <td class="noborder"></td>
         </tr>
         
-        <tr>
-            <td>Request Date:</td>
-            <td></td>
+        <tr class="noborder">
+            <td class="noborder">Request Date:</td>
+            <td class="noborder" id="tdydate"></td>
         </tr>
     </table>
 
-    <table class="table table-striped" style="margin: 100px auto 30px;">
-        <thead>
-            <tr>
-                <th>Description</th>
-                <th>Quantity</th>
+    <table class="table table-striped noborder" style="margin: 100px auto 30px;">
+        <thead class="noborder">
+            <tr class="noborder">
+                <th class="noborder">Description</th>
+                <th class="noborder">Quantity</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td></td>
-                <td></td>
+        <tbody class="noborder">
+            <tr class="noborder">
+                <td class="noborder"></td>
+                <td class="noborder"></td>
             </tr>
         </tbody>
     </table>
@@ -84,13 +84,13 @@
     <br />
     <br />
 
-    <table style="margin-left:auto;margin-right:auto;">
+    <table style="margin-left:auto;margin-right:auto;" class="noborder">
 
-        <tr>
-            <td style="text-align:left;">
+        <tr class="noborder">
+            <td style="text-align:left;" class="noborder">
                 <input type="button" class="btn btn-warning" value="Save Draft" />
             </td>
-            <td style="text-align:right;">
+            <td style="text-align:right;" class="noborder">
                 <input type="submit" class="btn btn-info" value="Submit" />
             </td>
         </tr>
@@ -101,4 +101,13 @@
         //<button class="btn btn-default" href="/Department/viewRequisition/@requisitions.Id">Submit</button>*@
 
 </form>
+<script>
+    var tdydate = new Date();
+    var dd = String(tdydate.getDate()).padStart(2, '0');
+    var mm = String(tdydate.getMonth() + 1).padStart(2, '0');
+    var yyyy = tdydate.getFullYear();
+
+    tdydate = dd + '/' + mm + '/' + yyyy;
+    document.getElementById('tdydate').innerHTML = tdydate
+</script>
 
