@@ -1,5 +1,4 @@
-﻿@using SSIS_FRONT.Models;
-@{
+﻿@{
     List<Transaction> transactions = (List<Transaction>)ViewData["transactions"];
     List<TenderQuotation> tenderQuotations = (List<TenderQuotation>)ViewData["tenderquotations"];
 }
@@ -50,7 +49,7 @@
         @foreach (var t in transactions)
         {
             <tr>
-                <td>@t.Date</td>
+                <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(t.Date)</td>
                 <td>@t.Description</td>
                 <td>@t.Qty</td>
                 <td>@t.Balance</td>
@@ -59,3 +58,9 @@
         }
     </tbody>
 </table>
+<div>
+    <span>Add Entry:</span>
+    <input type="text" class="description" />
+    <input type="number" class="actualNumber" value="0" />
+    <button id="add" class="btn btn-primary">Save</button>
+</div>

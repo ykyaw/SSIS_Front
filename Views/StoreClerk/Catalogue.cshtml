@@ -1,6 +1,5 @@
-﻿@using SSIS_FRONT.Models;
-
-@{
+﻿@{
+    ViewData["Title"] = "Stationery Catalogue";
     List<Product> products = (List<Product>)ViewData["products"];
 }
 <h1>Stationery Catalogue</h1>
@@ -29,7 +28,7 @@
             <td>@p.ReorderLvl</td>
             <td>@p.ReorderQty</td>
             <td>@p.Uom</td>
-            <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="StockCard/@p.Id">Stock Card</a></td>
+            <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="StockCard" asp-route-id="@p.Id">Stock Card</a></td>
         </tr>
         }
     </tbody>

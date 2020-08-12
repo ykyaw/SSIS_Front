@@ -1,6 +1,5 @@
-﻿@using SSIS_FRONT.Models;
-
-@{
+﻿@{
+    ViewData["Title"] = "Requisition Forms";
     List<Requisition> requisitions = (List<Requisition>)ViewData["requisitions"];
 }
 <h1>Requisition Forms</h1>
@@ -22,10 +21,10 @@
         {
             <tr class="Search">
                 <td>@r.Id</td>
-                <td>@r.CreatedDate</td>
+                <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(r.CreatedDate)</td>
                 <td>@r.Department.Name</td>
                 <td>@r.Status</td>
-                <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="RequisitionDetail/@r.Id">Details</a></td>
+                <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="RequisitionDetail" asp-route-id="@r.Id">Details</a></td>
             </tr>
         }
     </tbody>

@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Purchase Request List";
+    Dictionary<long, List<PurchaseRequestDetail>> prDetailsByPr = (Dictionary<long, List<PurchaseRequestDetail>>)ViewData["prDetailsByPr"];
+}
+<h1>Purchase Request List</h1>
+
+<a class="btn btn-primary" asp-controller="StoreClerk" asp-action="GeneratePurchaseRequest">Raise Purchase Request</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Purchase Request No</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (KeyValuePair<long, List<PurchaseRequestDetail>> kvp in prDetailsByPr)
+        {
+            <tr class="Search">
+                <td>@kvp.Value[0].PurchaseRequestId</td>
+                <td>@kvp.Value[0].Status</td>
+                <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="PurchaseRequestDetail" asp-route-id="@kvp.Value[0].PurchaseRequestId">Details</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -40,15 +40,25 @@ namespace SSIS_FRONT.Controllers
             Result<List<Transaction>> result1 = HttpUtils.Get(url1, new List<Transaction>(), Request, Response);
             ViewData["transactions"] = result1.data;
 
-            string url2 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/supplier/﻿" + productId;
+            string url2 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/supplier/" + productId;
             Result<List<TenderQuotation>> result2 = HttpUtils.Get(url2, new List<TenderQuotation>(), Request, Response);
             ViewData["tenderquotations"] = result2.data;
             return View();
         }
-
-        public List<PurchaseOrderDetail> DeliveryOrder()
+        public IActionResult GeneratePurchaseRequest()
         {
-            return null;
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/catalogue";
+            Result<List<Product>> result = HttpUtils.Get(url, new List<Product>(), Request, Response);
+            ViewData["products"] = result.data;
+            return View();
+        }
+
+        public IActionResult DeliveryOrder()
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/po﻿";
+            Result<List<PurchaseOrder>> result = HttpUtils.Get(url, new List<PurchaseOrder>(), Request, Response);
+            ViewData["purchaseOrders"] = result.data;
+            return View();
         }
         public List<PurchaseOrder> DeliveryOrderList()
         {
@@ -58,17 +68,36 @@ namespace SSIS_FRONT.Controllers
         {
             return null;
         }
-        public List<PurchaseOrderDetail> PurchaseOrder()
+        public IActionResult PurchaseOrder()
         {
-            return null;
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/po﻿";
+            Result<List<PurchaseOrder>> result = HttpUtils.Get(url, new List<PurchaseOrder>(), Request, Response);
+            ViewData["purchaseOrders"] = result.data;
+            return View();
         }
         public List<PurchaseOrder> PurchaseOrderList()
         {
             return null;
         }
-        public List<PurchaseRequestDetail> PurchaseRequest()
+        public IActionResult PurchaseRequest()
         {
-            return null;
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/pr";
+            Result<List<PurchaseRequestDetail>> result = HttpUtils.Get(url, new List<PurchaseRequestDetail>(), Request, Response);
+            Dictionary<long, List<PurchaseRequestDetail>> prDetailsByPr = new Dictionary<long, List<PurchaseRequestDetail>>();
+            foreach (PurchaseRequestDetail detail in result.data)
+            {
+                if (prDetailsByPr.ContainsKey(detail.PurchaseRequestId))
+                {
+                    prDetailsByPr[detail.PurchaseRequestId].Add(detail);
+                }
+                else
+                {
+                    prDetailsByPr.Add(detail.PurchaseRequestId, new List<PurchaseRequestDetail>());
+                    prDetailsByPr[detail.PurchaseRequestId].Add(detail);
+                }
+            }
+            ViewData["prDetailsByPr"] = prDetailsByPr;
+            return View();
         }
         public List<PurchaseRequestDetail> PurchaseRequestList()
         {
@@ -82,7 +111,7 @@ namespace SSIS_FRONT.Controllers
             return View();
         }
 
-        public IActionResult GenerateRetrieveForm(string errMsg="")
+        public IActionResult GenerateRetrieveForm(string errMsg = "")
         {
             ViewData["errMsg"] = errMsg;
             return View();

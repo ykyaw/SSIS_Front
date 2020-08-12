@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Generate Purchase Request";
+    List<Product> products = (List<Product>)ViewData["products"];
+}
+
+<h1>Generate Purchase Request</h1>
+
+<table id="productlist">
+    <tr class="prrow" style="display:none">
+        <td>Item</td>
+        <td>
+            <select>
+                <option value="0">Choose Item</option>
+                @foreach (var p in products)
+                {
+                    <option value="@p.Id">@p.Description</option>
+                }
+            </select>
+        </td>
+    </tr>
+    @for (int i = 0; i < 5; i++)
+    {
+        <tr class="pr">
+            <td>Item</td>
+            <td>
+                <select>
+                    <option value="0">Choose Item</option>
+                    @foreach (var p in products)
+                    {
+                        <option value="@p.Id">@p.Description</option>
+                    }
+                </select>
+            </td>
+        </tr>
+    }
+</table>
+<div>
+    <button id="add" class="btn btn-primary">Add More Item</button>
+    <button type="submit" class="btn btn-primary">Generate</button>
+</div>
+
+
+<script src="~/js/PRAddRow.js"></script>
