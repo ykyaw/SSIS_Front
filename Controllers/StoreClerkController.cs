@@ -81,7 +81,7 @@ namespace SSIS_FRONT.Controllers
             //List<RequisitionDetail> requisitionDetails = new List<RequisitionDetail>();
             //RequisitionDetail rd1 = new RequisitionDetail()
             //{
-            //    Id=1,
+            //    Id = 1,
             //    Product = new Product()
             //    {
             //        Id = "1",
@@ -105,7 +105,7 @@ namespace SSIS_FRONT.Controllers
             //};
             //RequisitionDetail rd2 = new RequisitionDetail()
             //{
-            //    Id=2,
+            //    Id = 2,
             //    Product = new Product()
             //    {
             //        Id = "1",
@@ -129,7 +129,7 @@ namespace SSIS_FRONT.Controllers
             //};
             //RequisitionDetail rd3 = new RequisitionDetail()
             //{
-            //    Id=3,
+            //    Id = 3,
             //    Product = new Product()
             //    {
             //        Id = "2",
@@ -153,7 +153,7 @@ namespace SSIS_FRONT.Controllers
             //};
             //RequisitionDetail rd4 = new RequisitionDetail()
             //{
-            //    Id=4,
+            //    Id = 4,
             //    Product = new Product()
             //    {
             //        Id = "2",
@@ -191,9 +191,9 @@ namespace SSIS_FRONT.Controllers
             //    RequisitionDetails = requisitionDetails,
             //    DisbursedDate = date
             //};
-            //string json = JsonConvert.SerializeObject(retrieval); 
+            //string json = JsonConvert.SerializeObject(retrieval);
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/ret";
-            Result<Retrieval> result = HttpUtils.Post(url, date,new Retrieval(), Request, Response);
+            Result<Retrieval> result = HttpUtils.Post(url, date, new Retrieval(), Request, Response);
             Dictionary<string, List<RequisitionDetail>> categoryByProduct = new Dictionary<string, List<RequisitionDetail>>();
             foreach (RequisitionDetail detail in result.data.RequisitionDetails)
             {
@@ -216,14 +216,6 @@ namespace SSIS_FRONT.Controllers
         public bool Retrieval([FromBody] Retrieval retrieval)
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/ret";
-            Result<Object> result = HttpUtils.Put(url, retrieval, Request, Response);
-            return (bool)result.data;
-        }
-
-        [HttpPut]
-        public bool FinaliseRetrieval([FromBody] Retrieval retrieval)
-        {
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/ret/finalise";
             Result<Object> result = HttpUtils.Put(url, retrieval, Request, Response);
             return (bool)result.data;
         }

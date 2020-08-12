@@ -34,7 +34,7 @@
                     {
                         <td rowspan="@kvp.Value.Count()"> @kvp.Value[i].Product.Category.BinNo</td>
                         <td rowspan="@kvp.Value.Count()">@kvp.Value.Sum(item => item.QtyNeeded)</td>
-                        <td rowspan="@kvp.Value.Count()"></td>
+                        <td rowspan="@kvp.Value.Count()" class="retrieved"></td>
                     }
 
                     <td>@kvp.Value[i].Requisition.Department.Name</td>

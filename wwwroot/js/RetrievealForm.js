@@ -11,6 +11,7 @@
     $("#update").on("click", function () {
         let retrieval = getUpdateRetriveal();
         console.log("retrieval", retrieval);
+        retrieval.Status = "Created";
         Put("/StoreClerk/Retrieval", retrieval)
             .then(function (response) {
                 //let result = JSON.parse(response);
@@ -25,6 +26,7 @@
     $("#finalise").on("click", function () {
         let retrieval = getUpdateRetriveal();
         console.log("retrieval", retrieval);
+        retrieval.Status = "Retrieved";
         Put("/StoreClerk/FinaliseRetrieval", retrieval)
             .then(function (response) {
                 //let result = JSON.parse(response);
@@ -34,6 +36,19 @@
             .catch(function (err) {
                 alert("error: " + JSON.parse(err));
             })
+    })
+
+    $(".actualNumber").on("change", function () {
+        console.log($(this).parent().prev().text());
+        if (+$(this).val() > +$(this).parent().prev().text()) {
+            $(this).val($(this).parent().prev().text());
+            return;
+        }
+        let retrievedSum = 0;
+        $(this).parents("table").find(".actualNumber").each(function () {
+            retrievedSum += +$(this).val();
+        })
+        $(this).parents("table").find(".retrieved").text(retrievedSum);
     })
 });
 

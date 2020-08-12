@@ -23,10 +23,16 @@ namespace SSIS_FRONT.Utils
          */
         public class HttpUtils
         {
-            /**
-             * when we don't need to change the result value, use this method without pass the result type
-             */
-            public static Result<Object> Post<T>(string url,T value, HttpRequest request,HttpResponse httpResponse)
+
+            private static JsonSerializerSettings settings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                MissingMemberHandling = MissingMemberHandling.Ignore
+            };
+        /**
+         * when we don't need to change the result value, use this method without pass the result type
+         */
+        public static Result<Object> Post<T>(string url,T value, HttpRequest request,HttpResponse httpResponse)
             {
                 Result<Object> result = null;
                 var cookies = new CookieContainer();
@@ -60,8 +66,9 @@ namespace SSIS_FRONT.Utils
                                 }
                             }
                             string content = await response.Content.ReadAsStringAsync();
-                            result  = System.Text.Json.JsonSerializer.Deserialize<Result<Object>>(content);
-                        }else if (response.StatusCode.GetHashCode() == CommonConstant.ErrorCode.INVALID_TOKEN)
+                            result  = JsonConvert.DeserializeObject<Result<Object>>(content, settings);
+                        }
+                        else if (response.StatusCode.GetHashCode() == CommonConstant.ErrorCode.INVALID_TOKEN)
                         {
                             result=new Result<Object>()
                             {
@@ -113,7 +120,14 @@ namespace SSIS_FRONT.Utils
                         }
                     }
                     string content = await response.Content.ReadAsStringAsync();
-                    result = System.Text.Json.JsonSerializer.Deserialize<Result<K>>(content);
+                    try
+                    {
+                        result = JsonConvert.DeserializeObject<Result<K>>(content,settings);
+                    }
+                    catch(Exception e)
+                    {
+                        Debug.WriteLine(e.Message);
+                    }
                 }
                 else if (response.StatusCode.GetHashCode() == CommonConstant.ErrorCode.INVALID_TOKEN)
                 {
@@ -164,7 +178,7 @@ namespace SSIS_FRONT.Utils
                             }
                         }
                         string content = await response.Content.ReadAsStringAsync();
-                        result = System.Text.Json.JsonSerializer.Deserialize<Result<Object>>(content);
+                        result = JsonConvert.DeserializeObject<Result<Object>>(content, settings);
                     }
                     else if (response.StatusCode.GetHashCode() == CommonConstant.ErrorCode.INVALID_TOKEN)
                     {
@@ -215,7 +229,7 @@ namespace SSIS_FRONT.Utils
                         }
                     }
                     string content = await response.Content.ReadAsStringAsync();
-                    result = System.Text.Json.JsonSerializer.Deserialize<Result<K>>(content);
+                    result = JsonConvert.DeserializeObject<Result<K>>(content,settings);
                 }
                 else if (response.StatusCode.GetHashCode() == CommonConstant.ErrorCode.INVALID_TOKEN)
                 {
@@ -261,7 +275,7 @@ namespace SSIS_FRONT.Utils
                             }
                         }
                         string content = await response.Content.ReadAsStringAsync();
-                        result = System.Text.Json.JsonSerializer.Deserialize<Result<Object>>(content);
+                        result = JsonConvert.DeserializeObject<Result<Object>>(content, settings);
                     }
                     else if (response.StatusCode.GetHashCode() == CommonConstant.ErrorCode.INVALID_TOKEN)
                     {
@@ -307,7 +321,7 @@ namespace SSIS_FRONT.Utils
                         }
                     }
                     string content = await response.Content.ReadAsStringAsync();
-                    result = System.Text.Json.JsonSerializer.Deserialize<Result<T>>(content);
+                    result = JsonConvert.DeserializeObject<Result<T>>(content, settings);
                 }
                 else if (response.StatusCode.GetHashCode() == CommonConstant.ErrorCode.INVALID_TOKEN)
                 {
@@ -353,7 +367,7 @@ namespace SSIS_FRONT.Utils
                             }
                         }
                         string content = await response.Content.ReadAsStringAsync();
-                        result = System.Text.Json.JsonSerializer.Deserialize<Result<Object>>(content);
+                        result = JsonConvert.DeserializeObject<Result<Object>>(content, settings);
                     }
                     else if (response.StatusCode.GetHashCode() == CommonConstant.ErrorCode.INVALID_TOKEN)
                     {
@@ -400,7 +414,7 @@ namespace SSIS_FRONT.Utils
                         }
                     }
                     string content = await response.Content.ReadAsStringAsync();
-                    result = JsonConvert.DeserializeObject<Result<T>>(content);
+                    result = JsonConvert.DeserializeObject<Result<T>>(content,settings);
                 }
                 else if (response.StatusCode.GetHashCode() == CommonConstant.ErrorCode.INVALID_TOKEN)
                 {
