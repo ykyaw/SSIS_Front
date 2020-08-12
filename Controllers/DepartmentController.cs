@@ -82,6 +82,27 @@ namespace SSIS_FRONT.Controllers
             return View();
         }
 
+        public IActionResult viewRfPendingApprDetailDeptHead()
+        {
+            List<RequisitionDetail> requisitionDetail = new List<RequisitionDetail>();
+            ViewData["requisitionDetail"] = requisitionDetail;
+            return View();
+        }
+
+        public IActionResult viewRfApprovedDetailDeptHead()
+        {
+            List<RequisitionDetail> requisitionDetail = new List<RequisitionDetail>();
+            ViewData["requisitionDetail"] = requisitionDetail;
+            return View();
+        }
+
+        public IActionResult viewRfRejectedDetailDeptHead()
+        {
+            List<RequisitionDetail> requisitionDetail = new List<RequisitionDetail>();
+            ViewData["requisitionDetail"] = requisitionDetail;
+            return View();
+        }
+
         public IActionResult viewRequisitionDeptRep()
         {
             List<Requisition> requisitions = new List<Requisition>();
