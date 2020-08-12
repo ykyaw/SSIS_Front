@@ -3,14 +3,14 @@
 @{
     List<Product> products = (List<Product>)ViewData["products"];
 }
-<h4>Stationery Catalogue</h4>
+<h1>Stationery Catalogue</h1>
 
-<!-- Search box and button -->
-
-<table>
+<input type="text" id="Search" placeholder="Search" class="form-control" />
+<br />
+<table class="table table-striped">
     <thead>
         <tr>
-            <th>Item code</th>
+            <th>Item Code</th>
             <th>Category</th>
             <th>Description</th>
             <th>Reorder Level</th>
@@ -20,17 +20,19 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var product in products)
+        @foreach (var p in products)
         {
-            <tr>
-                <td>@product.Id</td>
-                <td>@product.Category.Name</td>
-                <td>@product.Description</td>
-                <td>@product.ReorderLvl</td>
-                <td>@product.ReorderQty</td>
-                <td>@product.Uom</td>
-                <td><a class="button" href="/StoreClerk/StockCard/@product.Id">Stock Card</a></td>
-            </tr>
+        <tr class="Search">
+            <td>@p.Id</td>
+            <td>@p.Category.Name</td>
+            <td>@p.Description</td>
+            <td>@p.ReorderLvl</td>
+            <td>@p.ReorderQty</td>
+            <td>@p.Uom</td>
+            <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="StockCard/@p.Id">Stock Card</a></td>
+        </tr>
         }
     </tbody>
 </table>
+<script src="~/js/Search.js"></script>
+

@@ -1,0 +1,33 @@
+﻿@using SSIS_FRONT.Models;
+
+@{
+    List<Requisition> requisitions = (List<Requisition>)ViewData["requisitions"];
+}
+<h1>Requisition Forms</h1>
+
+<input type="text" id="Search" placeholder="Search" class="form-control" />
+<br />
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Form ID</th>
+            <th>Requested Date</th>
+            <th>Department</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in requisitions)
+        {
+            <tr class="Search">
+                <td>@r.Id</td>
+                <td>@r.CreatedDate</td>
+                <td>@r.Department.Name</td>
+                <td>@r.Status</td>
+                <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="RequisitionDetail/@r.Id">Details</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script src="~/js/Search.js"></script>

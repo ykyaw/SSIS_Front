@@ -1,0 +1,61 @@
+﻿@using SSIS_FRONT.Models;
+@{
+    List<Transaction> transactions = (List<Transaction>)ViewData["transactions"];
+    List<TenderQuotation> tenderQuotations = (List<TenderQuotation>)ViewData["tenderquotations"];
+}
+<h1>Stock Card</h1>
+
+<table>
+    <tr>
+        <td>Item Code</td>
+        <td>@transactions[0].ProductId</td>
+    </tr>
+    <tr>
+        <td>Item Description</td>
+        <td>@transactions[0].Product.Description</td>
+    </tr>
+    <tr>
+        <td>Bin#</td>
+        <td>@transactions[0].Product.CategoryId</td>
+    </tr>
+    <tr>
+        <td>UOM</td>
+        <td>@transactions[0].Product.Uom</td>
+    </tr>
+    <tr>
+        <td>1st Supplier</td>
+        <td>@tenderQuotations[0].Supplier.Name</td>
+    </tr>
+    <tr>
+        <td>2nd Supplier</td>
+        <td>@tenderQuotations[1].Supplier.Name</td>
+    </tr>
+    <tr>
+        <td>3rd Supplier</td>
+        <td>@tenderQuotations[2].Supplier.Name</td>
+    </tr>
+</table>
+
+<table>
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th>Balance</th>
+            <th>Entered by</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var transaction in transactions)
+        {
+            <tr>
+                <td>@transaction.Date</td>
+                <td>@transaction.Description</td>
+                <td>@transaction.Qty</td>
+                <td>@transaction.Balance</td>
+                <td>@transaction.UpdatedByEmp.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>
