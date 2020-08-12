@@ -47,14 +47,14 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var transaction in transactions)
+        @foreach (var t in transactions)
         {
             <tr>
-                <td>@transaction.Date</td>
-                <td>@transaction.Description</td>
-                <td>@transaction.Qty</td>
-                <td>@transaction.Balance</td>
-                <td>@transaction.UpdatedByEmp.Name</td>
+                <td>@t.Date</td>
+                <td>@t.Description</td>
+                <td>@t.Qty</td>
+                <td>@t.Balance</td>
+                <td>@t.UpdatedByEmp.Name</td>
             </tr>
         }
     </tbody>
