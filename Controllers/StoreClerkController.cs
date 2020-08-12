@@ -82,8 +82,9 @@ namespace SSIS_FRONT.Controllers
             return View();
         }
 
-        public IActionResult GenerateRetrieveForm()
+        public IActionResult GenerateRetrieveForm(string errMsg="")
         {
+            ViewData["errMsg"] = errMsg;
             return View();
         }
 
@@ -205,22 +206,29 @@ namespace SSIS_FRONT.Controllers
             //string json = JsonConvert.SerializeObject(retrieval);
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/ret";
             Result<Retrieval> result = HttpUtils.Post(url, date, new Retrieval(), Request, Response);
-            Dictionary<string, List<RequisitionDetail>> categoryByProduct = new Dictionary<string, List<RequisitionDetail>>();
-            foreach (RequisitionDetail detail in result.data.RequisitionDetails)
+            if (result.code == 200)
             {
-                if (categoryByProduct.ContainsKey(detail.Product.Id))
+                Dictionary<string, List<RequisitionDetail>> categoryByProduct = new Dictionary<string, List<RequisitionDetail>>();
+                foreach (RequisitionDetail detail in result.data.RequisitionDetails)
                 {
-                    categoryByProduct[detail.Product.Id].Add(detail);
+                    if (categoryByProduct.ContainsKey(detail.Product.Id))
+                    {
+                        categoryByProduct[detail.Product.Id].Add(detail);
+                    }
+                    else
+                    {
+                        categoryByProduct.Add(detail.Product.Id, new List<RequisitionDetail>());
+                        categoryByProduct[detail.Product.Id].Add(detail);
+                    }
                 }
-                else
-                {
-                    categoryByProduct.Add(detail.Product.Id, new List<RequisitionDetail>());
-                    categoryByProduct[detail.Product.Id].Add(detail);
-                }
+                ViewData["categoryByProduct"] = categoryByProduct;
+                ViewData["Retrieval"] = result.data;
+                return View();
             }
-            ViewData["categoryByProduct"] = categoryByProduct;
-            ViewData["Retrieval"] = result.data;
-            return View();
+            else
+            {
+                return RedirectToAction("GenerateRetrieveForm", "StoreClerk", new { errMsg = result.msg });
+            }
         }
 
         [HttpPut]

@@ -21,6 +21,7 @@ namespace SSIS_FRONT.Models
         public long? ApprovedMgrDate { get; set; }
         [Required]
         public string Status { get; set; }
+        public string Reason { get; set; }
 
         // FKs
         [ForeignKey("InitiatedClerkId")]

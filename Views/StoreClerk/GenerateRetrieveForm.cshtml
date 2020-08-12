@@ -1,10 +1,12 @@
 ﻿
 @{
     ViewData["Title"] = "GenerateRetrieveForm";
+    string errMsg = (string)ViewData["errMsg"];
 }
 
 <h1>Generate Retrieve Form</h1>
 
+<span style="color:red;">@errMsg</span>
 <form action="/StoreClerk/RetrieveForm" method="post" onsubmit="return dateTransform()">
     <span>Enter planned date of disbursement: </span>
     <input type="date" />
