@@ -1,7 +1,34 @@
 ﻿
 @{
     ViewData["Title"] = "Supplier";
+    List<Product> items = (List<Product>)ViewData["Items"];
 }
 
 <h1>Supplier</h1>
 
+Item
+<select id="select">
+    @foreach (Product item in items)
+    {
+        <option value="@item.Id">@(item.Description+"("+@item.Id+")")</option>
+    }
+</select>
+<button type="button" id="retrieve">Retrieve</button>
+
+<table style="display:none">
+    <tr id="th">
+        <th>Item Code</th>
+        <th>Description</th>
+        <th>1st Supplier</th>
+        <th>2nd Supplier</th>
+        <th>3rd Supplier</th>
+    </tr>
+</table>
+
+<div style="display:none" class="rank">
+    <div>1st Supplier <select id="1st" class="rankSelect"></select></div>
+    <div>2nd Supplier <select id="2nd" class="rankSelect"></select></div>
+    <div>3rd Supplier <select id="3rd" class="rankSelect"></select></div>
+    <button type="button" id="save">Save</button>
+</div>
+<script src="~/js/Supplier.js"></script>
