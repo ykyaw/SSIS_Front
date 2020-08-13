@@ -13,6 +13,7 @@ namespace SSIS_FRONT.Models
         public string DepartmentId { get; set; }
         public int ReqByEmpId { get; set; }
         public int? ApprovedById { get; set; }
+        public string Remarks { get; set; }
         public int? ProcessedByClerkId { get; set; }
         public long CreatedDate { get; set; }
         public string Status { get; set; }
@@ -28,9 +29,10 @@ namespace SSIS_FRONT.Models
         public Employee ReqByEmp { get; set; }
         public Employee ApprovedBy { get; set; }
         public Employee ProcessedByClerk { get; set; }
-        public CollectionPoint CollectionPoint { get; set; }
         public Employee ReceivedByRep { get; set; }
         public Employee AckByClerk { get; set; }
+        public CollectionPoint CollectionPoint { get; set; }
+        public List<RequisitionDetail> RequisitionDetails { get; set; }
 
     }
 }
