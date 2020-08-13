@@ -19,7 +19,7 @@ namespace SSIS_FRONT.Models
         public int? FaxNo { get; set; }
         [Required]
         public string Address { get; set; }
-        [Required]
+        public string Email { get; set; }
         public string GstRegNo { get; set; }
     }
 }
