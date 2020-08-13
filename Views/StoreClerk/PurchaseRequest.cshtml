@@ -17,9 +17,9 @@
         @foreach (KeyValuePair<long, List<PurchaseRequestDetail>> kvp in prDetailsByPr)
         {
             <tr class="Search">
-                <td>@kvp.Value[0].PurchaseRequestId</td>
+                <td>@kvp.Key</td>
                 <td>@kvp.Value[0].Status</td>
-                <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="PurchaseRequestDetail" asp-route-id="@kvp.Value[0].PurchaseRequestId">Details</a></td>
+                <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="PurchaseRequestDetail" asp-route-id="@kvp.Key">Details</a></td>
             </tr>
         }
     </tbody>

@@ -10,7 +10,7 @@ namespace SSIS_FRONT.Models
     public class PurchaseRequestDetail
     {
         public int Id { get; set; }
-        public int PurchaseRequestId { get; set; }
+        public long PurchaseRequestId { get; set; }
         public int CreatedByClerkId { get; set; }
         public string ProductId { get; set; }
         public string SupplierId { get; set; }
@@ -23,9 +23,9 @@ namespace SSIS_FRONT.Models
         public int? ApprovedBySupId { get; set; }
         public string Status { get; set; }
         public string Remarks { get; set; }
-        public Product Product { get; set; }
 
         // FKs
+        public Product Product { get; set; }
         public Employee CreatedByClerk { get; set; }
         public Supplier Supplier { get; set; }
         public Employee ApprovedBySup { get; set; }
