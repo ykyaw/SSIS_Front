@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Purchase Request Detail";
+    Dictionary<PurchaseRequestDetail, List<TenderQuotation>> TQbyPRD = (Dictionary<PurchaseRequestDetail, List<TenderQuotation>>)ViewData["TQbyPRD"];
+}
+<h1>Purchase Request Detail</h1>
+
+<table>
+    <tr>
+        <td>Purchase Request No</td>
+        <td>@TQbyPRD.Keys.First().ProductId</td>
+    </tr>
+    <tr>
+        <td>Status</td>
+        <td>@TQbyPRD.Keys.First().Status</td>
+    </tr>
+</table>
+
+<table id="myTable">
+    <thead>
+        <tr>
+            <th>Item Code</th>
+            <th>Description</th>
+            <th>Current Stock</th>
+            <th>Quantity to Order</th>
+            <th>Vendor</th>
+            <th>Vendor Quote #</th>
+            <th>Total Price</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (KeyValuePair<PurchaseRequestDetail, List<TenderQuotation>> kvp in TQbyPRD)
+        {
+            <tr>
+                <td>@kvp.Key.ProductId</td>
+                <td>@kvp.Key.Product.Description</td>
+                <td>@kvp.Key.CurrentStock</td>
+                <td><input type="number" class="number" value="@kvp.Key.ReorderQty"/></td>
+                <td>
+                    <select class="number">
+                        @foreach (var v in kvp.Value)
+                        {
+                            <option value="@v.Unitprice">@v.Supplier.Name</option>
+                        }
+                    </select>
+                </td>
+                <td><input type="text" class="venderQuote" /></td>
+                <td>@((kvp.Key.ReorderQty * kvp.Value[0].Unitprice).ToString("C"))</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+    <button class="btn btn-primary">Generate Quote</button>
+    <button class="btn btn-primary">Update</button>
+    <button class="btn btn-success">Submit for Approval</button>
+</div>
+
+<script src="~/js/PRDTotalPrice.js"></script>
+

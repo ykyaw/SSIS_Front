@@ -60,10 +60,6 @@ namespace SSIS_FRONT.Controllers
             ViewData["deliveryOrders"] = result.data;
             return View();
         }
-        public List<PurchaseOrder> DeliveryOrderList()
-        {
-            return null;
-        }
         public List<RequisitionDetail> Disbursement()
         {
             return null;
@@ -74,10 +70,6 @@ namespace SSIS_FRONT.Controllers
             Result<List<PurchaseOrder>> result = HttpUtils.Get(url, new List<PurchaseOrder>(), Request, Response);
             ViewData["purchaseOrders"] = result.data;
             return View();
-        }
-        public List<PurchaseOrder> PurchaseOrderList()
-        {
-            return null;
         }
         public IActionResult PurchaseRequest()
         {
@@ -99,9 +91,23 @@ namespace SSIS_FRONT.Controllers
             ViewData["prDetailsByPr"] = prDetailsByPr;
             return View();
         }
-        public List<PurchaseRequestDetail> PurchaseRequestList()
+        [Route("StoreClerk/PurchaseRequest/{PurchaseRequestId}")]
+        public IActionResult PurchaseRequestDetail(long PurchaseRequestId)
         {
-            return null;
+            string url1 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/prdetails/" + PurchaseRequestId;
+            Result<List<PurchaseRequestDetail>> result1 = HttpUtils.Get(url1, new List<PurchaseRequestDetail>(), Request, Response);
+
+
+            Dictionary<PurchaseRequestDetail, List<TenderQuotation>> TQbyPRD = new Dictionary<PurchaseRequestDetail, List<TenderQuotation>>();
+            foreach (PurchaseRequestDetail detail in result1.data)
+            {
+                string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/supplier/" + detail.ProductId;
+                Result<List<TenderQuotation>> result = HttpUtils.Get(url, new List<TenderQuotation>(), Request, Response);
+                TQbyPRD.Add(detail, result.data);
+            }
+            ViewData["TQbyPRD"] = TQbyPRD;
+
+            return View();
         }
         public IActionResult Requisition()
         {
@@ -275,7 +281,7 @@ namespace SSIS_FRONT.Controllers
             Result<List<AdjustmentVoucher>> result = HttpUtils.Get(url, new List<AdjustmentVoucher>(), Request, Response);
             ViewData["adjustmentVoucherListToHTML"] = result.data;
             return View();
-           
+
         }
     }
 }
