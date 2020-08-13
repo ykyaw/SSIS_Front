@@ -13,7 +13,8 @@ namespace SSIS_FRONT.Models
         public string SupplierId { get; set; }
         public int Year { get; set; }
         public string ProductId { get; set; }
-        public string PricePerUom { get; set; }
+        public double Unitprice { get; set; }
+        public string Uom { get; set; }
         public int? Rank { get ; set; }
 
         // FKs
