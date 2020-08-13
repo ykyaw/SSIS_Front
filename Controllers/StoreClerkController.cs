@@ -267,5 +267,15 @@ namespace SSIS_FRONT.Controllers
             Result<Object> result = HttpUtils.Put(url, retrieval, Request, Response);
             return (bool)result.data;
         }
+
+        //Author XJ, 
+        public IActionResult AdjustmentVoucher()
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/adv";
+            Result<List<AdjustmentVoucher>> result = HttpUtils.Get(url, new List<AdjustmentVoucher>(), Request, Response);
+            ViewData["adjustmentVoucherListToHTML"] = result.data;
+            return View();
+           
+        }
     }
 }

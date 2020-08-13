@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewData["Title"] = "Adjustment Voucher";
+    List<AdjustmentVoucher> advlist = (List<AdjustmentVoucher>)ViewData["adjustmentVoucherListToHTML"];
+}
+
+<h1>Adjustment Voucher List</h1>
+
+<a class="btn btn-primary" asp-controller="StoreClerk" asp-action="GenerateAdjustmentVoucher">Issue Adjustment Voucher</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Voucher#</th>
+            <th>Date Issued</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (AdjustmentVoucher adv in advlist)
+        {
+            <tr class="Search">
+                <td>@adv.Id</td>
+                <td>@adv.InitiatedDate</td>
+                <td>@adv.Status</td>
+                <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="AdjustmentVoucherDetails" asp-route-id="@adv.Id">Details</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
