@@ -55,9 +55,9 @@ namespace SSIS_FRONT.Controllers
 
         public IActionResult DeliveryOrder()
         {
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/po﻿";
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/po";
             Result<List<PurchaseOrder>> result = HttpUtils.Get(url, new List<PurchaseOrder>(), Request, Response);
-            ViewData["purchaseOrders"] = result.data;
+            ViewData["deliveryOrders"] = result.data;
             return View();
         }
         public List<PurchaseOrder> DeliveryOrderList()
@@ -70,7 +70,7 @@ namespace SSIS_FRONT.Controllers
         }
         public IActionResult PurchaseOrder()
         {
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/po﻿";
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/po";
             Result<List<PurchaseOrder>> result = HttpUtils.Get(url, new List<PurchaseOrder>(), Request, Response);
             ViewData["purchaseOrders"] = result.data;
             return View();
