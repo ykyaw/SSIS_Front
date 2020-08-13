@@ -9,15 +9,10 @@ namespace SSIS_FRONT.Models
 {
     public class PurchaseRequestDetail
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [Required]
-        public int PurchaseRequestId { get; set; }
-        [Required]
+        public long PurchaseRequestId { get; set; }
         public int CreatedByClerkId { get; set; }
-        [Required]
         public string ProductId { get; set; }
-        [Required]
         public string SupplierId { get; set; }
         public int CurrentStock { get; set; }
         public int ReorderQty { get; set; }
@@ -26,12 +21,12 @@ namespace SSIS_FRONT.Models
         public long? SubmitDate { get; set; }
         public long? ApprovedDate { get; set; }
         public int? ApprovedBySupId { get; set; }
-        [Required]
         public string Status { get; set; }
         public string Remarks { get; set; }
-        public Product Product { get; set; }
 
         // FKs
+        [ForeignKey("ProductId")]
+        public Product Product { get; set; }
         [ForeignKey("CreatedByClerkId")]
         public Employee CreatedByClerk { get; set; }
         [ForeignKey("SupplierId")]
