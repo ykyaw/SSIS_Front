@@ -45,9 +45,12 @@
                     <td class="noborder">
                         <a href="/department/viewRfApprovedDetailDeptRep" class="button btn btn-outline-info">Details</a>
                         @*if status is approved, "/department/viewRfApprovedDetailDeptRep"
-                        if status is confirmed, "/department/viewRfConfirmedDetailDeptRep"
-                        if status is completed, "/department/viewRfCompletedDetailDeptRep"*@
-                        <a href="/viewDisbursement/" class="button btn btn-outline-primary">Disbursement</a>
+        if status is confirmed, "/department/viewRfConfirmedDetailDeptRep"
+        if status is completed, "/department/viewRfCompletedDetailDeptRep"*@
+                        @*<a href="/department/viewDisbBefAck" class="button btn btn-outline-primary">Disbursement</a>
+                        if status is approved, show error page
+        if status is confirmed, "/department/viewDisbBefAck"
+        if status is completed, "/department/viewDisbAftAck"*@
                     </td>
                 </tr>
             }
