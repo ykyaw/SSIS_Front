@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SSIS_FRONT.Components.JWT.Impl;
+using SSIS_FRONT.Components.JWT.Interfaces;
+using SSIS_FRONT.Extensions;
 
 namespace SSIS_FRONT
 {
@@ -24,7 +27,9 @@ namespace SSIS_FRONT
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            //services.AddSession();
+            services.AddScoped<IAuthService, JWTService>();
+
+            services.AddSession();
             //inject the service
             services.AddScoped<HttpClient>();
             //services.AddScoped<DBUser>();
@@ -48,7 +53,11 @@ namespace SSIS_FRONT
             }
             app.UseStaticFiles();
 
+            app.UseSession();
+
             app.UseRouting();
+
+            app.UseMiddlewareExtensions();
 
             app.UseAuthorization();
 
