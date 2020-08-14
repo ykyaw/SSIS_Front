@@ -2,7 +2,7 @@
     ViewData["Title"] = "Purchase Orders";
     List<PurchaseOrder> purchaseOrders = (List<PurchaseOrder>)ViewData["purchaseOrders"];
 }
-<h1>Purchase Orders</h1>
+<h1>@ViewData["Title"]</h1>
 
 <input type="text" id="Search" placeholder="Search" class="form-control" />
 <br />

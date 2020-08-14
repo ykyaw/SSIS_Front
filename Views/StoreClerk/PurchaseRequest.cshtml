@@ -2,7 +2,7 @@
     ViewData["Title"] = "Purchase Request List";
     Dictionary<long, List<PurchaseRequestDetail>> prDetailsByPr = (Dictionary<long, List<PurchaseRequestDetail>>)ViewData["prDetailsByPr"];
 }
-<h1>Purchase Request List</h1>
+<h1>@ViewData["Title"]</h1>
 
 <a class="btn btn-primary" asp-controller="StoreClerk" asp-action="GeneratePurchaseRequest">Raise Purchase Request</a>
 <table class="table table-striped">

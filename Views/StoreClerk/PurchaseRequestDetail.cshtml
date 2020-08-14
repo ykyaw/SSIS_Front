@@ -4,9 +4,7 @@
     string role = (string)ViewData["Role"];
     string name = (string)ViewData["Name"];
 }
-<h1>Purchase Request Detail</h1>
-<h4 id="role">@role</h4>
-<h5>Welcome, @name</h5>
+<h1>@ViewData["Title"]</h1>
 <table>
     <tr>
         <td>Purchase Request No</td>

@@ -2,7 +2,7 @@
     ViewData["Title"] = "Purchase Order Form";
     List<PurchaseOrderDetail> pods = (List<PurchaseOrderDetail>)ViewData["purchaseOrderDetails"];
 }
-<h1>Purchase Order Form</h1>
+<h1>@ViewData["Title"]</h1>
 
 <div>
     <table>
@@ -17,6 +17,10 @@
         <tr>
             <td>Deliver to</td>
             <td>@pods[0].PurchaseOrder.CollectionPoint.Location</td>
+        </tr>
+        <tr>
+            <td>Attn</td>
+            <td></td>
         </tr>
         @*
                 !!!!TK PLEASE SETTLE!!!!
@@ -71,14 +75,6 @@
             @* NEED BACKEND UPDATE*@
             @*<td>@pods[0].PurchaseOrder.OrderedByClerk.Name</td>*@
             <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(pods[0].PurchaseOrder.OrderedDate)</td>
-        </tr>
-        <tr>
-            <td>Approved by</td>
-            @* NEED BACKEND UPDATE*@
-            @*<td>@pods[0].PurchaseOrder.ApprovedBySup.Name</td>*@
-
-            @* NEED MODEL UPDATE*@
-            @*<td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(pods[0].PurchaseOrder.ApprovedDate)</td>*@
         </tr>
     </table>
 </div>
