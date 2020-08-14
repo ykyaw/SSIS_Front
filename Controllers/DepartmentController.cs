@@ -5,7 +5,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using SSIS_FRONT.Components;
 using SSIS_FRONT.Models;
+using SSIS_FRONT.Utils;
 
 namespace SSIS_FRONT.Controllers
 {
@@ -55,79 +57,29 @@ namespace SSIS_FRONT.Controllers
 
         public IActionResult viewRequisitionDeptHead()
         {
-            List<Requisition> requisitions = new List<Requisition>();
-            ViewData["requisitions"] = requisitions;
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/depthead/rfl";
+            Result<List<Requisition>> result = HttpUtils.Get(url, new List<Requisition>(), Request, Response);
+            ViewData["requisitions"] = result.data;
 
-            Requisition r1 = new Requisition();
-            r1.Id = 1;
-            r1.CreatedDate = 12082020;
-            //r1.Department.Name = "English";
-            r1.Status = "Pending Approval";
-            requisitions.Add(r1);
+            return View();            
+        }
 
-            Requisition r2 = new Requisition();
-            r2.Id = 2;
-            r2.CreatedDate = 15082020;
-            //r2.Department.Name = "Science";
-            r2.Status = "Approved";
-            requisitions.Add(r2);
-
-            Requisition r3 = new Requisition();
-            r3.Id = 3;
-            r3.CreatedDate = 17082020;
-            //r3.Department.Name = "History";
-            r3.Status = "Rejected";
-            requisitions.Add(r3);
-
+        [Route("Department/viewRequisitionDeptHead/{RequisitionId}")]
+        public IActionResult viewRequisitionDetailDeptHead(int RequisitionId)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/depthead/rfld/" + RequisitionId;
+            Result<Requisition> result = HttpUtils.Get(url, new Requisition(), Request, Response);
+            ViewData["requisition"] = result.data;
             return View();
         }
 
-        public IActionResult viewRfPendingApprDetailDeptHead()
+        
+
+        public IActionResult viewRequisitionEmp()
         {
-            List<RequisitionDetail> requisitionDetail = new List<RequisitionDetail>();
-            ViewData["requisitionDetail"] = requisitionDetail;
-            return View();
-        }
-
-        public IActionResult viewRfApprovedDetailDeptHead()
-        {
-            List<RequisitionDetail> requisitionDetail = new List<RequisitionDetail>();
-            ViewData["requisitionDetail"] = requisitionDetail;
-            return View();
-        }
-
-        public IActionResult viewRfRejectedDetailDeptHead()
-        {
-            List<RequisitionDetail> requisitionDetail = new List<RequisitionDetail>();
-            ViewData["requisitionDetail"] = requisitionDetail;
-            return View();
-        }
-
-        public IActionResult viewRequisitionDeptRep()
-        {
-            List<Requisition> requisitions = new List<Requisition>();
-            ViewData["requisitions"] = requisitions;
-
-            Requisition r1 = new Requisition();
-            r1.Id = 1;
-            r1.CreatedDate = 12082020;
-            //r1.Department.Name = "English";
-            r1.Status = "Approved";
-            requisitions.Add(r1);
-
-            Requisition r2 = new Requisition();
-            r2.Id = 2;
-            r2.CreatedDate = 15082020;
-            //r2.Department.Name = "Science";
-            r2.Status = "Confirmed";
-            requisitions.Add(r2);
-
-            Requisition r3 = new Requisition();
-            r3.Id = 3;
-            r3.CreatedDate = 17082020;
-            //r3.Department.Name = "History";
-            r3.Status = "Completed";
-            requisitions.Add(r3);
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/rfl";
+            Result<List<Requisition>> result = HttpUtils.Get(url, new List<Requisition>(), Request, Response);
+            ViewData["requisitions"] = result.data;
 
 
             return View();

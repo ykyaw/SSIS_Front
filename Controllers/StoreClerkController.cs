@@ -333,5 +333,17 @@ namespace SSIS_FRONT.Controllers
             return View();
 
         }
+
+
+        [Route("StoreClerk/AdjustmentVoucherDetails/{advId}")]
+        public IActionResult AdjustmentVoucherDetails(string advId)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/advdet/" + advId;
+            Result<List<AdjustmentVoucherDetail>> result = HttpUtils.Get(url, new List<AdjustmentVoucherDetail>(), Request, Response);
+
+            ViewData["adjustmentVoucherDetailsToHTML"] = result.data;
+
+            return View();
+        }
     }
 }
