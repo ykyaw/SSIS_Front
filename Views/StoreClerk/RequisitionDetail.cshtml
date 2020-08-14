@@ -41,6 +41,13 @@
         <td>Status</td>
         <td>@requisition.Status</td>
     </tr>
+    @if (@requisition.Status == "Confirmed" || @requisition.Status == "Completed")
+    {
+        <tr>
+            <td>Disbursement Date</td>
+            <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(requisition.CollectionDate)</td>
+        </tr>
+    }
 </table>
 <table>
     <thead>
