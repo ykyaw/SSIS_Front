@@ -26,6 +26,10 @@ namespace SSIS_FRONT.Controllers
         {
             return View();
         }
+
+        /**
+         * @author Thatoe
+         */
         public IActionResult Catalogue()
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/catalogue";
@@ -53,13 +57,6 @@ namespace SSIS_FRONT.Controllers
             return View();
         }
 
-        public IActionResult DeliveryOrder()
-        {
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/po";
-            Result<List<PurchaseOrder>> result = HttpUtils.Get(url, new List<PurchaseOrder>(), Request, Response);
-            ViewData["deliveryOrders"] = result.data;
-            return View();
-        }
         public List<RequisitionDetail> Disbursement()
         {
             return null;
@@ -77,6 +74,21 @@ namespace SSIS_FRONT.Controllers
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/pod/" + PurchaseOrderId;
             Result<List<PurchaseOrderDetail>> result = HttpUtils.Get(url, new List<PurchaseOrderDetail>(), Request, Response);
             ViewData["purchaseOrderDetails"] = result.data;
+            return View();
+        }
+        public IActionResult DeliveryOrder()
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/po";
+            Result<List<PurchaseOrder>> result = HttpUtils.Get(url, new List<PurchaseOrder>(), Request, Response);
+            ViewData["deliveryOrders"] = result.data;
+            return View();
+        }
+        [Route("StoreClerk/DeliveryOrder/{DeliveryOrderId}")]
+        public IActionResult DeliveryOrderDetail(int DeliveryOrderId)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/pod/" + DeliveryOrderId;
+            Result<List<PurchaseOrderDetail>> result = HttpUtils.Get(url, new List<PurchaseOrderDetail>(), Request, Response);
+            ViewData["deliveryOrderDetails"] = result.data;
             return View();
         }
         public IActionResult PurchaseRequest()
@@ -125,6 +137,9 @@ namespace SSIS_FRONT.Controllers
             return View();
         }
 
+        /**
+         * @author WUYUDING
+         */
         public IActionResult GenerateRetrieveForm(string errMsg = "")
         {
             ViewData["errMsg"] = errMsg;
@@ -282,7 +297,9 @@ namespace SSIS_FRONT.Controllers
             return (bool)result.data;
         }
 
-        //Author XJ, 
+        /**
+         * @author XJ
+         */
         public IActionResult AdjustmentVoucher()
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/adv";

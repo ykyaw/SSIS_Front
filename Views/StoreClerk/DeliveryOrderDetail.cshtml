@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Delivery Order";
+    List<PurchaseOrderDetail> dods = (List<PurchaseOrderDetail>)ViewData["deliveryOrderDetails"];
+}
+<h1>Delivery Order</h1>
+
+<div>
+    <table>
+        <tr>
+            <td>PO Number</td>
+            <td>@dods[0].PurchaseOrderId</td>
+        </tr>
+    </table>
+</div>
+
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>Item Code</th>
+                <th>Description</th>
+                <th>Qty Ordered</th>
+                <th>Qty Received</th>
+                <th>Date</th>
+                <th>Vender DO#</th>
+                <th>Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (PurchaseOrderDetail dod in dods)
+            {
+                <tr>
+                    <td>@dod.ProductId</td>
+                    <td>@dod.Product.Description</td>
+                    <td>@dod.QtyPurchased</td>
+                    <td><input type="number" value="@dod.QtyPurchased" /></td>
+                    <td><input type="date" /></td>
+                    <td><input type="text" /></td>
+                    <td><input type="text" /></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <button class="btn btn-success">Save</button>
+</div>
+
