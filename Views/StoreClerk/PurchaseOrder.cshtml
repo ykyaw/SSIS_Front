@@ -20,7 +20,7 @@
             <tr class="Search">
                 <td>@po.Id</td>
                 <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(po.OrderedDate)</td>
-                <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="RequisitionDetail" asp-route-id="@po.Id">Details</a></td>
+                <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="PurchaseOrder" asp-route-id="@po.Id">Details</a></td>
             </tr>
         }
     </tbody>

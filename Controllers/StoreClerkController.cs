@@ -71,6 +71,14 @@ namespace SSIS_FRONT.Controllers
             ViewData["purchaseOrders"] = result.data;
             return View();
         }
+        [Route("StoreClerk/PurchaseOrder/{PurchaseOrderId}")]
+        public IActionResult PurchaseOrderDetail(int PurchaseOrderId)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/pod/" + PurchaseOrderId;
+            Result<List<PurchaseOrderDetail>> result = HttpUtils.Get(url, new List<PurchaseOrderDetail>(), Request, Response);
+            ViewData["purchaseOrderDetails"] = result.data;
+            return View();
+        }
         public IActionResult PurchaseRequest()
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/pr";
