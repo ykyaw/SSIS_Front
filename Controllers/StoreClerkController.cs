@@ -30,6 +30,25 @@ namespace SSIS_FRONT.Controllers
         /**
          * @author Thatoe
          */
+        public IActionResult Requisition()
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/rf";
+            Result<List<Requisition>> result = HttpUtils.Get(url, new List<Requisition>(), Request, Response);
+            ViewData["requisitions"] = result.data;
+            return View();
+        }
+        [Route("StoreClerk/Requisition/{RequisitionId}")]
+        public IActionResult RequisitionDetail(int RequisitionId)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/rfld/" + RequisitionId;
+            Result<Requisition> result = HttpUtils.Get(url, new Requisition(), Request, Response);
+            ViewData["requisition"] = result.data;
+            return View();
+        }
+        public List<RequisitionDetail> Disbursement()
+        {
+            return null;
+        }
         public IActionResult Catalogue()
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/catalogue";
@@ -37,14 +56,14 @@ namespace SSIS_FRONT.Controllers
             ViewData["products"] = result.data;
             return View();
         }
-        [Route("StoreClerk/StockCard/{productId}")]
-        public IActionResult StockCard(string productId)
+        [Route("StoreClerk/StockCard/{ProductId}")]
+        public IActionResult StockCard(string ProductId)
         {
-            string url1 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/sc/" + productId;
+            string url1 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/sc/" + ProductId;
             Result<List<Transaction>> result1 = HttpUtils.Get(url1, new List<Transaction>(), Request, Response);
             ViewData["transactions"] = result1.data;
 
-            string url2 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/supplier/" + productId;
+            string url2 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/supplier/" + ProductId;
             Result<List<TenderQuotation>> result2 = HttpUtils.Get(url2, new List<TenderQuotation>(), Request, Response);
             ViewData["tenderquotations"] = result2.data;
             return View();
@@ -54,41 +73,6 @@ namespace SSIS_FRONT.Controllers
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/catalogue";
             Result<List<Product>> result = HttpUtils.Get(url, new List<Product>(), Request, Response);
             ViewData["products"] = result.data;
-            return View();
-        }
-
-        public List<RequisitionDetail> Disbursement()
-        {
-            return null;
-        }
-        public IActionResult PurchaseOrder()
-        {
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/po";
-            Result<List<PurchaseOrder>> result = HttpUtils.Get(url, new List<PurchaseOrder>(), Request, Response);
-            ViewData["purchaseOrders"] = result.data;
-            return View();
-        }
-        [Route("StoreClerk/PurchaseOrder/{PurchaseOrderId}")]
-        public IActionResult PurchaseOrderDetail(int PurchaseOrderId)
-        {
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/pod/" + PurchaseOrderId;
-            Result<List<PurchaseOrderDetail>> result = HttpUtils.Get(url, new List<PurchaseOrderDetail>(), Request, Response);
-            ViewData["purchaseOrderDetails"] = result.data;
-            return View();
-        }
-        public IActionResult DeliveryOrder()
-        {
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/po";
-            Result<List<PurchaseOrder>> result = HttpUtils.Get(url, new List<PurchaseOrder>(), Request, Response);
-            ViewData["deliveryOrders"] = result.data;
-            return View();
-        }
-        [Route("StoreClerk/DeliveryOrder/{DeliveryOrderId}")]
-        public IActionResult DeliveryOrderDetail(int DeliveryOrderId)
-        {
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/pod/" + DeliveryOrderId;
-            Result<List<PurchaseOrderDetail>> result = HttpUtils.Get(url, new List<PurchaseOrderDetail>(), Request, Response);
-            ViewData["deliveryOrderDetails"] = result.data;
             return View();
         }
         public IActionResult PurchaseRequest()
@@ -129,11 +113,34 @@ namespace SSIS_FRONT.Controllers
 
             return View();
         }
-        public IActionResult Requisition()
+        public IActionResult PurchaseOrder()
         {
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/rf";
-            Result<List<Requisition>> result = HttpUtils.Get(url, new List<Requisition>(), Request, Response);
-            ViewData["requisitions"] = result.data;
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/po";
+            Result<List<PurchaseOrder>> result = HttpUtils.Get(url, new List<PurchaseOrder>(), Request, Response);
+            ViewData["purchaseOrders"] = result.data;
+            return View();
+        }
+        [Route("StoreClerk/PurchaseOrder/{PurchaseOrderId}")]
+        public IActionResult PurchaseOrderDetail(int PurchaseOrderId)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/pod/" + PurchaseOrderId;
+            Result<List<PurchaseOrderDetail>> result = HttpUtils.Get(url, new List<PurchaseOrderDetail>(), Request, Response);
+            ViewData["purchaseOrderDetails"] = result.data;
+            return View();
+        }
+        public IActionResult DeliveryOrder()
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/po";
+            Result<List<PurchaseOrder>> result = HttpUtils.Get(url, new List<PurchaseOrder>(), Request, Response);
+            ViewData["deliveryOrders"] = result.data;
+            return View();
+        }
+        [Route("StoreClerk/DeliveryOrder/{DeliveryOrderId}")]
+        public IActionResult DeliveryOrderDetail(int DeliveryOrderId)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/pod/" + DeliveryOrderId;
+            Result<List<PurchaseOrderDetail>> result = HttpUtils.Get(url, new List<PurchaseOrderDetail>(), Request, Response);
+            ViewData["deliveryOrderDetails"] = result.data;
             return View();
         }
 
