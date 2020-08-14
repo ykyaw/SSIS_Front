@@ -33,18 +33,34 @@ namespace SSIS_FRONT.Controllers
          */
         public IActionResult Requisition()
         {
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/rf";
-            Result<List<Requisition>> result = HttpUtils.Get(url, new List<Requisition>(), Request, Response);
-            ViewData["requisitions"] = result.data;
+            string role = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            string name = (string)HttpContext.Session.GetString("Name");
+            string url1 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/rf";
+            Result<List<Requisition>> result1 = HttpUtils.Get(url1, new List<Requisition>(), Request, Response);
+            ViewData["requisitions"] = result1.data;
+
+            string url2 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/retrievealldept";
+            Result<List<Department>> result2 = HttpUtils.Get(url2, new List<Department>(), Request, Response);
+            ViewData["departments"] = result2.data;
+
+            ViewData["Role"] = role;
+            ViewData["Name"] = name;
+
             return View();
         }
         [Route("StoreClerk/Requisition/{RequisitionId}")]
         public IActionResult RequisitionDetail(int RequisitionId)
         {
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/rfld/" + RequisitionId;
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/rfld2/" + RequisitionId;
             Result<Requisition> result = HttpUtils.Get(url, new Requisition(), Request, Response);
             ViewData["requisition"] = result.data;
             return View();
+        }
+        public bool UpdateRequisition([FromBody] Requisition requisition)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/rfld";
+            Result<Object> result = HttpUtils.Put(url, requisition, Request, Response);
+            return (bool)result.data;
         }
         public List<RequisitionDetail> Disbursement()
         {
@@ -98,11 +114,11 @@ namespace SSIS_FRONT.Controllers
         }
 
         [HttpPut]
-        [Route("Store/PurchaseRequestDetail")]
+        [Route("StoreClerk/PurchaseRequest")]
         public bool UpdatePurchaseRequestDetail([FromBody] List<PurchaseRequestDetail> details)
         {
 
-            string url = cfg.GetValue<string>("Hosts:Boot") + "﻿";//TODO
+            string url = cfg.GetValue<string>("Hosts:Boot") + "﻿/storeclerk/updatepr";
             Result<Object> result = HttpUtils.Put(url,details, Request, Response);
             return (Boolean)result.data;
         }
@@ -110,8 +126,8 @@ namespace SSIS_FRONT.Controllers
         [Route("StoreClerk/PurchaseRequest/{PurchaseRequestId}")]
         public IActionResult PurchaseRequestDetail(long PurchaseRequestId)
         {
-            string role= CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
-            string name= (string)HttpContext.Session.GetString("Name");
+            //string role= CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            //string name= (string)HttpContext.Session.GetString("Name");
             string url1 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/prdetails/" + PurchaseRequestId;
             Result<List<PurchaseRequestDetail>> result1 = HttpUtils.Get(url1, new List<PurchaseRequestDetail>(), Request, Response);
 
@@ -125,8 +141,8 @@ namespace SSIS_FRONT.Controllers
                 TQbyPRD.Add(detail, result.data);
             }
             ViewData["TQbyPRD"] = TQbyPRD;
-            ViewData["Role"] = role;
-            ViewData["Name"] = name;
+            //ViewData["Role"] = role;
+            //ViewData["Name"] = name;
             ViewData["Detail"] = result1.data;
 
             return View();

@@ -7,7 +7,7 @@
 <table>
     <tr>
         <td>Form ID</td>
-        <td>@requisition.Id</td>
+        <td id="requisitionId">@requisition.Id</td>
     </tr>
     <tr>
         <td>Department Name</td>
@@ -15,11 +15,7 @@
     </tr>
     <tr>
         <td>Employee Name</td>
-        @*
-            !!! TK PLS SETTLE !!!
-
-            NEED BACKEND UPDATE
-            <td>@requisition.ReqByEmp.Name</td>*@
+        <td>@requisition.ReqByEmp.Name</td>
     </tr>
     <tr>
         <td>Requested Date</td>
@@ -27,15 +23,11 @@
     </tr>
     <tr>
         <td>Collection Point</td>
-        @*
-            NEED BACKEND UPDATE
-            <td>@requisition.CollectionPoint.Location</td>*@
+        @*<td>@requisition.CollectionPoint.Location</td>*@
     </tr>
     <tr>
         <td>Dept Rep Name</td>
-        @*
-            NEED BACKEND UPDATE
-            <td>@requisition.ApprovedBy.Name</td>*@
+        <td>@requisition.ApprovedBy.Name</td>
     </tr>
     <tr>
         <td>Status</td>
@@ -70,8 +62,12 @@
 @if (requisition.Status == "Approved")
 {
     <div>
-        <span>Disbursement Date</span>
-        <input type="date" />
-        <button class="btn btn-success">Confirm</button>
+        <form>
+            <span>Disbursement Date</span>
+            <input id="collectiondate" type="date" />
+            <button id="confirm" class="btn btn-success">Confirm</button>
+        </form>
     </div>
 }
+
+<script src="~/js/Requisition.js"></script>

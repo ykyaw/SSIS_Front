@@ -1,17 +1,18 @@
 ﻿$(document).ready(function () {
-    function Contains(text1, text2) {
-        if (text1.indexOf(text2) != -1)
-            return true;
-    }
-    $("#Search").keyup(function () {
-        var searchText = $("#Search").val().toLowerCase();
-        $(".Search").each(function () {
-            if (!Contains($(this).text().toLowerCase(), searchText)) {
-                $(this).hide();
-            }
-            else {
-                $(this).show();
-            }
+    (function ($) {
+        $('#search').keyup(function () {
+            var search = new RegExp($(this).val(), 'i');
+            $('.search tr').hide();
+            $('.search tr').filter(function () {
+                return search.test($(this).text());
+            }).show();
         })
-    });
-});
+        $('#select').change(function () {
+            var search = new RegExp($(this).val(), 'i');
+            $('.search tr').hide();
+            $('.search tr').filter(function () {
+                return search.test($(this).text());
+            }).show(); 
+        })
+    }(jQuery));
+})

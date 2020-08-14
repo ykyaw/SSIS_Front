@@ -10,6 +10,27 @@
         cells.eq(6).text(totalprice);
     });
 
+    $("#submit").on("click", function () {
+        let PurchaseRequestId = $("#requestId").text();
+        let Status = "Pending Approval";
+        let details = [];
+        $(".detailId").each(function () {
+            let detail = {
+                Id: $(this).val(),
+                PurchaseRequestId,
+                Status
+            }
+            details.push(detail);
+        })
+        Put("/StoreClerk/PurchaseRequest", details)
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (err) {
+                console.log(err);
+            })
+    })
+
     $("#reject").on("click", function () {
         let Remarks = $("#Reason").val();
         let PurchaseRequestId = $("#requestId").text();
