@@ -49,7 +49,7 @@ namespace SSIS_FRONT.Controllers
             return View();
         }
 
-        [Route("Store/Voucher/{Id}")]
+        [Route("Voucher/{Id}")]
         public IActionResult VoucherDetail(string Id)
         {
             List<AdjustmentVoucherDetail> details = new List<AdjustmentVoucherDetail>();

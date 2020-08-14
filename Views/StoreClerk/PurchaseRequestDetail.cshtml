@@ -1,13 +1,16 @@
 ﻿@{
     ViewData["Title"] = "Purchase Request Detail";
     Dictionary<PurchaseRequestDetail, List<TenderQuotation>> TQbyPRD = (Dictionary<PurchaseRequestDetail, List<TenderQuotation>>)ViewData["TQbyPRD"];
+    string role = (string)ViewData["Role"];
+    string name = (string)ViewData["Name"];
 }
 <h1>Purchase Request Detail</h1>
-
+<h4 id="role">@role</h4>
+<h5>Welcome, @name</h5>
 <table>
     <tr>
         <td>Purchase Request No</td>
-        <td>@TQbyPRD.Keys.First().ProductId</td>
+        <td id="requestId">@TQbyPRD.Keys.First().PurchaseRequestId</td>
     </tr>
     <tr>
         <td>Status</td>
@@ -32,29 +35,67 @@
         @foreach (KeyValuePair<PurchaseRequestDetail, List<TenderQuotation>> kvp in TQbyPRD)
         {
             <tr>
+                <input type="hidden" class="detailId" value="@kvp.Key.Id"/>
                 <td>@kvp.Key.ProductId</td>
                 <td>@kvp.Key.Product.Description</td>
                 <td>@kvp.Key.CurrentStock</td>
-                <td><input type="number" class="number" value="@kvp.Key.ReorderQty" /></td>
                 <td>
-                    <select class="number">
-                        @foreach (var v in kvp.Value)
-                        {
-                            <option value="@v.Unitprice">@v.Supplier.Name</option>
-                        }
-                    </select>
+                    @if (role == "Clerk")
+                    {
+                        <input type="number" class="number" value="@kvp.Key.ReorderQty" />
+                    }
+                    else
+                    {
+                        @kvp.Key.ReorderQty
+                    }
                 </td>
-                <td><input type="text" class="venderQuote" /></td>
+                <td>
+                    @if (role == "Clerk")
+                    {
+
+                        <select class="number">
+                            @foreach (var v in kvp.Value)
+                            {
+                                <option value="@v.Unitprice">@v.Supplier.Name</option>
+                            }
+                        </select>
+                    }
+                    else
+                    {
+                        @kvp.Key.Supplier.Name
+                    }
+                </td>
+                <td>
+                    @if (role == "Clerk")
+                    {
+                        <input type="text" class="venderQuote" />
+                    }
+                    else
+                    {
+                        @kvp.Key.VenderQuote
+                    }
+                </td>
                 <td>@((kvp.Key.ReorderQty * kvp.Value[0].Unitprice).ToString("C"))</td>
             </tr>
         }
     </tbody>
 </table>
-<div>
-    <button class="btn btn-primary">Generate Quote</button>
-    <button class="btn btn-primary">Update</button>
-    <button class="btn btn-success">Submit for Approval</button>
-</div>
+@if (role == "Clerk")
+{
+    <div id="clerkButton">
+        <button class="btn btn-primary">Generate Quote</button>
+        <button class="btn btn-primary">Update</button>
+        <button class="btn btn-success">Submit for Approval</button>
+    </div>
+}
+else
+{
+    <div id="supervisorButton">
+        <textarea rows="3" placeholder="Reason"></textarea>
+        <button id="reject">Reject</button>
+        <button id="approve">Approve</button>
+    </div>
+}
 
 <script src="~/js/PRDTotalPrice.js"></script>
 

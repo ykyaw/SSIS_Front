@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
@@ -95,11 +96,25 @@ namespace SSIS_FRONT.Controllers
             ViewData["prDetailsByPr"] = prDetailsByPr;
             return View();
         }
+
+        [HttpPut]
+        [Route("Store/PurchaseRequestDetail")]
+        public bool UpdatePurchaseRequestDetail([FromBody] List<PurchaseRequestDetail> details)
+        {
+
+            string url = cfg.GetValue<string>("Hosts:Boot") + "﻿";//TODO
+            Result<Object> result = HttpUtils.Put(url,details, Request, Response);
+            return (Boolean)result.data;
+        }
+
         [Route("StoreClerk/PurchaseRequest/{PurchaseRequestId}")]
         public IActionResult PurchaseRequestDetail(long PurchaseRequestId)
         {
+            string role= CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            string name= (string)HttpContext.Session.GetString("Name");
             string url1 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/prdetails/" + PurchaseRequestId;
             Result<List<PurchaseRequestDetail>> result1 = HttpUtils.Get(url1, new List<PurchaseRequestDetail>(), Request, Response);
+
 
 
             Dictionary<PurchaseRequestDetail, List<TenderQuotation>> TQbyPRD = new Dictionary<PurchaseRequestDetail, List<TenderQuotation>>();
@@ -110,6 +125,9 @@ namespace SSIS_FRONT.Controllers
                 TQbyPRD.Add(detail, result.data);
             }
             ViewData["TQbyPRD"] = TQbyPRD;
+            ViewData["Role"] = role;
+            ViewData["Name"] = name;
+            ViewData["Detail"] = result1.data;
 
             return View();
         }

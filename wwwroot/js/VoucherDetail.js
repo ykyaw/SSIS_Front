@@ -6,9 +6,6 @@
             isMoreThan250=true
         }
     })
-    if (!isMoreThan250||role=="Manager") {
-        $("#operation").show()
-    }
 
     $("#approve").on("click", function () {
         let Id = $("#id").text();
