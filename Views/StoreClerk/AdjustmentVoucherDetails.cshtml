@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewData["Title"] = "AdjustmentVoucherDetails";
+    List<AdjustmentVoucherDetail> adjustmentVoucherDetailsToHTML = (List<AdjustmentVoucherDetail>)ViewData["adjustmentVoucherDetailsToHTML"];
+    
+    }
+
+    <h1>Adjustment Voucher Details</h1>
+    
+
+    <h6>Voucher# : @adjustmentVoucherDetailsToHTML[0].AdjustmentVoucherId</h6>
+    <h6>Date Issued: @SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(adjustmentVoucherDetailsToHTML[0].AdjustmentVoucher.InitiatedDate)</h6>
+    <h6>Status: @adjustmentVoucherDetailsToHTML[0].AdjustmentVoucher.Status.ToUpper()</h6>
+    <h6>Reject Reason:@adjustmentVoucherDetailsToHTML[0].AdjustmentVoucher.Reason</h6>    
+    <h6>By: </h6>
+   
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Item Code</th>
+                    <th>Description</th>
+                    <th>Quantity Adjusted</th>
+                    <th>Reason</th>
+                    <th>Price</th>
+                    <th>Total Price</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (AdjustmentVoucherDetail advdet in adjustmentVoucherDetailsToHTML)
+                    {
+
+                        <tr>
+                            <td>@advdet.ProductId</td>
+                            <td>@advdet.Product.Description</td>
+                            <td>@advdet.QtyAdjusted</td>
+                            <td>@advdet.Reason</td>
+                            <td>@advdet.Unitprice</td>
+                            <td>@advdet.TotalPrice</td>
+                        </tr>
+                        }
+             </tbody>
+
+
+        </table>
+        
+    
+
