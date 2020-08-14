@@ -4,7 +4,7 @@
     List<CollectionPoint> collectionPoints = (List<CollectionPoint>)ViewData["collectionPoint"];
 }
 
-    <form action="/Department/updateCollectionPoint" method="post">
+
         <div class="form-inline" >
             <div class="form-group mb-2">
                 <label for="collectionPoint" class="sr-only text-right">Collection Point</label>
@@ -14,13 +14,14 @@
 
             <div class="form-group mx-sm-3 mb-2">
                 <label for="collectionPoint2" class="sr-only">Collection Point 2</label>
-                <input type="text" readonly class="form-control-plaintext" id="collectionPoint2" value=" ">
+                @*<input type="text" readonly class="form-control-plaintext" id="collectionPoint2" value="@collectionPoints[0].Location">*@
+            <p id="result">@collectionPoints[0].Location</p>
             </div>
             </div>
             <div class="form-inline" >
                 <div class="form-group mx-sm-3 mb-2">
                     <label for="chooseItem" class="sr-only">Select Collection Point</label>
-                    <select class="form-control">
+                    <select class="form-control" id="select">
                         <option>
                             Select Collection Point
                         </option>
@@ -32,7 +33,14 @@
                         }
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary mb-2">Change</button>
+                <button type="button" onclick="GetCollectionPoint()" class="btn btn-primary mb-2" id="changeCP">Change</button>
             </div>
 
-    </form>
+
+<script>
+    function GetCollectionPoint() {
+        var e = document.getElementById("select");
+        var result = e.options[e.selectedIndex].text;
+        document.getElementById("result").innerHTML = result;
+    }
+</script>

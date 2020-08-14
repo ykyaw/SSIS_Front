@@ -108,6 +108,12 @@ namespace SSIS_FRONT.Controllers
 
         public IActionResult updateCollectionPoint()
         {
+
+            //string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/rfl";
+            //Result<List<CollectionPoint>> result = HttpUtils.Get(url, new List<CollectionPoint>(), Request, Response);
+            //ViewData["requisitions"] = result.data;
+            //return View();
+
             List<CollectionPoint> collectionPoints = new List<CollectionPoint>();
             ViewData["collectionPoint"] = collectionPoints;
 
@@ -117,8 +123,21 @@ namespace SSIS_FRONT.Controllers
             c1.CollectionTime = "11:00am";
             collectionPoints.Add(c1);
 
+            CollectionPoint c2 = new CollectionPoint();
+            c2.Id = 1;
+            c2.Location = "Science School";
+            c2.CollectionTime = "10:00am";
+            collectionPoints.Add(c2);
+
+            CollectionPoint c3 = new CollectionPoint();
+            c3.Id = 1;
+            c3.Location = "History School";
+            c3.CollectionTime = "9:00am";
+            collectionPoints.Add(c3);
+
             return View();
         }
+        
 
         public IActionResult viewDisbBefAck()
         {
