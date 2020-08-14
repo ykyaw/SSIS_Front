@@ -1,8 +1,7 @@
 ﻿@{
-    ViewData["Title"] = "viewRequisitionDeptHead";
+    ViewData["Title"] = "Requisition Forms";
     List<Requisition> requisitions = (List<Requisition>)ViewData["requisitions"];
 }
-
 <h1>Requisition Forms</h1>
 
 
@@ -13,8 +12,8 @@
 <table class="table table-striped">
     <thead>
         <tr>
+            <th>Form ID</th>
             <th>Requested Date</th>
-            <th>Employee Name</th>
             <th>Status</th>
             <th></th>
         </tr>
@@ -23,10 +22,10 @@
         @foreach (var r in requisitions)
         {
             <tr class="Search">
+                <td>@r.Id</td>
                 <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(r.CreatedDate)</td>
-                <td></td>
                 <td>@r.Status</td>
-                <td><a class="btn btn-primary" asp-controller="Department" asp-action="viewRequisitionDeptHead" asp-route-id="@r.Id">Details</a></td>
+                <td><a class="btn btn-primary" asp-controller="Department" asp-action="RequisitionDetail" asp-route-id="@r.Id">Details</a></td>
             </tr>
         }
     </tbody>
