@@ -20,16 +20,8 @@
         </tr>
         <tr>
             <td>Attn</td>
-            <td></td>
+            <td>@pods[0].PurchaseOrder.OrderedByClerk.Name</td>
         </tr>
-        @*
-                !!!!TK PLEASE SETTLE!!!!
-
-                NEED BACKEND UPDATE
-            <tr>
-                <td>Attn</td>
-                <td>@pods[0].PurchaseOrder.OrderedByClerk.Name</td>
-            </tr>*@
     </table>
 </div>
 
@@ -38,7 +30,7 @@
 </div>
 
 <div>
-    <table id="myTable">
+    <table>
         <thead>
             <tr>
                 <th>Item Code</th>
@@ -72,8 +64,7 @@
     <table>
         <tr>
             <td>Ordered by</td>
-            @* NEED BACKEND UPDATE*@
-            @*<td>@pods[0].PurchaseOrder.OrderedByClerk.Name</td>*@
+            <td>@pods[0].PurchaseOrder.OrderedByClerk.Name</td>
             <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(pods[0].PurchaseOrder.OrderedDate)</td>
         </tr>
     </table>

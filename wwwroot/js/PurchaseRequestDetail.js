@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
 
-    var body = $('#myTable').children('tbody').first();
+    var body = $('#form').children('tbody').first();
     body.on('change', '.number', function () {
         var cells = $(this).closest('tr').children('td');
         var number1 = cells.eq(3).find('input').val();

@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Retrieve Disbursement List";
+    List<Department> departments = (List<Department>)ViewData["departments"];
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-controller="StoreClerk" asp-action="RetrieveDisbursement" method="post" onsubmit="return dateTransform()">
+    <div>
+        <span>Date of Disbursement: </span>
+        <input type="date" />
+    </div>
+    <div>
+        <span>Department: </span>
+        <select class="number">
+            @foreach (var d in departments)
+            {
+                <option value="@d.Id">@d.Name</option>
+            }
+        </select>
+    </div>
+    <div></div>
+    <button class="btn btn-success" type="submit">Submit</button>
+</form>
+
+<script src="~/js/dateTransform.js"></script>

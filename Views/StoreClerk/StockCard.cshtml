@@ -36,7 +36,7 @@
     </tr>
 </table>
 
-<table>
+<table id="transactionList">
     <thead>
         <tr>
             <th>Date</th>
@@ -59,9 +59,16 @@
         }
     </tbody>
 </table>
+
 <div>
-    <span>Add Entry:</span>
-    <input type="text" class="description" />
-    <input type="number" class="actualNumber" value="0" />
-    <button id="add" class="btn btn-primary">Save</button>
+    <form id="newEntry">
+        <span>Add Entry:</span>
+        <input id="description" type="text" />
+        <input id="qty" type="number" value="0" />
+        <input id="balance" type="hidden" value="@transactions.Last().Balance"/>
+        <input id="updatedByEmp" type="hidden" value="@ViewData["Name"]" />
+        <button id="addEntry" type="button" class="btn btn-primary">Save</button>
+    </form>
 </div>
+
+<script src="~/js/StockCard.js"></script>

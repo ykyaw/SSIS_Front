@@ -5,12 +5,8 @@
 <h1>@ViewData["Title"]</h1>
 
 <div>
-    <table>
-        <tr>
-            <td>PO Number</td>
-            <td>@dods[0].PurchaseOrderId</td>
-        </tr>
-    </table>
+    <span>PO Number:</span>
+    <span>@dods[0].PurchaseOrderId</span>
 </div>
 
 <div>
@@ -31,10 +27,11 @@
             @foreach (PurchaseOrderDetail dod in dods)
             {
                 <tr>
+                    <input type="hidden" class="detailId" value="@dod.Id" />
                     <td>@dod.ProductId</td>
                     <td>@dod.Product.Description</td>
                     <td>@dod.QtyPurchased</td>
-                    <td><input type="number" value="@dod.QtyPurchased" /></td>
+                    <td><input id="qtyReceived" type="number" value="@dod.QtyPurchased" /></td>
                     <td><input type="date" /></td>
                     <td><input type="text" /></td>
                     <td><input type="text" /></td>
@@ -45,6 +42,8 @@
 </div>
 
 <div>
-    <button class="btn btn-success">Save</button>
+    <button id="save" class="btn btn-success">Save</button>
 </div>
+
+<script src="~/js/DeliveryOrder"></script>
 

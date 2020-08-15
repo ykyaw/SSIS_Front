@@ -4,9 +4,12 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<input type="text" id="Search" placeholder="Search" class="form-control" />
-<br />
-<table class="table table-striped">
+<div class="input-group">
+    <span class="input-group-addon">Search</span>
+    <input type="text" id="search" class="form-control" placeholder="Type here" />
+</div>
+
+<table id="form" class="table table-striped">
     <thead>
         <tr>
             <th>PO Number</th>
@@ -14,7 +17,7 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody class="search">
         @foreach (var d in deliveryOrders)
         {
             <tr class="Search">

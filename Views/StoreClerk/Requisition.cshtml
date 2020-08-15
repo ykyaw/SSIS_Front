@@ -4,6 +4,7 @@
     List<Department> departments = (List<Department>)ViewData["departments"];
 }
 <h1>@ViewData["Title"]</h1>
+
 <div class="input-group">
     <span class="input-group-addon">Search</span>
     <input type="text" id="search" class="form-control" placeholder="Type here" />
@@ -16,6 +17,7 @@
         }
     </select>
 </div>
+
 <table id="form" class="table table-striped">
     <thead>
         <tr>
@@ -39,4 +41,5 @@
         }
     </tbody>
 </table>
+
 <script src="~/js/Search.js"></script>
