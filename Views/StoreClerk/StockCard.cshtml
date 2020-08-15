@@ -5,7 +5,7 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<table>
+<table class="noborder">
     <tr>
         <td>Item Code</td>
         <td>@transactions[0].ProductId</td>
@@ -36,7 +36,7 @@
     </tr>
 </table>
 
-<table id="transactionList">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>Date</th>
@@ -46,7 +46,7 @@
             <th>Entered by</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="transactionList">
         @foreach (var t in transactions)
         {
             <tr>
@@ -63,6 +63,7 @@
 <div>
     <form id="newEntry">
         <span>Add Entry:</span>
+        <input id="productId" type="hidden" value="@transactions[0].ProductId"/>
         <input id="description" type="text" />
         <input id="qty" type="number" value="0" />
         <input id="balance" type="hidden" value="@transactions.Last().Balance"/>

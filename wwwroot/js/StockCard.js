@@ -1,20 +1,35 @@
 ﻿$(document).ready(function () {
-    let currentBalance = $("#balance").val(); 
+    let Balance = parseInt($("#balance").val());
     $("#addEntry").click(function () {
+        let ProductId = $("#productId").val();
         let date = new Date();
-        let dateString = date.getFullYear() + " " + (date.getMonth() + 1) + " " + date.getDate();
-        let description = $("#description").val();
-        let qty = $("#qty").val();
-        let balance = new Number(currentBalance) + new Number(qty);
+        let dateString = date.getFullYear() + " " + ('0' + (date.getMonth() + 1)).slice(-2) + " " + date.getDate();
+        let Description = $("#description").val();
+        let Qty = parseInt($("#qty").val());
+        Balance += Qty;
         let updatedByEmp = $("#updatedByEmp").val();
         $('#transactionList').append(
             '<tr><td>' + dateString +
-            '</td><td>' + description +
-            '</td><td>' + qty +
-            '</td><td>' + balance +
+            '</td><td>' + Description +
+            '</td><td>' + Qty +
+            '</td><td>' + Balance +
             '</td><td>' + updatedByEmp +
             '</td></tr>');
 
-        currentBalance = balance;
+        let transaction = {
+            ProductId,
+            Date: date.getTime(),
+            Description,
+            Qty,
+            Balance
+        }
+        Post(`/StoreClerk/UpdateStockCard`, transaction)
+            .then(function (response) {
+                console.log(response);
+                alert("success: " + response);
+            })
+            .catch(function (err) {
+                alert("error: " + JSON.parse(err));
+            })
     });
 })

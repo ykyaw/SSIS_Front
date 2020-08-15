@@ -106,6 +106,12 @@ namespace SSIS_FRONT.Controllers
 
             return View();
         }
+        public bool UpdateStockCard([FromBody] Transaction transaction)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/updatesc";
+            Result<Object> result = HttpUtils.Post(url, transaction, Request, Response);
+            return (bool)result.data;
+        }
         public IActionResult GeneratePurchaseRequest()
         {
             string role = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
