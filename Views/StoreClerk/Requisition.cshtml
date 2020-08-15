@@ -3,7 +3,6 @@
     List<Requisition> requisitions = (List<Requisition>)ViewData["requisitions"];
     List<Department> departments = (List<Department>)ViewData["departments"];
 }
-<h1>@ViewData["Title"]</h1>
 
 <div class="input-group">
     <span class="input-group-addon">Search</span>
@@ -17,6 +16,8 @@
         }
     </select>
 </div>
+
+<h1>@ViewData["Title"]</h1>
 
 <table id="form" class="table table-striped">
     <thead>

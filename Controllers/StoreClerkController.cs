@@ -62,6 +62,7 @@ namespace SSIS_FRONT.Controllers
 
             return View();
         }
+        [HttpPut]
         public bool UpdateRequisition([FromBody] Requisition requisition)
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/rfld";
