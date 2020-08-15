@@ -15,13 +15,17 @@ namespace SSIS_FRONT.Models
         public string ProductId { get; set; }
         public int QtyPurchased { get; set; }
         public int? QtyReceived { get; set; }
+        public int? ReceivedByClerkId { get; set; }
+        public long? ReceivedDate { get; set; }
         public double TotalPrice { get; set; }
         public int? SupplierDeliveryNo { get; set; }
         public string Remark { get; set; }
+        public string Status { get; set; }
 
         // FKs
         public PurchaseOrder PurchaseOrder { get; set; }
         public PurchaseRequestDetail PurchaseRequestDetail { get; set; }
         public Product Product { get; set; }
+        public Employee ReceivedByClerk { get; set; }
     }
 }

@@ -16,16 +16,14 @@ namespace SSIS_FRONT.Models
         public long? OrderedDate { get; set; }
         public long SupplyByDate { get; set; }
         public int? ApprovedBySupId { get; set; }
-        public int? ReceivedByClerkId { get; set; }
-        public long? ReceivedDate { get; set; }
-        public string Status { get; set; }
+        //public int? ReceivedByClerkId { get; set; }
         public int? CollectionPointId { get; set; }
 
         // FKs
         public Supplier Supplier { get; set; }
         public Employee OrderedByClerk { get; set; }
         public Employee ApprovedBySup { get; set; }
-        public Employee ReceivedByClerk { get; set; }
+        //public Employee ReceivedByClerk { get; set; }
         public CollectionPoint CollectionPoint { get; set; }
     }
 }

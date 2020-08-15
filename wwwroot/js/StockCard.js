@@ -18,7 +18,3 @@
         currentBalance = balance;
     });
 })
-
-
-
-post call
