@@ -27,32 +27,18 @@ namespace SSIS_FRONT.Controllers
 
         public IActionResult reqStationery()
         {
-            List<Requisition> requisitions = new List<Requisition>();
-            ViewData["requisitions"] = requisitions;
-            List<Product> products = new List<Product>();
-
-            Product p1 = new Product();
-            p1.Description = "pen";
-            products.Add(p1);
-
-            Product p2 = new Product();
-            p2.Description = "pencil";
-            products.Add(p2);
-
-            Product p3 = new Product();
-            p3.Description = "eraser";
-            products.Add(p3);
-
-            Product p4 = new Product();
-            p4.Description = "ruler";
-            products.Add(p4);
-
-            Product p5 = new Product();
-            p5.Description = "fountain";
-            products.Add(p5);
-
-            ViewData["products"] = products;
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/catalogue";
+            Result<List<Product>> result = HttpUtils.Get(url, new List<Product>(), Request, Response);
+            ViewData["products"] = result.data;
             return View();
+        }
+
+        [HttpPut]
+        public bool RequisitionDetail([FromBody] RequisitionDetail requisitionDetail)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/updateRF";
+            Result<Object> result = HttpUtils.Put(url, requisitionDetail, Request, Response);
+            return (bool)result.data;
         }
 
         public IActionResult viewRequisitionDeptHead()
@@ -244,5 +230,8 @@ namespace SSIS_FRONT.Controllers
             ViewData["employees"] = employees;
             return View();
         }
+
+     
     }
 }
+    

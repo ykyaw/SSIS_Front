@@ -1,7 +1,7 @@
 ﻿
 @using SSIS_FRONT.Models;
 
-@{   
+@{
     List<Product> products = (List<Product>)ViewData["products"];
 }
 <h4 style="text-align:center;">Requisition Form</h4>
@@ -11,17 +11,17 @@
 
     <table class="noborder">
         <tr class="noborder">
-            <td class="noborder">Form ID:</td >
+            <td class="noborder">Form ID:</td>
             <td class="noborder"></td>
         </tr>
-        
+
         <tr class="noborder">
             <td class="noborder">Request Date:</td>
             <td class="noborder" id="tdydate"></td>
         </tr>
     </table>
 
-    <table class="table table-striped noborder" style="margin: 100px auto 30px;">
+    <table class="table table-striped noborder" style="margin: 100px auto 30px;"id="myTable">
         <thead class="noborder">
             <tr class="noborder">
                 <th class="noborder">Description</th>
@@ -31,56 +31,56 @@
         </thead>
         <tbody class="noborder">
             <tr class="noborder">
-                <td class="noborder"></td>
-                <td class="noborder"></td>
-                <td class="noborder"><input type="button" class="btn btn-danger" value="Delete" /></td>
+                @*<td class="noborder"></td>
+                <td class="noborder"></td>*@
+                @*<td class="noborder"><input type="button" class="btn btn-danger" value="Delete" /></td>*@
             </tr>
         </tbody>
     </table>
 
-    
 
-<div class="form-inline">
-    <div class="form-group mb-2">
-        <label for="item" class="sr-only text-right">Item</label>
-        <input type="text" readonly class="form-control-plaintext" id="item" value="                 Item:">
 
-    </div>
+    <div class="form-inline">
+        <div class="form-group mb-2">
+            <label for="item" class="sr-only text-right">Item</label>
+            <input type="text" readonly class="form-control-plaintext" id="item" value="                 Item:">
 
-    <div class="form-group mx-sm-3 mb-2">
-        <label for="chooseItem" class="sr-only">choose item</label>
-        <select class="form-control">
-            <option>
-                -- Choose Item --
-            </option>
-            @foreach (var product in products)
-            {
+        </div>
+
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="chooseItem" class="sr-only">choose item</label>
+            <select class="form-control"id="ddlViewBy">
                 <option>
-                    @product.Description
+                    -- Choose Item --
                 </option>
-            }
-        </select>
+                @foreach (var product in products)
+                {
+                    <option>
+                        @product.Description
+                    </option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group mb-2">
+            <label for="qty" class="sr-only text-right">Qty</label>
+            <input type="text" readonly class="form-control-plaintext"  value="                 Qty:">
+
+        </div>
+
+        <div class="form-group mb-2">
+            <label for="qty2" class="sr-only">Qty2</label>
+            <input type="number" id="qty" class="form-control input-sm quantity" />
+
+        </div>
+
+        <div class="form-group mb-2">
+            <label for="qty" class="sr-only">Qty</label>
+            <input type="text" readonly class="form-control-plaintext" id="qty" value="  ">
+
+        </div>
+        <button type="button" class="btn btn-outline-info mb-2" onclick="myFunction()">Add</button>
     </div>
-
-    <div class="form-group mb-2">
-        <label for="qty" class="sr-only text-right">Qty</label>
-        <input type="text" readonly class="form-control-plaintext" id="qty" value="                 Qty:">
-
-    </div>
-
-    <div class="form-group mb-2">
-        <label for="qty2" class="sr-only">Qty2</label>
-        <input type="number" class="form-control input-sm quantity" />
-
-    </div>
-
-    <div class="form-group mb-2">
-        <label for="qty" class="sr-only">Qty</label>
-        <input type="text" readonly class="form-control-plaintext" id="qty" value="  ">
-
-    </div>
-    <button type="button" class="btn btn-outline-info mb-2">Add</button>
-</div>
 
 
     <br />
@@ -90,7 +90,7 @@
 
         <tr class="noborder">
             <td class="noborder">
-                <input type="button" class="btn btn-warning" value="Save Draft" />
+                <input type="button" id="savedraft" class="btn btn-warning" value="Save Draft" />
             </td>
             <td class="noborder">
                 <input type="submit" class="btn btn-info" value="Submit" />
@@ -99,16 +99,11 @@
 
     </table>
 
-    
+
 
 </form>
-<script>
-    var tdydate = new Date();
-    var dd = String(tdydate.getDate()).padStart(2, '0');
-    var mm = String(tdydate.getMonth() + 1).padStart(2, '0');
-    var yyyy = tdydate.getFullYear();
 
-    tdydate = dd + '/' + mm + '/' + yyyy;
-    document.getElementById('tdydate').innerHTML = tdydate
-</script>
 
+
+
+<script src="~/js/reqStationery.js"></script>
