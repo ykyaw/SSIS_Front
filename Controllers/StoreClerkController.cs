@@ -197,9 +197,9 @@ namespace SSIS_FRONT.Controllers
             //    url = cfg.GetValue<string>("Hosts:Boot") + "﻿/storesup/updatepr";
             //} 
             //Result<Object> result = HttpUtils.Put(url,details, Request, Response);
-            string url = cfg.GetValue<string>("Hosts:Boot") + "﻿/storeclerk/updatepr";
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/updatepr";
             Result<Object> result = HttpUtils.Put(url, details, Request, Response);
-            return (Boolean)result.data;
+            return (bool)result.data;
         }
         [Route("StoreClerk/PurchaseRequest/{PurchaseRequestId}")]
         public IActionResult PurchaseRequestDetail(long PurchaseRequestId)

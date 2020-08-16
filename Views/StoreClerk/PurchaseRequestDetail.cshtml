@@ -33,26 +33,26 @@
         @foreach (KeyValuePair<PurchaseRequestDetail, List<TenderQuotation>> kvp in TQbyPRD)
         {
             <tr>
-                <input type="hidden" class="detailId" value="@kvp.Key.Id" />
+                <input class="detailId" type="hidden" value="@kvp.Key.Id" />
                 <td>@kvp.Key.ProductId</td>
                 <td>@kvp.Key.Product.Description</td>
                 <td>@kvp.Key.CurrentStock</td>
 
-                @if (role == "Clerk")
+                @if (role == "Clerk" && kvp.Key.Status == "Created")
                 {
                     <td>
-                        <input type="number" class="number" value="@kvp.Key.ReorderQty" />
+                        <input class="reorderqty number" type="number" min="0" value="@kvp.Key.ReorderQty" />
                     </td>
                     <td>
-                        <select class="number">
+                        <select class="supplierid number">
                             @foreach (var v in kvp.Value)
                             {
-                                <option value="@v.Unitprice">@v.Supplier.Name</option>
+                                <option data-sid="@v.SupplierId" value="@v.Unitprice">@v.Supplier.Name</option>
                             }
                         </select>
                     </td>
                     <td>
-                        <input type="text" class="venderQuote" />
+                        <input  class="venderquote" type="text" />
                     </td>
                 }
                 else
@@ -75,11 +75,14 @@
 
 @if (role == "Clerk")
 {
-    <div id="clerkButton">
-        <button class="btn btn-primary">Generate Quote</button>
-        <button id="update" class="btn btn-primary">Update</button>
-        <button id="submit" class="btn btn-success">Submit for Approval</button>
-    </div>
+    if (TQbyPRD.Keys.First().Status == "Created")
+    {
+        <div id="clerkButton">
+            <button id="quote" class="btn btn-primary">Generate Quote</button>
+            <button id="update" class="btn btn-primary">Update</button>
+            <button id="submit" class="btn btn-success" disabled>Submit for Approval</button>
+        </div>
+    }
 }
 else
 {

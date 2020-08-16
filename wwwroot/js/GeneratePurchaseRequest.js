@@ -17,7 +17,7 @@
             let newItem = $(this).val();
             let isExist = jQuery.inArray(newItem, prlist);
             if (isExist >= 0) {
-                alert("Can't select the same product more than once.");
+                alert("Same product selected more than once.");
                 return;
             } else if (newItem != "0") {
                 prlist.push(newItem);
