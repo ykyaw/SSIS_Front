@@ -34,7 +34,7 @@ namespace SSIS_FRONT.Controllers
         public IActionResult Requisition()
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/rf";
-            Result<List<Requisition>> result = HttpUtils.Get(url, new List<Requisition>(), Request, Response);
+            Result<List<Requisition>>  result = HttpUtils.Get(url, new List<Requisition>(), Request, Response);
             ViewData["requisitions"] = result.data;
             return View();
         }
@@ -78,8 +78,18 @@ namespace SSIS_FRONT.Controllers
         }
         public IActionResult PurchaseRequest()
         {
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/pr";
-            Result<List<PurchaseRequestDetail>> result = HttpUtils.Get(url, new List<PurchaseRequestDetail>(), Request, Response);
+            string role = HttpContext.Session.GetString("Role");
+            Result<List<PurchaseRequestDetail>> result = null;
+            if (role == CommonConstant.ROLE.STORE_CLERK)
+            {
+                string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/pr";
+                result = HttpUtils.Get(url, new List<PurchaseRequestDetail>(), Request, Response);
+            }
+            else
+            {
+                string url = cfg.GetValue<string>("Hosts:Boot") + "/storesup/pr";
+                result = HttpUtils.Get(url, new List<PurchaseRequestDetail>(), Request, Response);
+            }
             Dictionary<long, List<PurchaseRequestDetail>> prDetailsByPr = new Dictionary<long, List<PurchaseRequestDetail>>();
             foreach (PurchaseRequestDetail detail in result.data)
             {
@@ -101,8 +111,16 @@ namespace SSIS_FRONT.Controllers
         [Route("Store/PurchaseRequestDetail")]
         public bool UpdatePurchaseRequestDetail([FromBody] List<PurchaseRequestDetail> details)
         {
+            string role = HttpContext.Session.GetString("Role");
+            string url = "";
+            if (role == CommonConstant.ROLE.STORE_CLERK)
+            {
 
-            string url = cfg.GetValue<string>("Hosts:Boot") + "﻿";//TODO
+            }
+            else
+            {
+                url = cfg.GetValue<string>("Hosts:Boot") + "﻿/storesup/updatepr";
+            } 
             Result<Object> result = HttpUtils.Put(url,details, Request, Response);
             return (Boolean)result.data;
         }
@@ -112,7 +130,15 @@ namespace SSIS_FRONT.Controllers
         {
             string role= CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
             string name= (string)HttpContext.Session.GetString("Name");
-            string url1 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/prdetails/" + PurchaseRequestId;
+            string url1 = "";
+            if(HttpContext.Session.GetString("Role") == CommonConstant.ROLE.STORE_CLERK)
+            {
+                url1 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/prdetails/" + PurchaseRequestId;
+            }
+            else
+            {
+                url1 = cfg.GetValue<string>("Hosts:Boot") + "/storesup/prdetails/" + PurchaseRequestId;
+            }
             Result<List<PurchaseRequestDetail>> result1 = HttpUtils.Get(url1, new List<PurchaseRequestDetail>(), Request, Response);
 
 

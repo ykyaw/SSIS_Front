@@ -10,7 +10,7 @@ Item
 <select id="select">
     @foreach (Product item in items)
     {
-        <option value="@item.Id">@(item.Description+"("+@item.Id+")")</option>
+        <option value="@item.Id" des="@item.Description">@(item.Description+"("+@item.Id+")")</option>
     }
 </select>
 <button type="button" id="retrieve">Retrieve</button>

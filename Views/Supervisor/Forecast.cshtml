@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewData["Title"] = "Forecast";
+    List<Product> products = (List<Product>)ViewData["Items"];
+}
+
+<h1>Forecast</h1>
+
+Code <select> 
+    @foreach(Product product in products)
+    {
+        <option value="@product.Id">@product.Description</option>
+    }
+    </select>
+
+<button type="button" id="forecast">Forecast</button>
+
+<script src="~/js/Forecast.js"></script>

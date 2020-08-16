@@ -41,72 +41,9 @@ namespace SSIS_FRONT.Controllers
         [Route("TenderQuotations/{id}")]
         public List<TenderQuotation> TenderQuotations(string id)
         {
-            List<TenderQuotation> quotations = new List<TenderQuotation>();
-            TenderQuotation t1 = new TenderQuotation()
-            {
-                Id = 1,
-                Product = new Product()
-                {
-                    Id = id,
-                    Description = "this is description"
-                },
-                Supplier = new Supplier()
-                {
-                    Id = "1",
-                    Name = "ALPHA"
-                },
-                Rank = 1
-            };
-            TenderQuotation t2 = new TenderQuotation()
-            {
-                Id = 2,
-                Product = new Product()
-                {
-                    Id = id,
-                    Description = "this is description"
-                },
-                Supplier = new Supplier()
-                {
-                    Id = "2",
-                    Name = "BANES"
-                },
-                Rank = 2
-            };
-            TenderQuotation t3 = new TenderQuotation()
-            {
-                Id = 3,
-                Product = new Product()
-                {
-                    Id = id,
-                    Description = "this is description"
-                },
-                Supplier = new Supplier()
-                {
-                    Id = "3",
-                    Name = "CHARLIE"
-                },
-                Rank = 3
-            };
-            TenderQuotation t4 = new TenderQuotation()
-            {
-                Id = 4,
-                Product = new Product()
-                {
-                    Id = id,
-                    Description = "this is description"
-                },
-                Supplier = new Supplier()
-                {
-                    Id = "4",
-                    Name = "TAN"
-                },
-                Rank = null
-            };
-            quotations.Add(t1);
-            quotations.Add(t2);
-            quotations.Add(t3);
-            quotations.Add(t4);
-            return quotations;
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storemgmt/retrievesuppliers/"+id;
+            Result<List<TenderQuotation>> result = HttpUtils.Get(url, new List<TenderQuotation>(), Request, Response);
+            return result.data;
         }
 
 
@@ -115,7 +52,9 @@ namespace SSIS_FRONT.Controllers
         [Route("TenderQuotations/{id}")]
         public bool UpdateTop3Supplier([FromBody] List<TenderQuotation> quotations)
         {
-            return true;
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storemgmt/updatesupplier/";
+            Result<Object> result = HttpUtils.Put(url, quotations, Request, Response);
+            return (bool)result.data;
         }
 
     }

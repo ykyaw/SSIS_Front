@@ -7,7 +7,7 @@
             .then(function (quotations) {
                 //let result = JSON.parse(response);
                 console.log(quotations);
-                let $tr = `<tr id=${quotations[0].product.id}><td>${quotations[0].product.id}</td><td>${quotations[0].product.description}</td>`;
+                let $tr = `<tr id=${quotations[0].productId}><td>${quotations[0].productId}</td><td>${quotations[0].product.description}</td>`;
                 $tr += `<td>${quotations.filter(function (item) { return item.rank == 1 })[0].supplier.name}</td>`;
                 $tr += `<td>${quotations.filter(function (item) { return item.rank == 2 })[0].supplier.name}</td>`;
                 $tr += `<td>${quotations.filter(function (item) { return item.rank == 3 })[0].supplier.name}</td>`;

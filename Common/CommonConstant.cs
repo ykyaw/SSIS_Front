@@ -39,7 +39,9 @@ namespace SSIS_FRONT.Common
         {
             {ROLE.STORE_CLERK,"Clerk" },
             {ROLE.STORE_MANAGER,"Manager" },
-            {ROLE.STORE_SUPERVISOR,"Supervisor" }
+            {ROLE.STORE_SUPERVISOR,"Supervisor" },
+            {ROLE.DEPARTMENT_EMPLOYEE,"Department Employee "},
+            {ROLE.DEPARTMENT_HEAD,"Department Head "}
         };
     }
 }

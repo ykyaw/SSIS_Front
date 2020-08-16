@@ -14,7 +14,7 @@
             Id,
             Status: isMoreThan250 ? role == "Manager" ? "Approved" : "Pending Manager Approval" :"Approved"
         }
-        Put(`/Voucher/${Id}`, voucher)
+        Put(`/Store/Voucher/${Id}`, voucher)
             .then(function (response) {
                 //let result = JSON.parse(response);
                 console.log(response);
@@ -34,7 +34,7 @@
             Status: "Rejected",
             Reason
         }
-        Put(`/Voucher/${Id}`, voucher)
+        Put(`/Store/Voucher/${Id}`, voucher)
             .then(function (response) {
                 //let result = JSON.parse(response);
                 console.log(response);
