@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewData["Title"] = "viewRfPendingApprDetailDeptHead";
+    Requisition requisition = (Requisition)ViewData["requisition"];
+}
+
+<h1 style="text-align:center">Requisition Form Detail</h1>
+
+<input type="hidden" id="reqdetailId" value="@requisition.Id"/>
+
+<table class="noborder">
+    <tr class="noborder">
+        <td class="noborder">Form ID:</td>
+        <td class="noborder">@requisition.Id</td>
+    </tr>
+
+    <tr class="noborder">
+        <td class="noborder">Employee Name:</td>
+        <td class="noborder"></td>
+    </tr>
+
+    <tr class="noborder">
+        <td class="noborder">Requested Date:</td>
+        <td class="noborder">
+            @SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(requisition.CreatedDate)
+        </td>
+    </tr>
+
+    <tr class="noborder">
+        <td class="noborder">Status:</td>
+        <td class="noborder">@requisition.Status</td>
+    </tr>
+
+    @if (@requisition.Status == "Rejected" || requisition.Status == "Approved")
+    {
+        @if (@requisition.Remarks != null)
+        {
+            <tr>
+                <td class="noborder">Rejected Reason:</td>
+                <td class="noborder">@requisition.Remarks</td>
+            </tr>
+        }
+    }
+    
+</table>
+
+    <table class="table table-striped noborder" style="margin: 100px auto 30px;">
+        <thead class="noborder">
+            <tr class="noborder">
+                <th class="noborder">Description</th>
+                <th class="noborder">Quantity</th>
+            </tr>
+        </thead>
+        <tbody class="noborder">
+            @foreach (var r in requisition.RequisitionDetails)
+            {
+                <tr class="noborder">
+                    <td class="noborder">@r.Product.Description</td>
+                    <td class="noborder">@r.QtyNeeded</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+    @if (requisition.Status == "Pending Approval")
+    {
+        <div class="form-group">
+            <label for="reason">Reason</label>
+            <textarea class="form-control" id="reason" rows="2"></textarea>
+        </div>
+
+        <table style="margin-left:auto; margin-right:auto;" class="noborder">
+
+            <tr class="noborder">
+                <td class="noborder">
+                    <button class="btn btn-danger" id="reject">Reject</button>
+                </td>
+                <td class="noborder">
+                    <button class="btn btn-success" id="approve">Approve</button>
+                </td>
+            </tr>
+
+        </table>
+    }
+
+<script src="~/js/requisitionDetailDeptHead.js" ></script>

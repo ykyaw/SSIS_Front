@@ -1,12 +1,25 @@
 ﻿@{
     ViewData["Title"] = "Requisition Forms";
     List<Requisition> requisitions = (List<Requisition>)ViewData["requisitions"];
+    List<Department> departments = (List<Department>)ViewData["departments"];
 }
-<h1>Requisition Forms</h1>
 
-<input type="text" id="Search" placeholder="Search" class="form-control" />
-<br />
-<table class="table table-striped">
+<div class="input-group">
+    <span class="input-group-addon">Search</span>
+    <input type="text" id="search" class="form-control" placeholder="Type here" />
+    <span class="input-group-addon">Filter by</span>
+    <select id="select" class="form-control">
+        <option value="">Select Department</option>
+        @foreach (var d in departments)
+        {
+            <option>@d.Name</option>
+        }
+    </select>
+</div>
+
+<h1>@ViewData["Title"]</h1>
+
+<table id="form" class="table table-striped">
     <thead>
         <tr>
             <th>Form ID</th>
@@ -16,10 +29,10 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody class="search">
         @foreach (var r in requisitions)
         {
-            <tr class="Search">
+            <tr>
                 <td>@r.Id</td>
                 <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(r.CreatedDate)</td>
                 <td>@r.Department.Name</td>
@@ -29,4 +42,5 @@
         }
     </tbody>
 </table>
+
 <script src="~/js/Search.js"></script>

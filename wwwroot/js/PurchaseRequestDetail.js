@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
 
-    var body = $('#myTable').children('tbody').first();
+    var body = $('#form').children('tbody').first();
     body.on('change', '.number', function () {
         var cells = $(this).closest('tr').children('td');
         var number1 = cells.eq(3).find('input').val();
@@ -9,6 +9,27 @@
         var totalprice = '$' + total.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
         cells.eq(6).text(totalprice);
     });
+
+    $("#submit").on("click", function () {
+        let PurchaseRequestId = $("#requestId").text();
+        let Status = "Pending Approval";
+        let details = [];
+        $(".detailId").each(function () {
+            let detail = {
+                Id: $(this).val(),
+                PurchaseRequestId,
+                Status
+            }
+            details.push(detail);
+        })
+        Put("/StoreClerk/PurchaseRequest", details)
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (err) {
+                console.log(err);
+            })
+    })
 
     $("#reject").on("click", function () {
         let Remarks = $("#Reason").val();

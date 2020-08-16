@@ -2,15 +2,11 @@
     ViewData["Title"] = "Delivery Order";
     List<PurchaseOrderDetail> dods = (List<PurchaseOrderDetail>)ViewData["deliveryOrderDetails"];
 }
-<h1>Delivery Order</h1>
+<h1>@ViewData["Title"]</h1>
 
 <div>
-    <table>
-        <tr>
-            <td>PO Number</td>
-            <td>@dods[0].PurchaseOrderId</td>
-        </tr>
-    </table>
+    <span>PO Number:</span>
+    <span>@dods[0].PurchaseOrderId</span>
 </div>
 
 <div>
@@ -30,14 +26,25 @@
 
             @foreach (PurchaseOrderDetail dod in dods)
             {
-                <tr>
+
+                <tr id="@dod.Id">
                     <td>@dod.ProductId</td>
                     <td>@dod.Product.Description</td>
                     <td>@dod.QtyPurchased</td>
-                    <td><input type="number" value="@dod.QtyPurchased" /></td>
-                    <td><input type="date" /></td>
-                    <td><input type="text" /></td>
-                    <td><input type="text" /></td>
+                    @if (dod.Status == "Approved")
+                    {
+                        <td><input id="qtyReceived" type="number" value="@dod.QtyPurchased" /></td>
+                        <td><input type="date" /></td>
+                        <td><input type="text" /></td>
+                        <td><input type="text" /></td>
+                    }
+                    else
+                    {
+                        <td class="qtyReceived">@dod.QtyReceived</td>
+                        <td>@dod.ReceivedDate</td>
+                        <td>@dod.SupplierDeliveryNo</td>
+                        <td>@dod.Remark</td>
+                    }
                 </tr>
             }
         </tbody>
@@ -45,6 +52,8 @@
 </div>
 
 <div>
-    <button class="btn btn-success">Save</button>
+    <button id="save" class="btn btn-success">Save</button>
 </div>
+
+<script src="~/js/DeliveryOrder"></script>
 

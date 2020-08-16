@@ -2,76 +2,76 @@
     ViewData["Title"] = "Requisition Form";
     Requisition requisition = (Requisition)ViewData["requisition"];
 }
-<h1>Requisition Form</h1>
+<h1>@ViewData["Title"]</h1>
 
-<table>
-    <tr>
-        <td>Form ID</td>
-        <td>@requisition.Id</td>
-    </tr>
-    <tr>
-        <td>Department Name</td>
-        <td>@requisition.Department.Name</td>
-    </tr>
-    <tr>
-        <td>Employee Name</td>
-        @*
-            !!! TK PLS SETTLE !!!
-
-            NEED BACKEND UPDATE
-            <td>@requisition.ReqByEmp.Name</td>*@
-    </tr>
-    <tr>
-        <td>Requested Date</td>
-        <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(requisition.CreatedDate)</td>
-    </tr>
-    <tr>
-        <td>Collection Point</td>
-        @*
-            NEED BACKEND UPDATE
-            <td>@requisition.CollectionPoint.Location</td>*@
-    </tr>
-    <tr>
-        <td>Dept Rep Name</td>
-        @*
-            NEED BACKEND UPDATE
-            <td>@requisition.ApprovedBy.Name</td>*@
-    </tr>
-    <tr>
-        <td>Status</td>
-        <td>@requisition.Status</td>
-    </tr>
-    @if (@requisition.Status == "Confirmed" || @requisition.Status == "Completed")
-    {
+<div>
+    <table id="form">
         <tr>
-            <td>Disbursement Date</td>
-            <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(requisition.CollectionDate)</td>
+            <td>Form ID</td>
+            <td><span id="requisitionId">@requisition.Id</span></td>
         </tr>
-    }
-</table>
-<table>
-    <thead>
         <tr>
-            <th>Description</th>
-            <th>Qty</th>
+            <td>Department Name</td>
+            <td>@requisition.Department.Name</td>
         </tr>
-    </thead>
-    <tbody>
-        @foreach (var r in requisition.RequisitionDetails)
+        <tr>
+            <td>Employee Name</td>
+            <td>@requisition.ReqByEmp.Name</td>
+        </tr>
+        <tr>
+            <td>Requested Date</td>
+            <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(requisition.CreatedDate)</td>
+        </tr>
+        <tr>
+            <td>Collection Point</td>
+            <td>@requisition.CollectionPoint.Location</td>
+        </tr>
+        <tr>
+            <td>Dept Rep Name</td>
+            <td>@requisition.ApprovedBy.Name</td>
+        </tr>
+        <tr>
+            <td>Status</td>
+            <td id="status">@requisition.Status</td>
+        </tr>
+        @if (@requisition.Status == "Confirmed" || @requisition.Status == "Completed")
         {
             <tr>
-                <td>@r.Product.Description</td>
-                <td>@r.QtyNeeded</td>
+                <td>Disbursement Date</td>
+                <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(requisition.CollectionDate)</td>
             </tr>
         }
-    </tbody>
-</table>
+    </table>
+</div>
+
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Qty</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var r in requisition.RequisitionDetails)
+            {
+                <tr>
+                    <td>@r.Product.Description</td>
+                    <td>@r.QtyNeeded</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
 
 @if (requisition.Status == "Approved")
 {
-    <div>
+    <div id="confirmDate">
         <span>Disbursement Date</span>
         <input type="date" />
-        <button class="btn btn-success">Confirm</button>
+        <button id="confirm" class="btn btn-success">Confirm</button>
     </div>
 }
+
+<script src="~/js/Requisition.js"></script>

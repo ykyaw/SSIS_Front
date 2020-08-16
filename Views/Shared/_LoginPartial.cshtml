@@ -1,0 +1,18 @@
+﻿<ul class="nav navbar-nav navbar-right">
+    @if (ViewData["Name"] == null)
+    {
+        <li>
+            <a class="nav-link text-dark" asp-controller="Login" asp-action="Index">Login</a>
+        </li>
+    }
+    else
+    {
+        <li>
+            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Welcome @ViewData["Name"]!</a>
+        </li>
+        <li>
+            @*TODO*@
+            <a class="nav-link text-dark" asp-controller="Login" asp-action="Logout">Logout</a>
+        </li>
+    }
+</ul>
