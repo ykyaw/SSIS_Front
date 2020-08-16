@@ -33,46 +33,40 @@
         @foreach (KeyValuePair<PurchaseRequestDetail, List<TenderQuotation>> kvp in TQbyPRD)
         {
             <tr>
-                <input type="hidden" class="detailId" value="@kvp.Key.Id"/>
+                <input type="hidden" class="detailId" value="@kvp.Key.Id" />
                 <td>@kvp.Key.ProductId</td>
                 <td>@kvp.Key.Product.Description</td>
                 <td>@kvp.Key.CurrentStock</td>
-                <td>
-                    @if (role == "Clerk")
-                    {
-                        <input type="number" class="number" value="@kvp.Key.ReorderQty" />
-                    }
-                    else
-                    {
-                        @kvp.Key.ReorderQty
-                    }
-                </td>
-                <td>
-                    @if (role == "Clerk")
-                    {
 
+                @if (role == "Clerk")
+                {
+                    <td>
+                        <input type="number" class="number" value="@kvp.Key.ReorderQty" />
+                    </td>
+                    <td>
                         <select class="number">
                             @foreach (var v in kvp.Value)
                             {
                                 <option value="@v.Unitprice">@v.Supplier.Name</option>
                             }
                         </select>
-                    }
-                    else
-                    {
-                        @kvp.Key.Supplier.Name
-                    }
-                </td>
-                <td>
-                    @if (role == "Clerk")
-                    {
+                    </td>
+                    <td>
                         <input type="text" class="venderQuote" />
-                    }
-                    else
-                    {
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @kvp.Key.ReorderQty
+                    </td>
+                    <td>
+                        @kvp.Key.Supplier.Name
+                    </td>
+                    <td>
                         @kvp.Key.VenderQuote
-                    }
-                </td>
+                    </td>
+                }
                 <td>@((kvp.Key.ReorderQty * kvp.Value[0].Unitprice).ToString("C"))</td>
             </tr>
         }
@@ -96,5 +90,5 @@ else
     </div>
 }
 
-<script src="~/js/PurchaseRequestDetail.js"></script>
+<script src="~/js/PurchaseRequest.js"></script>
 

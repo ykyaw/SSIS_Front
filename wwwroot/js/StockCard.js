@@ -8,27 +8,35 @@
         let Qty = +$("#qty").val();
         Balance += Qty;
         let updatedByEmp = $("#updatedByEmp").val();
-        $('<tr><td>' + dateString +
-            '</td><td>' + Description +
-            '</td><td>' + Qty +
-            '</td><td>' + Balance +
-            '</td><td>' + updatedByEmp +
-            '</td></tr>').hide().appendTo('#transactionList').fadeIn();
+        if (!$.isNumeric($("#qty").val())) {
+            alert("Quantity must be a number");
+            return;
+        } else if (Balance < 0) {
+            alert("There is not enough balance.");
+            return;
+        } else {
+            $('<tr><td>' + dateString +
+                '</td><td>' + Description +
+                '</td><td>' + Qty +
+                '</td><td>' + Balance +
+                '</td><td>' + updatedByEmp +
+                '</td></tr>').hide().appendTo('#transactionList').fadeIn();
 
-        let transaction = {
-            ProductId,
-            Date: date.getTime(),
-            Description,
-            Qty,
-            Balance
+            let transaction = {
+                ProductId,
+                Date: date.getTime(),
+                Description,
+                Qty,
+                Balance
+            }
+            Post(`/StoreClerk/UpdateStockCard`, transaction)
+                .then(function (response) {
+                    console.log(response);
+                    //alert("success: " + response);
+                })
+                .catch(function (err) {
+                    //alert("error: " + JSON.parse(err));
+                })
         }
-        Post(`/StoreClerk/UpdateStockCard`, transaction)
-            .then(function (response) {
-                console.log(response);
-                //alert("success: " + response);
-            })
-            .catch(function (err) {
-                //alert("error: " + JSON.parse(err));
-            })
     });
 });

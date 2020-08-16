@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "Disbursement List";
+    List<RequisitionDetail> disbursementList = (List<RequisitionDetail>)ViewData["disbursementList"];
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <span>Disbursement Date: </span>
+    <span>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(disbursementList[0].Requisition.CollectionDate)</span>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Item Description</th>
+            <th>Qty Requisited</th>
+            <th>Qty Disbursed</th>
+            <th>Remarks</th>
+            <th>Qty Received</th>
+            <th>Dept Remarks</th>
+            <th>Clerk Remarks</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var d in disbursementList)
+        {
+            <tr>
+                <td>@d.Product.Description</td>
+                <td>@d.QtyNeeded</td>
+                <td>@d.QtyDisbursed</td>
+                <td>@d.DisburseRemark</td>
+                <td>@d.QtyReceived</td>
+                <td>@d.RepRemark</td>
+                <td><input type="text" /></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <button id="acknowledge" type="button" class="btn btn-primary">Acknowledge Disbursement Received by Dept Rep</button>
+</div>
+
+<table>
+    <tr>
+        <td>Received by (Rep)</td>
+        <td>@disbursementList[0].Requisition.ReceivedByRep.Name</td>
+        <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(disbursementList[0].Requisition.ReceivedDate)</td>
+    </tr>
+    <tr>
+        <td>Acknowledged by (Clerk)</td>
+        <td id="clerk"></td>
+        <td id="date"></td>
+    </tr>
+</table>
