@@ -29,15 +29,22 @@ namespace SSIS_FRONT.Controllers
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/catalogue";
             Result<List<Product>> result = HttpUtils.Get(url, new List<Product>(), Request, Response);
+  
             ViewData["products"] = result.data;
+            
+
+            string url2 = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/createRF";
+            Result<Requisition> result2 = HttpUtils.Post(url2, new Requisition(),new Requisition(), Request, Response);
+
+            ViewData["requisitions"] = result2.data;
             return View();
         }
 
         [HttpPut]
-        public bool RequisitionDetail([FromBody] RequisitionDetail requisitionDetail)
+        public bool RequisitionDetail([FromBody] List<RequisitionDetail> requisitionDetail)
         {
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/updateRF";
-            Result<Object> result = HttpUtils.Put(url, requisitionDetail, Request, Response);
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/updateRF"; //return null for now from backend function 
+            Result<Object> result = HttpUtils.Post(url, requisitionDetail, Request, Response);
             return (bool)result.data;
         }
 
@@ -57,15 +64,6 @@ namespace SSIS_FRONT.Controllers
             Result<Requisition> result = HttpUtils.Get(url, new Requisition(), Request, Response);
             ViewData["requisition"] = result.data;
             return View();
-        }
-
-        [HttpPut]
-        [Route("Department/viewRequisitionDeptHead/{RequisitionId}")]
-        public bool apprejReq(int RequisitionId, [FromBody] Requisition requisition)
-        {
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/depthead/arr";
-            Result<Object> result = HttpUtils.Put(url, requisition, Request, Response);
-            return (bool)result.data;
         }
 
         
@@ -104,27 +102,35 @@ namespace SSIS_FRONT.Controllers
         public IActionResult updateCollectionPoint()
         {
 
-            string url1 = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/dept";
-            Result<Department> result1 = HttpUtils.Get(url1, new Department(), Request, Response);
-            ViewData["departments"] = result1.data;
+            //string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/rfl";
+            //Result<List<CollectionPoint>> result = HttpUtils.Get(url, new List<CollectionPoint>(), Request, Response);
+            //ViewData["requisitions"] = result.data;
+            //return View();
 
-            string url2 = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/clist";
-            Result<List<CollectionPoint>> result2 = HttpUtils.Get(url2, new List<CollectionPoint>(), Request, Response);
-            ViewData["collectionpoints"] = result2.data;
+            List<CollectionPoint> collectionPoints = new List<CollectionPoint>();
+            ViewData["collectionPoint"] = collectionPoints;
+
+            CollectionPoint c1 = new CollectionPoint();
+            c1.Id = 1;
+            c1.Location = "Management School";
+            c1.CollectionTime = "11:00am";
+            collectionPoints.Add(c1);
+
+            CollectionPoint c2 = new CollectionPoint();
+            c2.Id = 1;
+            c2.Location = "Science School";
+            c2.CollectionTime = "10:00am";
+            collectionPoints.Add(c2);
+
+            CollectionPoint c3 = new CollectionPoint();
+            c3.Id = 1;
+            c3.Location = "History School";
+            c3.CollectionTime = "9:00am";
+            collectionPoints.Add(c3);
 
             return View();
-
         }
-
-        [HttpPut]
-        [Route("Department/updateCollectionPoint")]
-        public bool savecp([FromBody] CollectionPoint collectionPoint)
-        {
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/ucp";
-            Result<Object> result = HttpUtils.Put(url, collectionPoint, Request, Response);
-            return (bool)result.data;
-        }
-
+        
 
         public IActionResult viewDisbBefAck()
         {
