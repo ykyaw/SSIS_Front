@@ -2,49 +2,48 @@
     ViewData["Title"] = "Stationery Catalogue";
     List<Product> products = (List<Product>)ViewData["products"];
     List<string> categories = (List<string>)ViewData["categories"];
-    }
-    <h1>@ViewData["Title"]</h1>
+}
+<h1>@ViewData["Title"]</h1>
 
-    <div class="input-group">
-        <span class="input-group-addon">Search</span>
-        <input type="text" id="search" class="form-control" placeholder="Type here" />
-        <span class="input-group-addon">Filter by</span>
-        <select id="select" class="form-control">
-            <option value="">Select Category</option>
-            @foreach (var c in categories)
-            {
-                <option>@c</option>
-            }
-        </select>
-    </div>
+<div class="input-group">
+    <span class="input-group-addon">Search</span>
+    <input type="text" id="search" class="form-control" placeholder="Type here" />
+    <span class="input-group-addon">Filter by</span>
+    <select id="select" class="form-control">
+        <option value="">Select Category</option>
+        @foreach (var c in categories)
+        {
+            <option>@c</option>
+        }
+    </select>
+</div>
 
-    <table id="form" class="table table-striped">
-        <thead>
+<table id="form" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Item Code</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Reorder Level</th>
+            <th>Reorder Quantity</th>
+            <th>Unit of Measure</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="search">
+        @foreach (var p in products)
+        {
             <tr>
-                <th>Item Code</th>
-                <th>Category</th>
-                <th>Description</th>
-                <th>Reorder Level</th>
-                <th>Reorder Quantity</th>
-                <th>Unit of Measure</th>
-                <th></th>
+                <td>@p.Id</td>
+                <td>@p.Category.Name</td>
+                <td>@p.Description</td>
+                <td>@p.ReorderLvl</td>
+                <td>@p.ReorderQty</td>
+                <td>@p.Uom</td>
+                <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="StockCard" asp-route-id="@p.Id">Stock Card</a></td>
             </tr>
-        </thead>
-        <tbody class="search">
-            @foreach (var p in products)
-            {
-                <tr>
-                    <td>@p.Id</td>
-                    <td>@p.Category.Name</td>
-                    <td>@p.Description</td>
-                    <td>@p.ReorderLvl</td>
-                    <td>@p.ReorderQty</td>
-                    <td>@p.Uom</td>
-                    <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="StockCard" asp-route-id="@p.Id">Stock Card</a></td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>
 
-    <script src="~/js/Search.js"></script>
-
+<script src="~/js/Search.js"></script>

@@ -69,9 +69,18 @@ namespace SSIS_FRONT.Controllers
             Result<Object> result = HttpUtils.Put(url, requisition, Request, Response);
             return (bool)result.data;
         }
-        public List<RequisitionDetail> Disbursement()
+        public IActionResult GenerateDisbursement()
         {
-            return null;
+            string role = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            string name = (string)HttpContext.Session.GetString("Name");
+            ViewData["Role"] = role;
+            ViewData["Name"] = name;
+
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/retrievealldept";
+            Result<List<Department>> result = HttpUtils.Get(url, new List<Department>(), Request, Response);
+            ViewData["departments"] = result.data;
+
+            return View();
         }
         public IActionResult Catalogue()
         {
@@ -125,6 +134,13 @@ namespace SSIS_FRONT.Controllers
             ViewData["products"] = result.data;
 
             return View();
+        }
+        [HttpPost]
+        public List<PurchaseRequestDetail> CreatePurchaseRequest([FromBody] List<string> productIds)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/createpr";
+            Result<List<PurchaseRequestDetail>> result = HttpUtils.Post(url, productIds, new List<PurchaseRequestDetail>(), Request, Response);
+            return result.data;
         }
         public IActionResult PurchaseRequest()
         {
