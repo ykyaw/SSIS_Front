@@ -33,33 +33,79 @@ namespace SSIS_FRONT.Controllers
          */
         public IActionResult Requisition()
         {
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/rf";
-            Result<List<Requisition>> result = HttpUtils.Get(url, new List<Requisition>(), Request, Response);
-            ViewData["requisitions"] = result.data;
+            string role = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            string name = (string)HttpContext.Session.GetString("Name");
+            ViewData["Role"] = role;
+            ViewData["Name"] = name;
+
+            string url1 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/rf";
+            Result<List<Requisition>> result1 = HttpUtils.Get(url1, new List<Requisition>(), Request, Response);
+            ViewData["requisitions"] = result1.data;
+
+            string url2 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/retrievealldept";
+            Result<List<Department>> result2 = HttpUtils.Get(url2, new List<Department>(), Request, Response);
+            ViewData["departments"] = result2.data;
+
             return View();
         }
         [Route("StoreClerk/Requisition/{RequisitionId}")]
         public IActionResult RequisitionDetail(int RequisitionId)
         {
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/rfld/" + RequisitionId;
+            string role = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            string name = (string)HttpContext.Session.GetString("Name");
+            ViewData["Role"] = role;
+            ViewData["Name"] = name;
+
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/rfld2/" + RequisitionId;
             Result<Requisition> result = HttpUtils.Get(url, new Requisition(), Request, Response);
             ViewData["requisition"] = result.data;
+
             return View();
         }
-        public List<RequisitionDetail> Disbursement()
+        [HttpPut]
+        public bool UpdateRequisition([FromBody] Requisition requisition)
         {
-            return null;
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/rfld";
+            Result<Object> result = HttpUtils.Put(url, requisition, Request, Response);
+            return (bool)result.data;
+        }
+        public IActionResult GenerateDisbursement()
+        {
+            string role = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            string name = (string)HttpContext.Session.GetString("Name");
+            ViewData["Role"] = role;
+            ViewData["Name"] = name;
+
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/retrievealldept";
+            Result<List<Department>> result = HttpUtils.Get(url, new List<Department>(), Request, Response);
+            ViewData["departments"] = result.data;
+
+            return View();
         }
         public IActionResult Catalogue()
         {
+            string role = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            string name = (string)HttpContext.Session.GetString("Name");
+            ViewData["Role"] = role;
+            ViewData["Name"] = name;
+
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/catalogue";
             Result<List<Product>> result = HttpUtils.Get(url, new List<Product>(), Request, Response);
             ViewData["products"] = result.data;
+
+            List<string> categories = result.data.Select(x => x.Category.Name).Distinct().ToList();
+            ViewData["categories"] = categories;
+
             return View();
         }
         [Route("StoreClerk/StockCard/{ProductId}")]
         public IActionResult StockCard(string ProductId)
         {
+            string role = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            string name = (string)HttpContext.Session.GetString("Name");
+            ViewData["Role"] = role;
+            ViewData["Name"] = name;
+
             string url1 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/sc/" + ProductId;
             Result<List<Transaction>> result1 = HttpUtils.Get(url1, new List<Transaction>(), Request, Response);
             ViewData["transactions"] = result1.data;
@@ -67,17 +113,42 @@ namespace SSIS_FRONT.Controllers
             string url2 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/supplier/" + ProductId;
             Result<List<TenderQuotation>> result2 = HttpUtils.Get(url2, new List<TenderQuotation>(), Request, Response);
             ViewData["tenderquotations"] = result2.data;
+
             return View();
+        }
+        public bool UpdateStockCard([FromBody] Transaction transaction)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/updatesc";
+            Result<Object> result = HttpUtils.Post(url, transaction, Request, Response);
+            return (bool)result.data;
         }
         public IActionResult GeneratePurchaseRequest()
         {
+            string role = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            string name = (string)HttpContext.Session.GetString("Name");
+            ViewData["Role"] = role;
+            ViewData["Name"] = name;
+
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/catalogue";
             Result<List<Product>> result = HttpUtils.Get(url, new List<Product>(), Request, Response);
             ViewData["products"] = result.data;
+
             return View();
+        }
+        [HttpPost]
+        public List<PurchaseRequestDetail> CreatePurchaseRequest([FromBody] List<string> productIds)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/createpr";
+            Result<List<PurchaseRequestDetail>> result = HttpUtils.Post(url, productIds, new List<PurchaseRequestDetail>(), Request, Response);
+            return result.data;
         }
         public IActionResult PurchaseRequest()
         {
+            string role = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            string name = (string)HttpContext.Session.GetString("Name");
+            ViewData["Role"] = role;
+            ViewData["Name"] = name;
+
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/pr";
             Result<List<PurchaseRequestDetail>> result = HttpUtils.Get(url, new List<PurchaseRequestDetail>(), Request, Response);
             Dictionary<long, List<PurchaseRequestDetail>> prDetailsByPr = new Dictionary<long, List<PurchaseRequestDetail>>();
@@ -94,30 +165,30 @@ namespace SSIS_FRONT.Controllers
                 }
             }
             ViewData["prDetailsByPr"] = prDetailsByPr;
+
             return View();
         }
-
         [HttpPut]
-        [Route("Store/PurchaseRequestDetail")]
+        [Route("StoreClerk/PurchaseRequest")]
         public bool UpdatePurchaseRequestDetail([FromBody] List<PurchaseRequestDetail> details)
         {
-
-            string url = cfg.GetValue<string>("Hosts:Boot") + "﻿";//TODO
-            Result<Object> result = HttpUtils.Put(url,details, Request, Response);
+            string url = cfg.GetValue<string>("Hosts:Boot") + "﻿/storeclerk/updatepr";
+            Result<Object> result = HttpUtils.Put(url, details, Request, Response);
             return (Boolean)result.data;
         }
-
         [Route("StoreClerk/PurchaseRequest/{PurchaseRequestId}")]
         public IActionResult PurchaseRequestDetail(long PurchaseRequestId)
         {
-            string role= CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
-            string name= (string)HttpContext.Session.GetString("Name");
+            string role = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            string name = (string)HttpContext.Session.GetString("Name");
+            ViewData["Role"] = role;
+            ViewData["Name"] = name;
+
             string url1 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/prdetails/" + PurchaseRequestId;
             Result<List<PurchaseRequestDetail>> result1 = HttpUtils.Get(url1, new List<PurchaseRequestDetail>(), Request, Response);
-
-
-
             Dictionary<PurchaseRequestDetail, List<TenderQuotation>> TQbyPRD = new Dictionary<PurchaseRequestDetail, List<TenderQuotation>>();
+            ViewData["Detail"] = result1.data;
+
             foreach (PurchaseRequestDetail detail in result1.data)
             {
                 string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/supplier/" + detail.ProductId;
@@ -125,40 +196,61 @@ namespace SSIS_FRONT.Controllers
                 TQbyPRD.Add(detail, result.data);
             }
             ViewData["TQbyPRD"] = TQbyPRD;
-            ViewData["Role"] = role;
-            ViewData["Name"] = name;
-            ViewData["Detail"] = result1.data;
 
             return View();
         }
         public IActionResult PurchaseOrder()
         {
+            string role = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            string name = (string)HttpContext.Session.GetString("Name");
+            ViewData["Role"] = role;
+            ViewData["Name"] = name;
+
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/po";
             Result<List<PurchaseOrder>> result = HttpUtils.Get(url, new List<PurchaseOrder>(), Request, Response);
             ViewData["purchaseOrders"] = result.data;
+
             return View();
         }
         [Route("StoreClerk/PurchaseOrder/{PurchaseOrderId}")]
         public IActionResult PurchaseOrderDetail(int PurchaseOrderId)
         {
+            string role = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            string name = (string)HttpContext.Session.GetString("Name");
+            ViewData["Role"] = role;
+            ViewData["Name"] = name;
+
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/pod/" + PurchaseOrderId;
             Result<List<PurchaseOrderDetail>> result = HttpUtils.Get(url, new List<PurchaseOrderDetail>(), Request, Response);
             ViewData["purchaseOrderDetails"] = result.data;
+
             return View();
         }
         public IActionResult DeliveryOrder()
         {
+            string role = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            string name = (string)HttpContext.Session.GetString("Name");
+            ViewData["Role"] = role;
+            ViewData["Name"] = name;
+
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/po";
             Result<List<PurchaseOrder>> result = HttpUtils.Get(url, new List<PurchaseOrder>(), Request, Response);
             ViewData["deliveryOrders"] = result.data;
+
             return View();
         }
         [Route("StoreClerk/DeliveryOrder/{DeliveryOrderId}")]
         public IActionResult DeliveryOrderDetail(int DeliveryOrderId)
         {
+            string role = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            string name = (string)HttpContext.Session.GetString("Name");
+            ViewData["Role"] = role;
+            ViewData["Name"] = name;
+
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/pod/" + DeliveryOrderId;
             Result<List<PurchaseOrderDetail>> result = HttpUtils.Get(url, new List<PurchaseOrderDetail>(), Request, Response);
             ViewData["deliveryOrderDetails"] = result.data;
+
             return View();
         }
 
