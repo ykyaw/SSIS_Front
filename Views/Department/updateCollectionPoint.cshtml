@@ -50,36 +50,30 @@
 <div>
     <div class="form-group">
         <label for="chooseItem" class="sr-only">Select Collection Point</label>
-        <table class="noborder">
-            @foreach (var collectionPoint in collectionPoints)
-            {
-                <tr class="noborder">
-                    <td class="noborder">
-                        <form id="select">
-                            <input type="radio" name="cp" value="@(collectionPoint.Location+"/"+collectionPoint.CollectionTime+"/"+collectionPoint.Id)">
-                            <label for="colpoint">@collectionPoint.Location @collectionPoint.CollectionTime</label>
-                        </form>
-                        
-                    </td>
-                </tr>
-                
 
-            }
-        </table>
-        
-        @*<select class="form-control" id="select">
-            <option>
-                Select Collection Point
-            </option>
+
+        <form id="select">
             @foreach (var collectionPoint in collectionPoints)
             {
-                <option value="@(collectionPoint.Location+"/"+collectionPoint.CollectionTime+"/"+collectionPoint.Id)">
-                    @collectionPoint.Location @collectionPoint.CollectionTime
-                </option>
+                <input type="radio" name="cp" value="@(collectionPoint.Location+"/"+collectionPoint.CollectionTime+"/"+collectionPoint.Id)">
+                <label for="colpoint">@collectionPoint.Location @collectionPoint.CollectionTime</label>
+                <br />
             }
-        </select>*@
+        </form>
+
+        @*<select class="form-control" id="select">
+                <option>
+                    Select Collection Point
+                </option>
+                @foreach (var collectionPoint in collectionPoints)
+                {
+                    <option value="@(collectionPoint.Location+"/"+collectionPoint.CollectionTime+"/"+collectionPoint.Id)">
+                        @collectionPoint.Location @collectionPoint.CollectionTime
+                    </option>
+                }
+            </select>*@
     </div>
-    
+
 </div>
 <button type="button" class="btn btn-primary mb-2" id="savecp">Change</button>
 

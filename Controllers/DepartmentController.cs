@@ -157,8 +157,7 @@ namespace SSIS_FRONT.Controllers
 
 
         [HttpPut]
-        [Route("Department/updateCollectionPoint")]
-        public bool savecp([FromBody] CollectionPoint collectionPoint)
+        public bool Savecp([FromBody] CollectionPoint collectionPoint)
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/ucp";
             Result<Object> result = HttpUtils.Put(url, collectionPoint, Request, Response);
