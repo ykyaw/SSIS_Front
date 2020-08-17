@@ -1,7 +1,28 @@
-﻿@using SSIS_FRONT.Models; 
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Retrieve Disbursement List";
+    List<Department> departments = (List<Department>)ViewData["departments"];
+    string errMsg = (string)ViewData["errMsg"];
 }
+
 <h1>@ViewData["Title"]</h1>
+
+<span style="color:red;">@errMsg</span>
+<div>
+    <div>
+        <span>Date of Disbursement: </span>
+        <input id="date" type="date" />
+    </div>
+    <div>
+        <span>Department: </span>
+        <select id="departmentid">
+            @foreach (var d in departments)
+            {
+                <option value="@d.Id">@d.Name</option>
+            }
+        </select>
+    </div>
+    <div></div>
+    <button id="submit" class="btn btn-success">Submit</button>
+</div>
+
+<script src="~/js/Disbursement.js"></script>

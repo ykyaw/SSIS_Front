@@ -18,7 +18,7 @@
                 <th>Qty Ordered</th>
                 <th>Qty Received</th>
                 <th>Date</th>
-                <th>Vender DO#</th>
+                <th>Vendor DO#</th>
                 <th>Remarks</th>
             </tr>
         </thead>
@@ -27,20 +27,21 @@
             @foreach (PurchaseOrderDetail dod in dods)
             {
 
-                <tr id="@dod.Id">
+                <tr>
+                    <input class="detailId" type="hidden" value="@dod.Id" />
                     <td>@dod.ProductId</td>
                     <td>@dod.Product.Description</td>
                     <td>@dod.QtyPurchased</td>
                     @if (dod.Status == "Approved")
                     {
-                        <td><input id="qtyReceived" type="number" value="@dod.QtyPurchased" /></td>
-                        <td><input type="date" /></td>
-                        <td><input type="text" /></td>
-                        <td><input type="text" /></td>
+                        <td><input class="qtyReceived" type="number" value="@dod.QtyPurchased" /></td>
+                        <td><input class="date" type="date" /></td>
+                        <td><input class="vendordo" type="text" /></td>
+                        <td><input class="remarks" type="text" /></td>
                     }
                     else
                     {
-                        <td class="qtyReceived">@dod.QtyReceived</td>
+                        <td>@dod.QtyReceived</td>
                         <td>@dod.ReceivedDate</td>
                         <td>@dod.SupplierDeliveryNo</td>
                         <td>@dod.Remark</td>
@@ -52,7 +53,7 @@
 </div>
 
 <div>
-    <button id="save" class="btn btn-success">Save</button>
+    <button id="save" class="btn btn-success" disabled>Save</button>
 </div>
 
 <script src="~/js/DeliveryOrder"></script>

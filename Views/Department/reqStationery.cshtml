@@ -3,6 +3,7 @@
 
 @{
     List<Product> products = (List<Product>)ViewData["products"];
+    Requisition requisition = (Requisition)ViewData["requisitions"];
 }
 <h4 style="text-align:center;">Requisition Form</h4>
 <br />
@@ -12,7 +13,7 @@
     <table class="noborder">
         <tr class="noborder">
             <td class="noborder">Form ID:</td>
-            <td class="noborder"></td>
+            <td class="noborder" id="formId">@requisition.Id</td>
         </tr>
 
         <tr class="noborder">
@@ -55,7 +56,8 @@
                 </option>
                 @foreach (var product in products)
                 {
-                    <option>
+                    
+                    <option value="@(product.Id+"/"+product.Description)">
                         @product.Description
                     </option>
                 }
@@ -79,7 +81,7 @@
             <input type="text" readonly class="form-control-plaintext" id="qty" value="  ">
 
         </div>
-        <button type="button" class="btn btn-outline-info mb-2" onclick="myFunction()">Add</button>
+        <button type="button" id="add" class="btn btn-outline-info mb-2" >Add</button>
     </div>
 
 

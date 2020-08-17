@@ -64,7 +64,7 @@
     <form id="newEntry">
         <span>Add Entry:</span>
         <input id="productId" type="hidden" value="@transactions[0].ProductId"/>
-        <input id="description" type="text" />
+        <input id="description" type="text" placeholder="Description" />
         <input id="qty" type="number" value="0" />
         <input id="balance" type="hidden" value="@transactions.Last().Balance"/>
         <input id="updatedByEmp" type="hidden" value="@ViewData["Name"]" />

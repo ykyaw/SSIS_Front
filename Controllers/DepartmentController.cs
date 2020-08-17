@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using SSIS_FRONT.Common;
 using SSIS_FRONT.Components;
 using SSIS_FRONT.Models;
 using SSIS_FRONT.Utils;
@@ -27,51 +29,61 @@ namespace SSIS_FRONT.Controllers
 
         public IActionResult reqStationery()
         {
+            ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+
             string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/catalogue";
             Result<List<Product>> result = HttpUtils.Get(url, new List<Product>(), Request, Response);
+
             ViewData["products"] = result.data;
+
+
+            string url2 = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/createRF";
+            Result<Requisition> result2 = HttpUtils.Post(url2, new Requisition(), new Requisition(), Request, Response);
+
+            ViewData["requisitions"] = result2.data;
             return View();
         }
 
         [HttpPut]
-        public bool RequisitionDetail([FromBody] RequisitionDetail requisitionDetail)
+        public bool RequisitionDetail([FromBody] List<RequisitionDetail> requisitionDetail)
         {
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/updateRF";
-            Result<Object> result = HttpUtils.Put(url, requisitionDetail, Request, Response);
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/updateRF"; //return null for now from backend function 
+            Result<Object> result = HttpUtils.Post(url, requisitionDetail, Request, Response);
             return (bool)result.data;
         }
 
         public IActionResult viewRequisitionDeptHead()
         {
+            ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+
             string url = cfg.GetValue<string>("Hosts:Boot") + "/depthead/rfl";
             Result<List<Requisition>> result = HttpUtils.Get(url, new List<Requisition>(), Request, Response);
             ViewData["requisitions"] = result.data;
 
-            return View();            
+            return View();
         }
 
         [Route("Department/viewRequisitionDeptHead/{RequisitionId}")]
         public IActionResult viewRequisitionDetailDeptHead(int RequisitionId)
         {
+            ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+
             string url = cfg.GetValue<string>("Hosts:Boot") + "/depthead/rfld/" + RequisitionId;
             Result<Requisition> result = HttpUtils.Get(url, new Requisition(), Request, Response);
             ViewData["requisition"] = result.data;
             return View();
         }
 
-        [HttpPut]
-        [Route("Department/viewRequisitionDeptHead/{RequisitionId}")]
-        public bool apprejReq(int RequisitionId, [FromBody] Requisition requisition)
-        {
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/depthead/arr";
-            Result<Object> result = HttpUtils.Put(url, requisition, Request, Response);
-            return (bool)result.data;
-        }
 
-        
 
         public IActionResult viewRequisitionEmp()
         {
+            ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+
             string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/rfl";
             Result<List<Requisition>> result = HttpUtils.Get(url, new List<Requisition>(), Request, Response);
             ViewData["requisitions"] = result.data;
@@ -80,45 +92,72 @@ namespace SSIS_FRONT.Controllers
             return View();
         }
 
-        public IActionResult viewRfApprovedDetailDeptRep()
+        [Route("Department/viewRequisitionEmp/{RequisitionId}")]
+        public IActionResult viewRequisitionDetailEmp(int RequisitionId)
         {
-            List<RequisitionDetail> requisitionDetail = new List<RequisitionDetail>();
-            ViewData["requisitionDetail"] = requisitionDetail;
+            ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/rfld/" + RequisitionId;
+            Result<Requisition> result = HttpUtils.Get(url, new Requisition(), Request, Response);
+            ViewData["requisition"] = result.data;
             return View();
         }
 
-        public IActionResult viewRfCompletedDetailDeptRep()
-        {
-            List<RequisitionDetail> requisitionDetail = new List<RequisitionDetail>();
-            ViewData["requisitionDetail"] = requisitionDetail;
-            return View();
-        }
 
-        public IActionResult viewRfConfirmedDetailDeptRep()
-        {
-            List<RequisitionDetail> requisitionDetail = new List<RequisitionDetail>();
-            ViewData["requisitionDetail"] = requisitionDetail;
-            return View();
-        }
+
+        //public IActionResult viewRfApprovedDetailDeptRep()
+        //{
+        //    ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+        //    ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+
+        //    List<RequisitionDetail> requisitionDetail = new List<RequisitionDetail>();
+        //    ViewData["requisitionDetail"] = requisitionDetail;
+        //    return View();
+        //}
+
+        //public IActionResult viewRfCompletedDetailDeptRep()
+        //{
+        //    ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+        //    ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+
+        //    List<RequisitionDetail> requisitionDetail = new List<RequisitionDetail>();
+        //    ViewData["requisitionDetail"] = requisitionDetail;
+        //    return View();
+        //}
+
+        //public IActionResult viewRfConfirmedDetailDeptRep()
+        //{
+        //    ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+        //    ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+
+        //    List<RequisitionDetail> requisitionDetail = new List<RequisitionDetail>();
+        //    ViewData["requisitionDetail"] = requisitionDetail;
+        //    return View();
+        //}
 
         public IActionResult updateCollectionPoint()
         {
 
+            ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+
+
             string url1 = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/dept";
             Result<Department> result1 = HttpUtils.Get(url1, new Department(), Request, Response);
             ViewData["departments"] = result1.data;
+
 
             string url2 = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/clist";
             Result<List<CollectionPoint>> result2 = HttpUtils.Get(url2, new List<CollectionPoint>(), Request, Response);
             ViewData["collectionpoints"] = result2.data;
 
             return View();
-
         }
 
+
         [HttpPut]
-        [Route("Department/updateCollectionPoint")]
-        public bool savecp([FromBody] CollectionPoint collectionPoint)
+        public bool Savecp([FromBody] CollectionPoint collectionPoint)
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/ucp";
             Result<Object> result = HttpUtils.Put(url, collectionPoint, Request, Response);
@@ -126,8 +165,12 @@ namespace SSIS_FRONT.Controllers
         }
 
 
+
         public IActionResult viewDisbBefAck()
         {
+            ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+
             List<RequisitionDetail> requisitionDetails = new List<RequisitionDetail>();
             ViewData["requisitionDetail"] = requisitionDetails;
 
@@ -143,6 +186,9 @@ namespace SSIS_FRONT.Controllers
 
         public IActionResult viewDisbAftAck()
         {
+            ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+
             List<RequisitionDetail> requisitionDetails = new List<RequisitionDetail>();
             ViewData["requisitionDetail"] = requisitionDetails;
 
@@ -162,7 +208,7 @@ namespace SSIS_FRONT.Controllers
             //rd1.Product.Description = "Clips";
             rq.ReceivedByRepId = 1;
             rq.ReceivedDate = 07082020;
-           
+
             requisitions.Add(rq);
 
 
@@ -172,6 +218,9 @@ namespace SSIS_FRONT.Controllers
 
         public IActionResult delegateAuthority()
         {
+            ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+
             List<Employee> employees = new List<Employee>();
             Employee e1 = new Employee();
             e1.Name = "Jame";
@@ -199,13 +248,17 @@ namespace SSIS_FRONT.Controllers
 
         public IActionResult viewDisbursementDeptRep()
         {
+            ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
 
             return View();
         }
 
         public IActionResult assignDeptRep()
         {
-            
+            ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+
             List<Employee> employees = new List<Employee>();
 
             Employee e1 = new Employee();
@@ -232,7 +285,6 @@ namespace SSIS_FRONT.Controllers
             return View();
         }
 
-     
+
     }
 }
-    

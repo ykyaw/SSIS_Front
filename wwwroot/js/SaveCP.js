@@ -1,36 +1,30 @@
 ﻿$(document).ready(function () {
-
-
-
     $("#savecp").on("click", function () {
-
-        var e = document.getElementById("select").value;
+        
+        let e = $('input[name=cp]:checked', '#select').val();
+        let [location, time, id] = e.split("/");
         console.log(e);
-        let [location, time, Id] = e.split("/");
-        console.log("location:", location, "time:", time);
-
-        $("#location").text(location);
-        $("#time").text(time);
-
-
-        let collectionpoint = { Id: +Id }
-        Put(`/Department/updateCollectionPoint`, collectionpoint)
+        console.log(id);
+        $("#location").hide().text(location).fadeIn();
+        $("#time").hide().text(time).fadeIn();
+        let collectionpoint = { Id: +id }
+        Put(`/Department/Savecp`, collectionpoint)
             .then(function (response) {
                 //let result = JSON.parse(response);
                 console.log(response);
                 if (response) {
-                    alert("Successfully Change.")
+                    //alert("Successfully Change.")
                 }
                 else {
-                    alert("Something wrong.")
+                    //alert("Something wrong.")
                 }
-                alert("success: " + response);
+                //alert("success: " + response);
             })
             .catch(function (err) {
                 console.log("error: " + err);
-                alert("Error.")
+                //alert("Error.")
             })
     })
 
-    
+
 })
