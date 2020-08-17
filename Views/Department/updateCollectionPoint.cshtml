@@ -5,7 +5,8 @@
     Department department = (Department)ViewData["departments"];
 }
 
-<input type="hidden" id="cpId" value="@department.CollectionPoint.Id" />
+@*<input type="hidden" id="cpId" value="@department.CollectionPoint.Id" />*@
+
 <div class="form-inline">
     <div class="form-group mb-2">
         <label for="department" class="sr-only text-right">Department</label>
@@ -46,10 +47,27 @@
 </div>
 
 
-<div class="form-inline">
-    <div class="form-group mx-sm-3 mb-2">
+<div>
+    <div class="form-group">
         <label for="chooseItem" class="sr-only">Select Collection Point</label>
-        <select class="form-control" id="select">
+        <table class="noborder">
+            @foreach (var collectionPoint in collectionPoints)
+            {
+                <tr class="noborder">
+                    <td class="noborder">
+                        <form id="select">
+                            <input type="radio" name="cp" value="@(collectionPoint.Location+"/"+collectionPoint.CollectionTime+"/"+collectionPoint.Id)">
+                            <label for="colpoint">@collectionPoint.Location @collectionPoint.CollectionTime</label>
+                        </form>
+                        
+                    </td>
+                </tr>
+                
+
+            }
+        </table>
+        
+        @*<select class="form-control" id="select">
             <option>
                 Select Collection Point
             </option>
@@ -59,12 +77,11 @@
                     @collectionPoint.Location @collectionPoint.CollectionTime
                 </option>
             }
-        </select>
+        </select>*@
     </div>
-    <button type="button" class="btn btn-primary mb-2" id="savecp">Change</button>
+    
 </div>
+<button type="button" class="btn btn-primary mb-2" id="savecp">Change</button>
 
 
-
-<script src="~/js/UpdateCollectionPoint.js"></script>
 <script src="~/js/SaveCP.js"></script>

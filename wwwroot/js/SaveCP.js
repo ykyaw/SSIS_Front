@@ -4,8 +4,9 @@
 
     $("#savecp").on("click", function () {
 
-        var e = document.getElementById("select").value;
+        let e = $('input[name=cp]:checked', '#select').val();
         console.log(e);
+        debugger
         let [location, time, Id] = e.split("/");
         console.log("location:", location, "time:", time);
 
@@ -32,5 +33,5 @@
             })
     })
 
-    
+
 })
