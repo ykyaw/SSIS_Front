@@ -16,10 +16,11 @@
 @{
     foreach (KeyValuePair<string, List<RequisitionDetail>> kvp in categoryByProduct)
     {
-        <h5>@kvp.Value[0].Product.Category.Name</h5>
+        <h5>@kvp.Value[0].Product.Description</h5>
         <table>
             <tr>
                 <th>Bin</th>
+                <th>RequisitionId</th>
                 <th>Needed</th>
                 <th>Retrieved</th>
                 <th>Department</th>
@@ -29,19 +30,20 @@
             </tr>
             @for (int i = 0; i < kvp.Value.Count(); i++)
             {
-                <tr id="@kvp.Value[i].Id">
-                    @if (i == 0)
-                    {
-                        <td rowspan="@kvp.Value.Count()"> @kvp.Value[i].Product.Category.BinNo</td>
-                        <td rowspan="@kvp.Value.Count()">@kvp.Value.Sum(item => item.QtyNeeded)</td>
-                        <td rowspan="@kvp.Value.Count()" class="retrieved"></td>
-                    }
+        <tr id="@kvp.Value[i].Id">
+            @if (i == 0)
+            {
+                <td rowspan="@kvp.Value.Count()"> @kvp.Value[i].Product.Category.BinNo</td>
+                <td rowspan="@kvp.Value.Count()"> @kvp.Value[i].RequisitionId</td>
+                <td rowspan="@kvp.Value.Count()">@kvp.Value.Sum(item => item.QtyNeeded)</td>
+                <td rowspan="@kvp.Value.Count()" class="retrieved"></td>
+            }
 
-                    <td>@kvp.Value[i].Requisition.Department.Name</td>
-                    <td>@kvp.Value[i].QtyNeeded</td>
-                    <td><input type="number" class="actualNumber" value="0"/></td>
-                    <td><input type="text" class="remarks" /></td>
-                </tr>
+            <td>@kvp.Value[i].Requisition.Department.Name</td>
+            <td>@kvp.Value[i].QtyNeeded</td>
+            <td><input type="number" class="actualNumber" value="0" /></td>
+            <td><input type="text" class="remarks" /></td>
+        </tr>
             }
 
         </table>

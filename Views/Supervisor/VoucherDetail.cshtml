@@ -44,10 +44,13 @@
     }
 </table>
 
-<div id="operation">
-    <textarea rows="3" placeholder="Reason" id="reason"></textarea>
-    <button id="reject" type="button">Reject</button>
-</div>
-<button id="approve" type="button">Approve</button>
+@if (voucher.Status != SSIS_FRONT.Common.CommonConstant.AdjVoucherStatus.APPROVED)
+{
+    <div id="operation">
+        <textarea rows="3" placeholder="Reason" id="reason"></textarea>
+        <button id="reject" type="button">Reject</button>
+    </div>
+    <button id="approve" type="button">Approve</button>
+}
 
 <script src="~/js/VoucherDetail.js"></script>

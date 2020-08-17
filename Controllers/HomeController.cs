@@ -28,12 +28,17 @@ namespace SSIS_FRONT.Controllers
             this.cfg = cfg;
         }
 
-        public IActionResult Index(bool isLogin=true)
+        public IActionResult Index(bool isLogin=true,bool isLogout=false)
         {
-            if (!isLogin)
+            if (isLogout)
+            {
+                ViewData["errmsg"] = "";
+            }
+            else if(!isLogin)
             {
                 ViewData["errmsg"] = "username or password incorrect";
             }
+
             return View();
         }
 

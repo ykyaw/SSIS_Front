@@ -49,5 +49,14 @@ namespace SSIS_FRONT.Controllers
                 return RedirectToAction("Index", "Home", new { isLogin = false });
             }
         }
+
+        public IActionResult Logout()
+        {
+            if (Request.Cookies["token"] != null)
+            {
+                Response.Cookies.Append("token", "");
+            }
+            return RedirectToAction("Index", "Home", new { isLogin = false,isLogout=true });
+        }
     }
 }
