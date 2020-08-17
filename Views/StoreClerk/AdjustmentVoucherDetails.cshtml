@@ -2,48 +2,83 @@
 @{
     ViewData["Title"] = "AdjustmentVoucherDetails";
     List<AdjustmentVoucherDetail> adjustmentVoucherDetailsToHTML = (List<AdjustmentVoucherDetail>)ViewData["adjustmentVoucherDetailsToHTML"];
+    AdjustmentVoucher av = (AdjustmentVoucher)ViewData["av"];
+}
+
+<h1>Adjustment Voucher Details</h1>
+
+
+<h6>Voucher# : @av.Id</h6>
+<h6>Date Issued: "@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(av.InitiatedDate)"</h6>
+<h6>Status: @av.Status.ToUpper()</h6>
+
+@if (av.Status == "Rejected")
+{
+    <h6>Reject Reason:@av.Reason</h6>
+}
+
+@if (av.ApprovedMgrId != null)
+{
+    <h6>By:@av.ApprovedMgr.Name </h6>
+}
+else if (av.ApprovedSup != null)
+{
+    <h6>By:@av.ApprovedSup.Name </h6>
+}
+else
+{
+    <h6></h6>
+}
+
+
+@if (adjustmentVoucherDetailsToHTML.Count()>0)
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Item Code</th>
+                <th>Description</th>
+                <th>Quantity Adjusted</th>
+                <th>Reason</th>
+                <th>Price</th>
+                <th>Total Price</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (AdjustmentVoucherDetail advdet in adjustmentVoucherDetailsToHTML)
+            {
+
+                <tr>
+                    <td class="productId">@advdet.ProductId</td>
+                    <td class="description">@advdet.Product.Description</td>
+                    <td class="quantity">@advdet.QtyAdjusted</td>
+                    <td class="reason">@advdet.Reason</td>
+                    <td class="price">@advdet.Unitprice</td>
+                    <td class="totalprice">@advdet.TotalPrice</td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+    @if (av.Status == "Created")
+    {
+<div>
+    <a class="btn btn-primary" asp-controller="StoreClerk" asp-action="AmendAdjustmentVoucher" asp-route-id="@av.Id"> Amend</a>
+    <button class="btn btn-primary" type="button" id="submit">Submit</button>
     
+</div>
+        <script src="~/js/AdjustmentVoucher.js"></script>
     }
 
-    <h1>Adjustment Voucher Details</h1>
     
+}
+else
+{
+    <h6> there is no adjustment voucher details in record, please amend and add details</h6>
+    <a class="btn btn-primary" asp-controller="StoreClerk" asp-action="AmendAdjustmentVoucher" asp-route-id="@av.Id"> Amend</a>
+}
 
-    <h6>Voucher# : @adjustmentVoucherDetailsToHTML[0].AdjustmentVoucherId</h6>
-    <h6>Date Issued: @SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(adjustmentVoucherDetailsToHTML[0].AdjustmentVoucher.InitiatedDate)</h6>
-    <h6>Status: @adjustmentVoucherDetailsToHTML[0].AdjustmentVoucher.Status.ToUpper()</h6>
-    <h6>Reject Reason:@adjustmentVoucherDetailsToHTML[0].AdjustmentVoucher.Reason</h6>    
-    <h6>By: </h6>
-   
-        
-        <table>
-            <thead>
-                <tr>
-                    <th>Item Code</th>
-                    <th>Description</th>
-                    <th>Quantity Adjusted</th>
-                    <th>Reason</th>
-                    <th>Price</th>
-                    <th>Total Price</th>
+<a class="btn btn-primary" asp-controller="StoreClerk" asp-action="AdjustmentVoucher"> Back to Adjustment List</a>
 
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (AdjustmentVoucherDetail advdet in adjustmentVoucherDetailsToHTML)
-                    {
-
-                        <tr>
-                            <td>@advdet.ProductId</td>
-                            <td>@advdet.Product.Description</td>
-                            <td>@advdet.QtyAdjusted</td>
-                            <td>@advdet.Reason</td>
-                            <td>@advdet.Unitprice</td>
-                            <td>@advdet.TotalPrice</td>
-                        </tr>
-                        }
-             </tbody>
-
-
-        </table>
-        
-    
 
