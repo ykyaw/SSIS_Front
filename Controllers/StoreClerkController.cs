@@ -68,7 +68,7 @@ namespace SSIS_FRONT.Controllers
             Result<Object> result = HttpUtils.Put(url, requisition, Request, Response);
             return (bool)result.data;
         }
-        public IActionResult Disbursement()
+        public IActionResult Disbursement(string errMsg = "")
         {
             ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
             ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
@@ -76,6 +76,8 @@ namespace SSIS_FRONT.Controllers
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/retrievealldept";
             Result<List<Department>> result = HttpUtils.Get(url, new List<Department>(), Request, Response);
             ViewData["departments"] = result.data;
+
+            ViewData["errMsg"] = errMsg;
 
             return View();
         }
@@ -86,9 +88,21 @@ namespace SSIS_FRONT.Controllers
 
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/disbursement";
             Result<List<RequisitionDetail>> result = HttpUtils.Post(url, requisition, new List<RequisitionDetail>(), Request, Response);
-            ViewData["disbursementList"] = result.data;
-
-            return View();
+            if (result.code == 200)
+            {
+                ViewData["disbursementList"] = result.data;
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Disbursement", "StoreClerk", new { errMsg = result.msg });
+            }
+        }
+        public bool AckDisbursement([FromBody] List<RequisitionDetail> requisitionDetails)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/rfld"; // CHANGE URL AFTER BACKEND COMPLETE
+            Result<Object> result = HttpUtils.Put(url, requisitionDetails, Request, Response);
+            return (bool)result.data;
         }
         public IActionResult Catalogue()
         {

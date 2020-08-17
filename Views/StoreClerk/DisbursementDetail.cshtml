@@ -8,7 +8,10 @@
 <div>
     <span>Disbursement Date: </span>
     <span>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(disbursementList[0].Requisition.CollectionDate)</span>
+    <input id="requisitionid" value="" @disbursementList[0].RequisitionId type="hidden" />
 </div>
+
+
 
 <table class="table table-striped">
     <thead>
@@ -26,6 +29,7 @@
         @foreach (var d in disbursementList)
         {
             <tr>
+                <input class="detailid" type="hidden" value=@d.Id"" />
                 <td>@d.Product.Description</td>
                 <td>@d.QtyNeeded</td>
                 <td>@d.QtyDisbursed</td>

@@ -24,7 +24,31 @@
     })
 
     $("#quote").on("click", function () {
-        //TODO
+        let Status = "Created";
+        let details = [];
+        $(".detailId").each(function () {
+            let cells = $(this).closest('tr').children('td');
+            let number1 = +cells.eq(3).find('input').val();
+            let number2 = +cells.eq(4).find('select').val();
+            let TotalPrice = number1 * number2;
+            let detail = {
+                Id: +$(this).val(),
+                ReorderQty: +$(this).nextAll().eq(3).find('input').val(),
+                SupplierId: $(this).nextAll().eq(4).find('option:selected').data('sid'),
+                VenderQuote: $(this).nextAll().eq(5).find('input').val(),
+                TotalPrice,
+                Status
+            }
+            details.push(detail);
+        })
+        Post("/StoreClerk/GenerateQuote", details)
+            .then(function (response) {
+                console.log(response);
+                alert("generated: " + response);
+            })
+            .catch(function (err) {
+                console.log(err);
+            })
     })
 
     $("#update").on("click", function () {
@@ -37,9 +61,9 @@
             let TotalPrice = number1 * number2;
             let detail = {
                 Id: +$(this).val(),
-                ReorderQty: +$('.reorderqty').val(),
-                SupplierId: $('.supplierid').find('option:selected').data('sid'),
-                VenderQuote: $('.venderquote').val(),
+                ReorderQty: +$(this).nextAll().eq(3).find('input').val(),
+                SupplierId: $(this).nextAll().eq(4).find('option:selected').data('sid'),
+                VenderQuote: $(this).nextAll().eq(5).find('input').val(),
                 TotalPrice,
                 Status
             }
@@ -66,9 +90,9 @@
             let TotalPrice = number1 * number2;
             let detail = {
                 Id: +$(this).val(),
-                ReorderQty: +$('.reorderqty').val(),
-                SupplierId: $('.supplierid').find('option:selected').data('sid'),
-                VenderQuote: $('.venderquote').val(),
+                ReorderQty: +$(this).nextAll().eq(3).find('input').val(),
+                SupplierId: $(this).nextAll().eq(4).find('option:selected').data('sid'),
+                VenderQuote: $(this).nextAll().eq(5).find('input').val(),
                 TotalPrice,
                 Status
             }

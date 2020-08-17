@@ -1,10 +1,12 @@
 ﻿@{
     ViewData["Title"] = "Retrieve Disbursement List";
     List<Department> departments = (List<Department>)ViewData["departments"];
+    string errMsg = (string)ViewData["errMsg"];
 }
 
 <h1>@ViewData["Title"]</h1>
 
+<span style="color:red;">@errMsg</span>
 <div>
     <div>
         <span>Date of Disbursement: </span>
