@@ -234,12 +234,34 @@ namespace SSIS_FRONT.Controllers
             return View();
         }
 
-        public IActionResult viewDisbursementDeptRep()
+        public IActionResult viewDisbursementDeptRep(string errMsg = "")
+        {
+            ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+            ViewData["errMsg"] = errMsg;
+
+            //string url1 = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/dis/" + collectiondate;
+            //Result<List<RequisitionDetail>> result1 = HttpUtils.Get(url1, new List<RequisitionDetail>(), Request, Response);
+            //ViewData["departments"] = result1.data;
+            return View();
+        }
+
+        public IActionResult viewDisbursementDetailDeptRep([FromBody] long collectiondate)
         {
             ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
             ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
 
+            string url1 = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/dis/" + collectiondate;
+            Result<List<RequisitionDetail>> result1 = HttpUtils.Get(url1, new List<RequisitionDetail>(),Request, Response);
+            ViewData["requisition"] = result1.data;
             return View();
+        }
+
+        public bool AckDisbursement([FromBody] List<RequisitionDetail> requisitionDetails)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/ack"; 
+            Result<Object> result = HttpUtils.Put(url, requisitionDetails, Request, Response);
+            return (bool)result.data;
         }
 
         public IActionResult assignDeptRep()
