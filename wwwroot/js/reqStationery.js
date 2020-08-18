@@ -48,6 +48,20 @@
             })
     });
 
+    $("#submit").click(function () {
+
+        console.log(reqdDetails)
+        Post("/Department/RequisitionDetailSubmit", reqdDetails) // /Department/RequisitionDetail
+            .then(function (response) {
+                //let result = JSON.parse(response);
+                console.log(response);
+                alert("success: " + response);
+            })
+            .catch(function (err) {
+                alert("error: " + JSON.parse(err));
+            })
+    });
+
 
 });
 var tdydate = new Date();
