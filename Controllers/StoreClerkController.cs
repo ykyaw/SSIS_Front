@@ -100,7 +100,7 @@ namespace SSIS_FRONT.Controllers
         }
         public bool AckDisbursement([FromBody] List<RequisitionDetail> requisitionDetails)
         {
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/rfld"; // CHANGE URL AFTER BACKEND COMPLETE
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/ackreq";
             Result<Object> result = HttpUtils.Put(url, requisitionDetails, Request, Response);
             return (bool)result.data;
         }
@@ -294,6 +294,11 @@ namespace SSIS_FRONT.Controllers
 
             return View();
         }
+        //public bool UpdateDelivery([FromBody] List<RequisitionDetail> requisitionDetails)
+        //{
+        //    string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/rfld"; // CHANGE URL AFTER BACKEND COMPLETE
+        //    Result<Object> result = HttpUtils.Put(url, requisitionDetails, Request, Response);
+        //}
 
         /**
          * @author WUYUDING
@@ -519,7 +524,7 @@ namespace SSIS_FRONT.Controllers
 
 
         [HttpPut]
-        public bool SaveAdjustmentVoucherDetails([FromBody]List<AdjustmentVoucherDetail> voucherDetails)
+        public bool SaveAdjustmentVoucherDetails([FromBody] List<AdjustmentVoucherDetail> voucherDetails)
         {
             //List<AdjustmentVoucherDetail> avdetails = voucherDetails;
             //foreach (AdjustmentVoucherDetail avdetail in avdetails)
@@ -531,7 +536,7 @@ namespace SSIS_FRONT.Controllers
         }
 
         [HttpPut]
-        public bool SubmitAdjustmentVoucherDetails([FromBody]List<AdjustmentVoucherDetail> voucherDetails)
+        public bool SubmitAdjustmentVoucherDetails([FromBody] List<AdjustmentVoucherDetail> voucherDetails)
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/SubmitAdjustmentDetails/";
             Result<Object> result = HttpUtils.Put(url, voucherDetails, Request, Response);
@@ -561,7 +566,7 @@ namespace SSIS_FRONT.Controllers
             ViewData["av"] = result1.data;
             ViewData["products"] = result2.data;
 
-            
+
 
             return View();
 
@@ -571,7 +576,7 @@ namespace SSIS_FRONT.Controllers
         public IActionResult AdjustmentVoucherByClerkId()
         {
 
-            
+
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/findAdjustmentVoucherbyClerk/";
             Result<List<AdjustmentVoucher>> result = HttpUtils.Get(url, new List<AdjustmentVoucher>(), Request, Response);
             ViewData["avByClerk"] = result.data;

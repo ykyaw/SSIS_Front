@@ -33,6 +33,9 @@ namespace SSIS_FRONT.Controllers
         [Route("Store/Vouchers")]
         public IActionResult Vouchers()
         {
+            ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storesup/allvoucher";
             Result<List<AdjustmentVoucher>> result = HttpUtils.Get(url, new List<AdjustmentVoucher>(), Request, Response);
             ViewData["Vouchers"] = result.data;
@@ -42,6 +45,9 @@ namespace SSIS_FRONT.Controllers
         [Route("Voucher/{Id}")]
         public IActionResult VoucherDetail(string Id)
         {
+            ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storesup/voucher/"+Id;
             Result<AdjustmentVoucher> result = HttpUtils.Get(url, new AdjustmentVoucher(), Request, Response);
             Employee employee = new Employee()
@@ -74,6 +80,9 @@ namespace SSIS_FRONT.Controllers
 
         public IActionResult Forecast()
         {
+            ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/catalogue";
             Result<List<Product>> result = HttpUtils.Get(url, new List<Product>(), Request, Response);
             ViewData["Items"] = result.data;
