@@ -52,10 +52,12 @@ namespace SSIS_FRONT.Middlewares
                         user.Name = claims.FirstOrDefault(e => e.Type.Equals(ClaimTypes.Name)).Value;
                         user.Email = claims.FirstOrDefault(e => e.Type.Equals(ClaimTypes.Email)).Value;
                         user.Role = claims.FirstOrDefault(e => e.Type.Equals(ClaimTypes.Role)).Value;
+                        user.Id = Convert.ToInt32(claims.FirstOrDefault(e => e.Type.Equals(ClaimTypes.NameIdentifier)).Value);
                         try
                         {
                             context.Session.SetString("Name", user.Name);
                             context.Session.SetString("Role", user.Role);
+                            context.Session.SetInt32("Id", user.Id);
                         }
                         catch (Exception e)
                         {
