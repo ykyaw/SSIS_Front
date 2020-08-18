@@ -53,6 +53,15 @@ namespace SSIS_FRONT.Controllers
             return (bool)result.data;
         }
 
+
+        [HttpPost]
+        public bool RequisitionDetailSubmit([FromBody] List<RequisitionDetail> requisitionDetail)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/submitrf"; //return null for now from backend function 
+            Result<Object> result = HttpUtils.Post(url, requisitionDetail, Request, Response);
+            return (bool)result.data;
+        }
+
         public IActionResult viewRequisitionDeptHead()
         {
             ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
@@ -247,32 +256,20 @@ namespace SSIS_FRONT.Controllers
             ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
             ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
 
-            List<Employee> employees = new List<Employee>();
+            string url2 = cfg.GetValue<string>("Hosts:Boot") + "/depthead/gae";
+            Result<List<Employee>> result2 = HttpUtils.Get(url2, new List<Employee>(), Request, Response);
+            ViewData["employees"] = result2.data;
 
-            Employee e1 = new Employee();
-            e1.Name = "Jame";
-            employees.Add(e1);
-
-            Employee e2 = new Employee();
-            e2.Name = "Sam";
-            employees.Add(e2);
-
-            Employee e3 = new Employee();
-            e3.Name = "Mary";
-            employees.Add(e3);
-
-            Employee e4 = new Employee();
-            e4.Name = "Tom";
-            employees.Add(e4);
-
-            Employee e5 = new Employee();
-            e5.Name = "Jerry";
-            employees.Add(e5);
-
-            ViewData["employees"] = employees;
             return View();
         }
 
+        [HttpPut]
+        public bool assignDeptRep([FromBody] int employeeID)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/depthead/adr/" + employeeID;
+            Result<Object> result = HttpUtils.Put(url, employeeID, Request, Response);
+            return (bool)result.data;
+        }
 
     }
 }
