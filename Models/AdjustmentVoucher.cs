@@ -19,7 +19,7 @@ namespace SSIS_FRONT.Models
         public string Status { get; set; }
         public string Reason { get; set; }
 
-        public List<AdjustmentVoucherDetail> details { set; get; }
+        public List<AdjustmentVoucherDetail> AdjustmentVoucherDetails { set; get; }
 
         // FKs
         public Employee InitiatedClerk { get; set; }

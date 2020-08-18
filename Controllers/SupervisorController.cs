@@ -49,9 +49,9 @@ namespace SSIS_FRONT.Controllers
                 Name = HttpContext.Session.GetString("Name"),
                 Role = HttpContext.Session.GetString("Role")
             };
-            if (result.data.details == null)
+            if (result.data.AdjustmentVoucherDetails == null)
             {
-                result.data.details = new List<AdjustmentVoucherDetail>();
+                result.data.AdjustmentVoucherDetails = new List<AdjustmentVoucherDetail>();
             }
             ViewData["Employee"] = employee;
             ViewData["Voucher"] = result.data;

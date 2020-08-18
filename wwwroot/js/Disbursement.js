@@ -1,6 +1,4 @@
 ﻿$(document).ready(function () {
-    date.max = new Date().toISOString().split("T")[0];
-
     $('#submit').click(function () {
         let dateString = $("input[type='date']").val();
         let date = new Date(dateString).getTime();

@@ -20,5 +20,13 @@
             }
             details.push(detail);
         });
+        Put(`/StoreClerk/AckDisbursement`, details)
+            .then(function (response) {
+                console.log(response);
+                //alert("success: " + response);
+            })
+            .catch(function (err) {
+                //alert("error: " + JSON.parse(err));
+            })
     });
 });
