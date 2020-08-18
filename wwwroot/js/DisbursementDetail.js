@@ -13,7 +13,9 @@
         Put(`/StoreClerk/AckDisbursement`, details)
             .then(function (response) {
                 console.log(response);
-                //alert("success: " + response);
+                alert("success: " + response);
+                $('#clerk').hide().text("test").fadeIn();
+                $('#date').hide().text()
             })
             .catch(function (err) {
                 //alert("error: " + JSON.parse(err));

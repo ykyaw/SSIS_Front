@@ -1,18 +1,17 @@
 ﻿
 @{
-    ViewData["Title"] = "Adjustment Voucher";
-    List<AdjustmentVoucher> vouchers = (List<AdjustmentVoucher>)ViewData["adjustmentVoucherListToHTML"];
-    string role = (string)ViewData["Role"];
+    ViewData["Title"] = "AdjustmentVoucherByClerkId";
+    List<AdjustmentVoucher> vouchers = (List<AdjustmentVoucher>)ViewData["avByClerk"];
 }
 
-<h1>Adjustment Voucher List</h1>
+<h1>Adjustment Voucher By Clerk</h1>
 <input type="text" placeholder="search" id="search" />
 
 <div>
     <a class="btn btn-primary" asp-controller="StoreClerk" asp-action="GenerateAdjustmentVoucher">Issue Adjustment Voucher</a>
 </div>
 <div>
-    <a class="btn btn-primary" asp-controller="StoreClerk" asp-action="AdjustmentVoucherByClerkId">View My Adjustment Voucher History</a>
+    <a class="btn btn-primary" asp-controller="StoreClerk" asp-action="AdjustmentVoucher">Back To All Vouvhers</a>
 </div>
 <table class="table table-striped">
     <thead>
@@ -31,14 +30,14 @@
                 <td class="initiateDate">@adv.InitiatedDate</td>
                 <td class="status" value="@adv.Status">@adv.Status</td>
                 <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="AdjustmentVoucherDetails" asp-route-id="@adv.Id">Details</a></td>
-                @*@if (adv.Status == "Created")
+                @if (adv.Status == "Created")
                 {
                     <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="AmendAdjustmentVoucher" asp-route-id="@adv.Id">Amend</a></td>
                 }
                 else
                 {
                     <td>   </td>
-                }*@
+                }
             </tr>
         }
     </tbody>
@@ -47,4 +46,6 @@
 
 
 
+
 <script src="~/js/AdjustmentVoucherList.js"></script>
+
