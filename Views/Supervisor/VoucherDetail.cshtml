@@ -22,7 +22,7 @@
         <th>Price</th>
         <th>Total Price</th>
     </tr>
-    @foreach (AdjustmentVoucherDetail detail in voucher.details)
+    @foreach (AdjustmentVoucherDetail detail in voucher.AdjustmentVoucherDetails)
     {
         <tr>
             <td>@detail.Product.Id</td>
