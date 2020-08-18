@@ -27,7 +27,7 @@
         let retrieval = getUpdateRetriveal();
         console.log("retrieval", retrieval);
         retrieval.Status = "Retrieved";
-        Put("/StoreClerk/FinaliseRetrieval", retrieval)
+        Put("/StoreClerk/Retrieval", retrieval)
             .then(function (response) {
                 //let result = JSON.parse(response);
                 console.log(response);
