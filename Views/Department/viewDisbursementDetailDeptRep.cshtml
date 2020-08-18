@@ -1,14 +1,15 @@
-﻿@{
+﻿
+@{
     ViewData["Title"] = "Disbursement List";
-    List<RequisitionDetail> disbursementList = (List<RequisitionDetail>)ViewData["disbursementList"];
+    List<RequisitionDetail> requisitions = (List<RequisitionDetail>)ViewData["requisition"];
 }
 
-<h1>@ViewData["Title"]</h1>
+    <h1>Disbursement List</h1>
 
 <div>
     <span>Disbursement Date: </span>
-    <span>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(disbursementList[0].Requisition.CollectionDate)</span>
-    <input id="requisitionid" value="" @disbursementList[0].RequisitionId type="hidden" />
+    @*<span>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(requisitions[0].Requisition.CollectionDate)</span>*@
+    <input id="requisitionid" value="" @requisitions[0].RequisitionId type="hidden" />
 </div>
 
 
@@ -26,10 +27,10 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var d in disbursementList)
+        @foreach (var d in requisitions)
         {
             <tr>
-                <input class="detailid" type="hidden" value=@d.Id"" />
+                <input class="detailid" type="hidden" value=@d.Id" "  />
                 <td>@d.Product.Description</td>
                 <td>@d.QtyNeeded</td>
                 <td>@d.QtyDisbursed</td>
@@ -43,14 +44,14 @@
 </table>
 
 <div>
-    <button id="acknowledge" type="button" class="btn btn-primary">Acknowledge Disbursement Received by Dept Rep</button>
+    <button id="acknowledge" type="button" class="btn btn-primary">Acknowledge Item Received</button>
 </div>
 
 <table>
     <tr>
         <td>Received by (Rep)</td>
-        <td>@disbursementList[0].Requisition.ReceivedByRep.Name</td>
-        <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(disbursementList[0].Requisition.ReceivedDate)</td>
+        <td></td>
+        <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(requisitions[0].Requisition.ReceivedDate)</td>
     </tr>
     <tr>
         <td>Acknowledged by (Clerk)</td>
@@ -58,5 +59,3 @@
         <td id="date"></td>
     </tr>
 </table>
-
-<script src="~/js/DisbursementDetail.js"></script>

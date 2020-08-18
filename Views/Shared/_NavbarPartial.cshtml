@@ -22,11 +22,31 @@
         <a class="nav-link text-dark" asp-controller="StoreClerk" asp-action="DeliveryOrder">DO</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="Login" asp-action="Logout">Logout</a>
+        <a class="nav-link text-dark" asp-controller="StoreClerk" asp-action="AdjustmentVoucher">Adjustment Voucher</a>
     </li>
-    @*<li class="nav-item">
-            <a class="nav-link text-dark" asp-controller="StoreClerk" asp-action="AdjustmentVoucher">Adjustment Voucher</a>
-        </li>*@
+}
+
+@if ((string)ViewData["Role"] == "Supervisor")
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="Store" asp-action="Vouchers">Adjustment Voucher</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="StoreClerk" asp-action="PurchaseRequest">Purchase Request</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="Supervisor" asp-action="Forecast">Data Analysis</a>
+    </li>
+}
+
+@if ((string)ViewData["Role"] == "Manager")
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="Store" asp-action="Vouchers">Adjustment Voucher</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="Store" asp-action="Supplier">Supplier</a>
+    </li>
 }
 
 @if ((string)ViewData["Role"] == "Department Employee ")
@@ -38,10 +58,10 @@
         <a class="nav-link text-dark" asp-controller="Department" asp-action="viewDisbursementDeptRep">Disbursement</a>
     </li>
     @*@if ((string)ViewData["Role"] == "EmployeeRep")
-    {*@
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-controller="Department" asp-action="updateCollectionPoint">Set Collection Point</a>
-        </li>
+        {*@
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="Department" asp-action="updateCollectionPoint">Set Collection Point</a>
+    </li>
     //}
 }
 

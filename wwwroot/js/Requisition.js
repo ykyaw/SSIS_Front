@@ -19,7 +19,7 @@
                     $(this).text("Confirmed").fadeIn();
                 });
                 $("<tr><td>Disbursement Date" +
-                    "</td><td>" + (CollectionDate.getFullYear() + " " + ('0' + (CollectionDate.getMonth() + 1)).slice(-2) + " " + CollectionDate.getDate()) +
+                    "</td><td>" + (CollectionDate.getFullYear() + "/" + ('0' + (CollectionDate.getMonth() + 1)).slice(-2) + "/" + CollectionDate.getDate()) +
                     "</td></tr>").hide().appendTo('#form').fadeIn();
             })
             .catch(function (err) {

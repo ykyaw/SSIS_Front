@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using SSIS_FRONT.Common;
@@ -31,6 +32,9 @@ namespace SSIS_FRONT.Controllers
         [Route("Store/Supplier")]
         public IActionResult Supplier()
         {
+            ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/catalogue";
             Result<List<Product>> result = HttpUtils.Get(url,new List<Product>(), Request, Response);
             ViewData["Items"] = result.data;

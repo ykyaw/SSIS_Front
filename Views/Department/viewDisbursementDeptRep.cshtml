@@ -1,5 +1,5 @@
 ﻿
-@{
+@*@{
     ViewData["Title"] = "viewDisbursementDeptRep";
 }
 
@@ -18,5 +18,25 @@
         </div>
 
         <button type="submit" class="btn btn-outline-primary mb-2">Generate</button>
-        </div>
-</form>
+    </div>
+</form>*@
+
+@{
+    ViewData["Title"] = "viewDisbursementDeptRep";
+    string errMsg = (string)ViewData["errMsg"];
+}
+
+<h1>Disbursement List</h1>
+
+<span style="color:red;">@errMsg</span>
+<div>
+    <div>
+        <span>Date of Disbursement: </span>
+        <input id="date" type="date" />
+    </div>
+    
+    <div></div>
+    <button id="submit" class="btn btn-success">Submit</button>
+</div>
+
+<script src="~/js/DisbursementDeptRep.js"></script>

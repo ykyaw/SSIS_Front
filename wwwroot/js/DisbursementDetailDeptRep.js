@@ -5,17 +5,16 @@
         $(".detailid").each(function () {
             let detail = {
                 Id: +$(this).val(),
+                QtyReceived: +$(this).val(),
                 RequisitionId,
-                ClerkRemark: $(this).nextAll().eq(6).find('input').val()
+                RepRemark: $(this).nextAll().eq(6).find('input').val()
             }
             details.push(detail);
         })
-        Put(`/StoreClerk/AckDisbursement`, details)
+        Put(`/Department/AckDisbursement`, details)
             .then(function (response) {
                 console.log(response);
-                alert("success: " + response);
-                $('#clerk').hide().text("test").fadeIn();
-                $('#date').hide().text()
+                //alert("success: " + response);
             })
             .catch(function (err) {
                 //alert("error: " + JSON.parse(err));
