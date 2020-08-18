@@ -3,6 +3,7 @@
     ViewData["Title"] = "Adjustment Voucher";
     List<AdjustmentVoucher> vouchers = (List<AdjustmentVoucher>)ViewData["adjustmentVoucherListToHTML"];
     string role = (string)ViewData["Role"];
+    int clerkid = (int)ViewData["clerkid"];
 }
 
 <h1>Adjustment Voucher List</h1>
@@ -31,14 +32,14 @@
                 <td class="initiateDate">@adv.InitiatedDate</td>
                 <td class="status" value="@adv.Status">@adv.Status</td>
                 <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="AdjustmentVoucherDetails" asp-route-id="@adv.Id">Details</a></td>
-                @*@if (adv.Status == "Created")
+                @if (adv.Status == "Created" && adv.InitiatedClerkId == clerkid)
                 {
                     <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="AmendAdjustmentVoucher" asp-route-id="@adv.Id">Amend</a></td>
                 }
                 else
                 {
                     <td>   </td>
-                }*@
+                }
             </tr>
         }
     </tbody>
