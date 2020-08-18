@@ -25,7 +25,7 @@
                 <td>@r.Id</td>
                 <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(r.CreatedDate)</td>
                 <td>@r.Status</td>
-                <td><a class="btn btn-primary" asp-controller="Department" asp-action="RequisitionDetail" asp-route-id="@r.Id">Details</a></td>
+                <td><a class="btn btn-primary" asp-controller="Department" asp-action="viewRequisitionEmp" asp-route-id="@r.Id">Details</a></td>
             </tr>
         }
     </tbody>

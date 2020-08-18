@@ -98,43 +98,31 @@ namespace SSIS_FRONT.Controllers
             ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
             ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
 
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/rfld/" + RequisitionId;
-            Result<Requisition> result = HttpUtils.Get(url, new Requisition(), Request, Response);
-            ViewData["requisition"] = result.data;
+            string url1 = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/rfld/" + RequisitionId;
+            Result<Requisition> result1 = HttpUtils.Get(url1, new Requisition(), Request, Response);
+            ViewData["requisition"] = result1.data;
+
+            string url2 = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/catalogue";
+            Result<List<Product>> result2 = HttpUtils.Get(url2, new List<Product>(), Request, Response);
+            ViewData["products"] = result2.data;
+
+            List<RequisitionDetail> requisitionDetails = new List<RequisitionDetail>();
+            ViewData["requisitionDetail"] = requisitionDetails;
+
+            RequisitionDetail rd1 = new RequisitionDetail();
+            //rd1.Product.Description = "Clips";
+            rd1.QtyNeeded = 10;
+            rd1.QtyDisbursed = 8;
+            rd1.DisburseRemark = "Insufficient stock";
+            rd1.QtyReceived = 8;
+            rd1.RepRemark = "Receieved in good order";
+            requisitionDetails.Add(rd1);
+
+
             return View();
         }
 
 
-
-        //public IActionResult viewRfApprovedDetailDeptRep()
-        //{
-        //    ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
-        //    ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
-
-        //    List<RequisitionDetail> requisitionDetail = new List<RequisitionDetail>();
-        //    ViewData["requisitionDetail"] = requisitionDetail;
-        //    return View();
-        //}
-
-        //public IActionResult viewRfCompletedDetailDeptRep()
-        //{
-        //    ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
-        //    ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
-
-        //    List<RequisitionDetail> requisitionDetail = new List<RequisitionDetail>();
-        //    ViewData["requisitionDetail"] = requisitionDetail;
-        //    return View();
-        //}
-
-        //public IActionResult viewRfConfirmedDetailDeptRep()
-        //{
-        //    ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
-        //    ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
-
-        //    List<RequisitionDetail> requisitionDetail = new List<RequisitionDetail>();
-        //    ViewData["requisitionDetail"] = requisitionDetail;
-        //    return View();
-        //}
 
         public IActionResult updateCollectionPoint()
         {
