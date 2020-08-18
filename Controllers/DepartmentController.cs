@@ -218,29 +218,21 @@ namespace SSIS_FRONT.Controllers
             ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
             ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
 
-            List<Employee> employees = new List<Employee>();
-            Employee e1 = new Employee();
-            e1.Name = "Jame";
-            employees.Add(e1);
+            string url1 = cfg.GetValue<string>("Hosts:Boot") + "/depthead/gae";
+            Result<List<Employee>> result1 = HttpUtils.Get(url1, new List<Employee>(), Request, Response);
+            ViewData["employees"] = result1.data;
 
-            Employee e2 = new Employee();
-            e2.Name = "Sam";
-            employees.Add(e2);
 
-            Employee e3 = new Employee();
-            e3.Name = "Mary";
-            employees.Add(e3);
 
-            Employee e4 = new Employee();
-            e4.Name = "Tom";
-            employees.Add(e4);
-
-            Employee e5 = new Employee();
-            e5.Name = "Jerry";
-            employees.Add(e5);
-
-            ViewData["employees"] = employees;
             return View();
+        }
+
+        [HttpPut]
+        public bool assignDelegate([FromBody] Employee employee)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/depthead/del";
+            Result<Object> result = HttpUtils.Put(url,employee, Request, Response);
+            return (bool)result.data;
         }
 
         public IActionResult viewDisbursementDeptRep(string errMsg = "")

@@ -6,60 +6,78 @@
 
 <h1>Delegate Authority</h1>
 
-<form action="/Department/delegateAuthority" method="post">
-    <table class="noborder">
-        <tr class="noborder">
-            <td class="noborder">Assigned Delegate: </td>
-            <td class="noborder"></td>
-        </tr>
-        <tr class="noborder">
-            <td class="noborder">Start Date: </td>
-            <td class="noborder"></td>
-            <td class="noborder">End Date: </td>
-            <td class="noborder"></td>
-            <td style="text-align:center;" class="noborder">
-                <input type="button" class="btn btn-primary" value="Edit" />
-            </td>
-            <td style="text-align:center;" class="noborder">
-                <input type="button" class="btn btn-primary" value="Delete" />
-            </td>
-        </tr>
-    </table>
-    <table class="table table-striped noborder" style="margin: 100px auto 30px;">
-        <thead class="noborder">
+<div id="delegate">
+    @foreach (var employee in employees)
+    {
+        <label for="colpoint">Employee Name</label>
+        <label for="colpoint">@employee.Name</label>
+        <br />
+        <label for="colpoint">Start Date</label>
+        <label for="colpoint">August 18</label>
+        <br />
+        <label for="colpoint">End Date</label>
+        <label for="colpoint">August 20</label>
+        <br />
+        <input type="button" class="btn btn-primary" value="Edit" />
+        
+        <input type="button" class="btn btn-primary" value="Delete" />
+        <br />
+
+
+    }
+    @*<table class="noborder">
             <tr class="noborder">
-                <th class="noborder">Name</th>
+                <td class="noborder">Assigned Delegate: </td>
+                <td class="noborder" id="empName">@employees[0].Name</td>
             </tr>
-        </thead>
-        <tbody class="noborder">
-            @foreach (var employee in employees)
-            {
-                <tr class="noborder">
+            <tr class="noborder">
+                <td class="noborder">Start Date: </td>
+                <td class="noborder" id="startDate">August 18</td>
+                <td class="noborder">End Date: </td>
+                <td class="noborder" id="endDate">August 20</td>
+                <td style="text-align:center;" class="noborder">
+                    <input type="button" class="btn btn-primary" value="Edit" />
+                </td>
+                <td style="text-align:center;" class="noborder">
+                    <input type="button" class="btn btn-primary" value="Delete" />
+                </td>
+            </tr>
+        </table>*@
+</div>
+    <div>
+        <div class="form-group">
+            <label for="chooseItem" class="sr-only">Select Collection Point</label>
 
-                    <td class="noborder">
-                        <input type="radio" id="empname" name="empname" value="empname">
-                        <label for="empname">@employee.Name</label>
 
-                    </td>
+            <form id="select">
+                @foreach (var employee in employees)
+                {
+                    <input type="radio" name="cp" value="@employee.Id">
+                    <label for="colpoint">@employee.Name</label>
+                    <br />
+                }
+            </form>
 
+            
+        </div>
 
-                </tr>
-            }
-        </tbody>
-
-    </table>
+    </div>
+    
     <table class="noborder">
         <tr class="noborder">
             <td class="noborder">Start Date: </td>
-            <td class="noborder" ><input type="text" /></td>
+            
+            <td class="noborder"><input id="fromdate" type="date" />@employees[0].DelegateFromDate</td>
             <td class="noborder">End Date: </td>
-            <td class="noborder"><input type="text" /></td>
+            <td class="noborder"><input id="todate" type="date" />@employees[0].DelegateToDate</td>
         </tr>
         <tr class="noborder">
             <td style="text-align:center;" class="noborder">
-                <input type="submit" class="btn btn-primary" value="Assign as Delegate" />
+                
+                <button type="button" class="btn btn-primary mb-2" id="assign">Assign as Delegate</button>
             </td>
         </tr>
 
     </table>
-</form>
+    <script src="~/js/AssignDelegate.js"></script>
+
