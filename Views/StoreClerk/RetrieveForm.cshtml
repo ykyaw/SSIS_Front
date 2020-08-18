@@ -20,9 +20,9 @@
         <table>
             <tr>
                 <th>Bin</th>
-                <th>RequisitionId</th>
                 <th>Needed</th>
                 <th>Retrieved</th>
+                <th>RequisitionId</th>
                 <th>Department</th>
                 <th>Needed</th>
                 <th>Actual</th>
@@ -34,14 +34,13 @@
             @if (i == 0)
             {
                 <td rowspan="@kvp.Value.Count()"> @kvp.Value[i].Product.Category.BinNo</td>
-                <td rowspan="@kvp.Value.Count()"> @kvp.Value[i].RequisitionId</td>
                 <td rowspan="@kvp.Value.Count()">@kvp.Value.Sum(item => item.QtyNeeded)</td>
-                <td rowspan="@kvp.Value.Count()" class="retrieved"></td>
+                <td rowspan="@kvp.Value.Count()" class="retrieved">@kvp.Value.Sum(item => item.QtyNeeded)</td>
             }
-
+            <td> @kvp.Value[i].RequisitionId</td>
             <td>@kvp.Value[i].Requisition.Department.Name</td>
             <td>@kvp.Value[i].QtyNeeded</td>
-            <td><input type="number" class="actualNumber" value="0" /></td>
+            <td><input type="number" class="actualNumber" value="@kvp.Value[i].QtyNeeded" /></td>
             <td><input type="text" class="remarks" /></td>
         </tr>
             }
