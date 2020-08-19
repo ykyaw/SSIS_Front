@@ -196,6 +196,13 @@ namespace SSIS_FRONT.Controllers
 
             return View();
         }
+        [HttpPost]
+        public bool GenerateQuote([FromBody] List<PurchaseRequestDetail> details)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/generatequote";
+            Result<Object> result = HttpUtils.Post(url, details, Request, Response);
+            return (bool)result.data;
+        }
         [HttpPut]
         [Route("StoreClerk/PurchaseRequest")]
         public bool UpdatePurchaseRequestDetail([FromBody] List<PurchaseRequestDetail> details)

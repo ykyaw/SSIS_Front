@@ -35,7 +35,7 @@
             <tr>
                 <input class="detailId" type="hidden" value="@kvp.Key.Id" />
                 <td>@kvp.Key.ProductId</td>
-                <td>@kvp.Key.Product.Description</td>
+                <td data-productid="@kvp.Key.ProductId">@kvp.Key.Product.Description</td>
                 <td>@kvp.Key.CurrentStock</td>
 
                 @if (role == "Clerk" && kvp.Key.Status == "Created")
@@ -52,7 +52,7 @@
                         </select>
                     </td>
                     <td>
-                        <input  class="venderquote" type="text" value="@kvp.Key.VenderQuote"/>
+                        <input class="venderquote" type="text" value="@kvp.Key.VenderQuote" />
                     </td>
                 }
                 else

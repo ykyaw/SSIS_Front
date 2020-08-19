@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Disbursement List";
     List<RequisitionDetail> disbursementList = (List<RequisitionDetail>)ViewData["disbursementList"];
+    string name = (string)ViewData["Name"];
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -28,16 +29,19 @@
     <tbody>
         @foreach (var d in disbursementList)
         {
-            <tr>
-                <input class="detailid" type="hidden" value=@d.Id"" />
-                <td>@d.Product.Description</td>
-                <td>@d.QtyNeeded</td>
-                <td>@d.QtyDisbursed</td>
-                <td>@d.DisburseRemark</td>
-                <td>@d.QtyReceived</td>
-                <td>@d.RepRemark</td>
+        <tr>
+            <input class="detailid" type="hidden" value=@d.Id" "    />
+            <td>@d.Product.Description</td>
+            <td>@d.QtyNeeded</td>
+            <td>@d.QtyDisbursed</td>
+            <td>@d.DisburseRemark</td>
+            <td>@d.QtyReceived</td>
+            <td>@d.RepRemark</td>
+            @if (disbursementList[0].Requisition.Status != "Received")
+            {
                 <td><input type="text" /></td>
-            </tr>
+            }
+        </tr>
         }
     </tbody>
 </table>
@@ -49,12 +53,16 @@
 <table>
     <tr>
         <td>Received by (Rep)</td>
-        <td>@disbursementList[0].Requisition.ReceivedByRep.Name</td>
-        <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(disbursementList[0].Requisition.ReceivedDate)</td>
+        @if (disbursementList[0].Requisition.Status != "Received" || disbursementList[0].Requisition.Status != "Completed")
+        {
+            <td>@disbursementList[0].Requisition.ReceivedByRep.Name</td>
+            <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(disbursementList[0].Requisition.ReceivedDate)</td>
+        }
     </tr>
     <tr>
         <td>Acknowledged by (Clerk)</td>
         <td id="clerk"></td>
+        <input id="clerkname" value="@name" type="hidden" />
         <td id="date"></td>
     </tr>
 </table>

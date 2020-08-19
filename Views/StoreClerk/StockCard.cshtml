@@ -46,6 +46,7 @@
             <tr>
                 <th>Date</th>
                 <th>Description</th>
+                <th>Reference Code</th>
                 <th>Quantity</th>
                 <th>Balance</th>
                 <th>Entered by</th>
@@ -57,6 +58,7 @@
                 <tr>
                     <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(t.Date)</td>
                     <td>@t.Description</td>
+                    <td>@t.RefCode</td>
                     <td>@t.Qty</td>
                     <td>@t.Balance</td>
                     <td>@t.UpdatedByEmp.Name</td>
@@ -69,7 +71,8 @@
         <form id="newEntry">
             <span>Add Entry:</span>
             <input id="productId" type="hidden" value="@transactions[0].ProductId" />
-            <input id="description" type="text" placeholder="Description" />
+            <input id="description" type="text" placeholder="Description" required/>
+            <input id="refcode" type="text" placeholder="Ref Code (optional)" />
             <input id="qty" type="number" value="0" />
             <input id="balance" type="hidden" value="@transactions.Last().Balance" />
             <input id="updatedByEmp" type="hidden" value="@ViewData["Name"]" />

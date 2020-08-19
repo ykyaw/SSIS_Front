@@ -24,6 +24,7 @@
     })
 
     $("#quote").on("click", function () {
+        let PurchaseRequestId = +$("#requestId").text();
         let Status = "Created";
         let details = [];
         $(".detailId").each(function () {
@@ -33,6 +34,8 @@
             let TotalPrice = number1 * number2;
             let detail = {
                 Id: +$(this).val(),
+                PurchaseRequestId,
+                ProductId: $(this).next().next().closest('td').data('productid'),
                 ReorderQty: +$(this).nextAll().eq(3).find('input').val(),
                 SupplierId: $(this).nextAll().eq(4).find('option:selected').data('sid'),
                 VenderQuote: $(this).nextAll().eq(5).find('input').val(),

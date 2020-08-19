@@ -12,7 +12,9 @@ namespace SSIS_FRONT.Models
         public int Id { get; set; }
         public string DepartmentId { get; set; }
         public int ReqByEmpId { get; set; }
+        public long? SubmittedDate { get; set; }
         public int? ApprovedById { get; set; }
+        public long? ApprovalDate { get; set; }
         public string Remarks { get; set; }
         public int? ProcessedByClerkId { get; set; }
         public long CreatedDate { get; set; }
