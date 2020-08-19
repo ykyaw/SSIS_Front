@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
-
+    validate();
+    $('input').on('keyup', validate);
     $('.number').change(function () {
         let cells = $(this).closest('tr').children('td');
         let number1 = +cells.eq(3).find('input').val();
@@ -8,20 +9,6 @@
         let totalprice = '$' + total.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
         cells.eq(6).text(totalprice);
     });
-
-    $('.venderquote').keyup(function () {
-        let empty = false;
-        $(this).each(function () {
-            if ($(this).val().length == 0) {
-                empty = true;
-            }
-        });
-        if (empty) {
-            $('#submit').attr('disabled', 'disabled');
-        } else {
-            $('#submit').attr('disabled', false);
-        }
-    })
 
     $("#quote").on("click", function () {
         let PurchaseRequestId = +$("#requestId").text();
@@ -155,3 +142,19 @@
     })
 
 });
+
+function validate() {
+    let inputs = 0;
+    let myinputs = $("input");
+    myinputs.each(function (e) {
+        if ($(this).val()) {
+            inputs += 1;
+        }
+    });
+
+    if (inputs == myinputs.length) {
+        $("#submit").prop("disabled", false);
+    } else {
+        $("#submit").prop("disabled", true);
+    }
+}
