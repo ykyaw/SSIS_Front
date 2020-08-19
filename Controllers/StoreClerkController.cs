@@ -477,6 +477,7 @@ namespace SSIS_FRONT.Controllers
             ViewData["adjustmentVoucherListToHTML"] = result.data;
             int clerkid = (int)HttpContext.Session.GetInt32("Id");
             ViewData["clerkid"] = clerkid;
+            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
             return View();
 
 
