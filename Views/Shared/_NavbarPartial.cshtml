@@ -59,18 +59,21 @@
     <li class="nav-item">
         <a class="nav-link text-dark" asp-controller="Department" asp-action="Requisition">Requisition Forms</a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="Department" asp-action="CollectionPoint">Set Collection Point</a>
+    </li>
 }
 
 @if ((string)ViewData["Role"] == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD])
 {
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="Department" asp-action="viewRequisitionDeptHead">Requisition</a>
+        <a class="nav-link text-dark" asp-controller="Department" asp-action="Requisition">Requisition Forms</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="Department" asp-action="delegateAuthority">Delegate Authority</a>
+        <a class="nav-link text-dark" asp-controller="Department" asp-action="Delegate">Delegate Authority</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="Department" asp-action="assignDeptRep">Assign Dept Representative</a>
+        <a class="nav-link text-dark" asp-controller="Department" asp-action="assignDeptRep">Assign Dept Rep</a>
     </li>
 
 }

@@ -79,7 +79,7 @@ namespace SSIS_FRONT.Controllers
         }
 
         [Route("Department/Requisition/{Id}")]
-        public IActionResult viewRequisitionDetailDeptHead(int Id)
+        public IActionResult RequisitionDetail(int Id)
         {
             string role = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
             ViewData["Role"] = role;
@@ -177,27 +177,32 @@ namespace SSIS_FRONT.Controllers
         //        return View();
         //    }
 
-        //    public IActionResult delegateAuthority()
-        //    {
-        //        ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
-        //        ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+        public IActionResult Delegate()
+        {
+            ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
 
-        //        string url1 = cfg.GetValue<string>("Hosts:Boot") + "/depthead/gae";
-        //        Result<List<Employee>> result1 = HttpUtils.Get(url1, new List<Employee>(), Request, Response);
-        //        ViewData["employees"] = result1.data;
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/depthead/gae";
+            Result<List<Employee>> result = HttpUtils.Get(url, new List<Employee>(), Request, Response);
+            ViewData["employees"] = result.data;
 
+            long currentdate = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            List<Employee> delegates = result.data.OrderBy(x => x.DelegateFromDate).ToList();
+            delegates.RemoveAll(x => x.DelegateToDate == null);
+            delegates.RemoveAll(x => x.DelegateToDate < currentdate);
 
+            ViewData["delegates"] = delegates;
 
-        //        return View();
-        //    }
+            return View();
+        }
 
-        //    [HttpPut]
-        //    public bool assignDelegate([FromBody] Employee employee)
-        //    {
-        //        string url = cfg.GetValue<string>("Hosts:Boot") + "/depthead/del";
-        //        Result<Object> result = HttpUtils.Put(url,employee, Request, Response);
-        //        return (bool)result.data;
-        //    }
+        [HttpPut]
+        public bool assignDelegate([FromBody] Employee employee)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/depthead/del";
+            Result<Object> result = HttpUtils.Put(url, employee, Request, Response);
+            return (bool)result.data;
+        }
 
         //    public IActionResult viewDisbursementDeptRep(string errMsg = "")
         //    {

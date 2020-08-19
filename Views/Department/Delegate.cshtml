@@ -1,0 +1,79 @@
+﻿@{
+    ViewData["Title"] = "Delegate Authority";
+    List<Employee> employees = (List<Employee>)ViewData["employees"];
+    List<Employee> delegates = (List<Employee>)ViewData["delegates"];
+}
+
+<div>
+    <h4>Assigned Delegates</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="delegates">
+            @if (delegates.Count == 0)
+            {
+                <tr>
+                    <td colspan="4">There is no assigned delegate for this department.</td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var d in delegates)
+                {
+                    <tr>
+                        <td>@d.Name</td>
+                        <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(d.DelegateFromDate)</td>
+                        <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(d.DelegateToDate)</td>
+                        <td>
+                            <button class="btn btn-primary">Edit</button>
+                            <button class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <h2>Employee List</h2>
+    <form id="employee">
+        <table>
+            <thead>
+                <tr>
+                    <td>Name</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var e in employees)
+                {
+                    <tr>
+                        <td>
+                            <input name="emp" type="radio" value="@e.Id" />
+                            <label>@e.Name</label>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+</div>
+
+<div>
+    <span>Start Date: </span>
+    <input id="fromdate" type="date" />
+    <span>End Date: </span>
+    <input id="todate" type="date" />
+</div>
+
+<div>
+    <button id="assign" class="btn btn-success">Assign as Delegate</button>
+</div>
+
+<script src="~/js/Delegate.js"></script>
