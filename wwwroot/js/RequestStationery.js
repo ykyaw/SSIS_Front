@@ -19,7 +19,7 @@
 
     $('#save').click(function () {
         let details = getUpdatedDetails();
-        Post(`/Department/SaveReqStationery`, details)
+        Post(`/Department/SaveRequest`, details)
             .then(function (response) {
                 console.log(response);
                 alert("success: " + response);
@@ -31,7 +31,7 @@
 
     $('#submit').click(function () {
         let details = getUpdatedDetails();
-        Post(`/Department/SubmitReqStationery`, details)
+        Post(`/Department/SubmitRequest`, details)
             .then(function (response) {
                 console.log(response);
                 alert("success: " + response);

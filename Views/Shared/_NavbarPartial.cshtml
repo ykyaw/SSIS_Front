@@ -1,4 +1,6 @@
-﻿@if ((string)ViewData["Role"] == "Clerk")
+﻿@using SSIS_FRONT.Common;
+
+@if ((string)ViewData["Role"] == CommonConstant.ROLE_NAME[CommonConstant.ROLE.STORE_CLERK])
 {
     <li class="nav-item">
         <a class="nav-link text-dark" asp-controller="StoreClerk" asp-action="Requisition">Requisition</a>
@@ -26,7 +28,7 @@
     </li>
 }
 
-@if ((string)ViewData["Role"] == "Supervisor")
+@if ((string)ViewData["Role"] == CommonConstant.ROLE_NAME[CommonConstant.ROLE.STORE_SUPERVISOR])
 {
     <li class="nav-item">
         <a class="nav-link text-dark" asp-controller="Store" asp-action="Vouchers">Adjustment Voucher</a>
@@ -39,7 +41,7 @@
     </li>
 }
 
-@if ((string)ViewData["Role"] == "Manager")
+@if ((string)ViewData["Role"] == CommonConstant.ROLE_NAME[CommonConstant.ROLE.STORE_MANAGER])
 {
     <li class="nav-item">
         <a class="nav-link text-dark" asp-controller="Store" asp-action="Vouchers">Adjustment Voucher</a>
@@ -49,7 +51,7 @@
     </li>
 }
 
-@if ((string)ViewData["Role"] == "Department Employee ")
+@if ((string)ViewData["Role"] == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_EMPLOYEE])
 {
     <li class="nav-item">
         <a class="nav-link text-dark" asp-controller="Department" asp-action="ReqStationery">Request Stationery</a>
@@ -59,7 +61,7 @@
     </li>
 }
 
-@if ((string)ViewData["Role"] == "Department Head ")
+@if ((string)ViewData["Role"] == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD])
 {
     <li class="nav-item">
         <a class="nav-link text-dark" asp-controller="Department" asp-action="viewRequisitionDeptHead">Requisition</a>

@@ -27,7 +27,7 @@ namespace SSIS_FRONT.Controllers
             return View();
         }
 
-        public IActionResult ReqStationery()
+        public IActionResult RequestStationery()
         {
             ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
             ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
@@ -43,120 +43,89 @@ namespace SSIS_FRONT.Controllers
             return View();
         }
 
-        public bool SaveReqStationery([FromBody] List<RequisitionDetail> requisitionDetail)
+        public bool SaveRequest([FromBody] List<RequisitionDetail> requisitionDetail)
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/updateRF";
             Result<Object> result = HttpUtils.Post(url, requisitionDetail, Request, Response);
             return (bool)result.data;
         }
 
-        public bool SubmitReqStationery([FromBody] List<RequisitionDetail> requisitionDetail)
+        public bool SubmitRequest([FromBody] List<RequisitionDetail> requisitionDetail)
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/submitrf";
             Result<Object> result = HttpUtils.Post(url, requisitionDetail, Request, Response);
             return (bool)result.data;
         }
 
-        //    public IActionResult viewRequisitionDeptHead()
-        //    {
-        //        ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
-        //        ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+        public IActionResult Requisition()
+        {
+            string role = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            ViewData["Role"] = role;
+            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
 
-        //        string url = cfg.GetValue<string>("Hosts:Boot") + "/depthead/rfl";
-        //        Result<List<Requisition>> result = HttpUtils.Get(url, new List<Requisition>(), Request, Response);
-        //        ViewData["requisitions"] = result.data;
+            string url;
+            if (role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD])
+            {
+                url = cfg.GetValue<string>("Hosts:Boot") + "/depthead/rfl";
+            }
+            else
+            {
+                url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/rfl";
+            }
+            Result<List<Requisition>> result = HttpUtils.Get(url, new List<Requisition>(), Request, Response);
+            ViewData["requisitions"] = result.data;
 
-        //        return View();
-        //    }
+            return View();
+        }
 
-        //    [Route("Department/viewRequisitionDeptHead/{RequisitionId}")]
-        //    public IActionResult viewRequisitionDetailDeptHead(int RequisitionId)
-        //    {
-        //        ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
-        //        ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+        [Route("Department/Requisition/{Id}")]
+        public IActionResult viewRequisitionDetailDeptHead(int Id)
+        {
+            string role = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            ViewData["Role"] = role;
+            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
 
-        //        string url = cfg.GetValue<string>("Hosts:Boot") + "/depthead/rfld/" + RequisitionId;
-        //        Result<Requisition> result = HttpUtils.Get(url, new Requisition(), Request, Response);
-        //        ViewData["requisition"] = result.data;
-        //        return View();
-        //    }
+            string url1;
+            if (role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD])
+            {
+                url1 = cfg.GetValue<string>("Hosts:Boot") + "/depthead/rfld/" + Id;
+            }
+            else
+            {
+                url1 = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/rfld/" + Id;
+            }
+            Result<Requisition> result1 = HttpUtils.Get(url1, new Requisition(), Request, Response);
+            ViewData["requisition"] = result1.data;
 
+            string url2 = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/catalogue";
+            Result<List<Product>> result2 = HttpUtils.Get(url2, new List<Product>(), Request, Response);
+            ViewData["products"] = result2.data;
 
+            return View();
+        }
 
-        //    public IActionResult viewRequisitionEmp()
-        //    {
-        //        ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
-        //        ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+        public IActionResult CollectionPoint()
+        {
+            ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
 
-        //        string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/rfl";
-        //        Result<List<Requisition>> result = HttpUtils.Get(url, new List<Requisition>(), Request, Response);
-        //        ViewData["requisitions"] = result.data;
+            string url1 = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/dept";
+            Result<Department> result1 = HttpUtils.Get(url1, new Department(), Request, Response);
+            ViewData["departments"] = result1.data;
 
+            string url2 = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/clist";
+            Result<List<CollectionPoint>> result2 = HttpUtils.Get(url2, new List<CollectionPoint>(), Request, Response);
+            ViewData["collectionPoints"] = result2.data;
 
-        //        return View();
-        //    }
+            return View();
+        }
 
-        //    [Route("Department/viewRequisitionEmp/{RequisitionId}")]
-        //    public IActionResult viewRequisitionDetailEmp(int RequisitionId)
-        //    {
-        //        ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
-        //        ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
-
-        //        string url1 = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/rfld/" + RequisitionId;
-        //        Result<Requisition> result1 = HttpUtils.Get(url1, new Requisition(), Request, Response);
-        //        ViewData["requisition"] = result1.data;
-
-        //        string url2 = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/catalogue";
-        //        Result<List<Product>> result2 = HttpUtils.Get(url2, new List<Product>(), Request, Response);
-        //        ViewData["products"] = result2.data;
-
-        //        List<RequisitionDetail> requisitionDetails = new List<RequisitionDetail>();
-        //        ViewData["requisitionDetail"] = requisitionDetails;
-
-        //        RequisitionDetail rd1 = new RequisitionDetail();
-        //        //rd1.Product.Description = "Clips";
-        //        rd1.QtyNeeded = 10;
-        //        rd1.QtyDisbursed = 8;
-        //        rd1.DisburseRemark = "Insufficient stock";
-        //        rd1.QtyReceived = 8;
-        //        rd1.RepRemark = "Receieved in good order";
-        //        requisitionDetails.Add(rd1);
-
-
-        //        return View();
-        //    }
-
-
-
-        //    public IActionResult updateCollectionPoint()
-        //    {
-
-        //        ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
-        //        ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
-
-
-        //        string url1 = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/dept";
-        //        Result<Department> result1 = HttpUtils.Get(url1, new Department(), Request, Response);
-        //        ViewData["departments"] = result1.data;
-
-
-        //        string url2 = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/clist";
-        //        Result<List<CollectionPoint>> result2 = HttpUtils.Get(url2, new List<CollectionPoint>(), Request, Response);
-        //        ViewData["collectionpoints"] = result2.data;
-
-        //        return View();
-        //    }
-
-
-        //    [HttpPut]
-        //    public bool Savecp([FromBody] CollectionPoint collectionPoint)
-        //    {
-        //        string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/ucp";
-        //        Result<Object> result = HttpUtils.Put(url, collectionPoint, Request, Response);
-        //        return (bool)result.data;
-        //    }
-
-
+        public bool SetCollectionPoint([FromBody] CollectionPoint collectionPoint)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/ucp";
+            Result<Object> result = HttpUtils.Put(url, collectionPoint, Request, Response);
+            return (bool)result.data;
+        }
 
         //    public IActionResult viewDisbBefAck()
         //    {

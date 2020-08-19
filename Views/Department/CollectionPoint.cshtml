@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Set Collection Point";
+    List<CollectionPoint> collectionPoints = (List<CollectionPoint>)ViewData["collectionPoints"];
+    Department department = (Department)ViewData["departments"];
+}
+
+<table>
+    <tr>
+        <td>Department:</td>
+        <td>@department.Name</td>
+    </tr>
+    <tr>
+        <td>Current Collection Point:</td>
+        <td id="location">@department.CollectionPoint.Location</td>
+    </tr>
+    <tr>
+        <td>Current Collection Time:</td>
+        <td id="time">@department.CollectionPoint.CollectionTime</td>
+    </tr>
+</table>
+
+<div>
+    <form id="collectionpoint">
+        <label>Select Collection Point</label>
+        <br />
+        @foreach (var c in collectionPoints)
+        {
+            <input name="cp" type="radio" data-loc="@c.Location" data-time="@c.CollectionTime" value="@c.Id"/>
+            <label> @c.Location @c.CollectionTime</label>
+            <br />
+        }
+    </form>
+    <button id="change" type="button" class="btn btn-success">Change</button>
+</div>
+
+<script src="~/js/CollectionPoint.js"></script>
