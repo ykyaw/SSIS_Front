@@ -3,24 +3,52 @@
     string errmsg = (string)ViewData["errmsg"];
 }
 
-<h1>Login Index</h1>
-<span id="errmsg" style="color:red">@errmsg</span>
+@*<h1>Login Index</h1>
+    <span id="errmsg" style="color:red">@errmsg</span>
+    <form action="/Login/Verify" method="post" onsubmit="return validate()">
+        <label>email:</label>
+        <input type="text" name="email" />
+        <label>Password:</label>
+        <input type="password" name="plainPassword" />
+        <input type="hidden" name="password" id="password" />
+        <button id="loginBtn">sign in</button>
+    </form>
+
+    <button id="withoutToken">Test token</button>*@
+
+
 <form action="/Login/Verify" method="post" onsubmit="return validate()">
-    <label>email:</label>
-    <input type="text" name="email" />
-    <label>Password:</label>
-    <input type="password" name="plainPassword" />
-    <input type="hidden" name="password" id="password" />
-    <button id="loginBtn">sign in</button>
+    <div class="container">
+        <div class="row">
+            <div class="col-6" style="margin-top:100px;">
+                <img src="~/images/ssis_logo.png" />
+            </div>
+            <div class="col-6" style="margin-top:100px;">
+                <h2 style="text-align:center">Sign in here</h2>
+                <span id="errmsg" style="color:red">@errmsg</span><br />
+                @*<label>email:</label><br />*@
+                <input type="text" name="email" class="form-control" placeholder="Email" /><br />
+                @*<label>Password:</label><br />*@
+                <input type="password" name="plainPassword" class="form-control" placeholder="Password" /><br />
+                <input type="hidden" name="password" id="password" /><br />
+                <button id="loginBtn" class=" form-control btn btn-dark font-weight-bold">Sign in</button><br />
+            </div>
+        </div>
+    </div>
+
 </form>
-
-<button id="withoutToken">Test token</button>
-
+<div class="container">
+    <div class="row">
+        <div class="col-12" style="text-align:center;">
+            <button id="withoutToken" class="btn btn-outline-secondary">Test token</button>
+        </div>
+    </div>
+</div>
 
 @*<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/lib/crypto/core-min.js"></script>
-<script src="~/lib/crypto/sha256.js"></script*@>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/crypto/core-min.js"></script>
+    <script src="~/lib/crypto/sha256.js"></script>*@
+
 <script src="~/js/login.js"></script>
 <script src="~/js/testToken.js"></script>
-
