@@ -13,7 +13,7 @@
             DelegateFromDate: delegateFromDate.getTime(),
             DelegateToDate: delegateToDate.getTime()
         }
-        Put(`/Department/assignDelegate`, employee)
+        Put(`/Department/AssignDelegate`, employee)
             .then(function (response) {
                 console.log(response);
                 //alert("success: " + response);

@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Delegate Authority";
+    List<Employee> employees = (List<Employee>)ViewData["employees"];
+    @*Employee deptrep = (Employee)ViewData["deptrep"];*@
+}
+
+<div>
+    <h4>Assigned Department Representative: <span id="rep">Temporary until backend complete</span></h4>
+    @*<h4>Assigned Department Representative: <span id="rep">@deptrep.Name</span></h4>*@
+</div>
+
+<div>
+    <h2>Employee List</h2>
+    <form id="employee">
+        <table>
+            <thead>
+                <tr>
+                    <td>Name</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var e in employees)
+                {
+                    <tr>
+                        <td>
+                            <input name="emp" type="radio" value="@e.Id" />
+                            <label>@e.Name</label>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+</div>
+
+<div>
+    <button id="assign" class="btn btn-success">Assign as Dept Representative</button>
+</div>
+
+<script src="~/js/DeptRep.js"></script>
