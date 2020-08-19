@@ -1,111 +1,51 @@
-﻿
-@using SSIS_FRONT.Models;
-
-@{
+﻿@{
+    ViewData["Title"] = "Requisition Form";
     List<Product> products = (List<Product>)ViewData["products"];
     Requisition requisition = (Requisition)ViewData["requisitions"];
 }
-<h4 style="text-align:center;">Requisition Form</h4>
-<br />
+<h1>@ViewData["Title"]</h1>
 
-
-
-<table class="noborder">
-    <tr class="noborder">
-        <td class="noborder">Form ID:</td>
-        <td class="noborder" id="formId">@requisition.Id</td>
+<table>
+    <tr>
+        <td>Form ID:</td>
+        <td id="formid">@requisition.Id</td>
     </tr>
-
-    <tr class="noborder">
-        <td class="noborder">Request Date:</td>
-        <td class="noborder" id="tdydate"></td>
+    <tr>
+        <td>Request Date:</td>
+        <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(requisition.CreatedDate)</td>
     </tr>
 </table>
 
-<table class="table table-striped noborder" style="margin: 100px auto 30px;" id="myTable">
-    <thead class="noborder">
-        <tr class="noborder">
-            <th class="noborder">Description</th>
-            <th class="noborder">Quantity</th>
-            <th class="noborder"></th>
+<br />
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Description</th>
+            <th>Quantity</th>
         </tr>
     </thead>
-    <tbody class="noborder">
-        <tr class="noborder">
-            @*<td class="noborder"></td>
-                <td class="noborder"></td>*@
-            @*<td class="noborder"><input type="button" class="btn btn-danger" value="Delete" /></td>*@
-        </tr>
+    <tbody id="requestlist">
     </tbody>
 </table>
 
-
-
-<div class="form-inline">
-    <div class="form-group mb-2">
-        <label for="item" class="sr-only text-right">Item</label>
-        <input type="text" readonly class="form-control-plaintext" id="item" value="                 Item:">
-
-    </div>
-
-    <div class="form-group mx-sm-3 mb-2">
-        <label for="chooseItem" class="sr-only">choose item</label>
-        <select class="form-control" id="ddlViewBy">
-            <option>
-                -- Choose Item --
-            </option>
-            @foreach (var product in products)
-            {
-
-                <option value="@(product.Id+"/"+product.Description)">
-                    @product.Description
-                </option>
-            }
-        </select>
-    </div>
-
-    <div class="form-group mb-2">
-        <label for="qty" class="sr-only text-right">Qty</label>
-        <input type="text" readonly class="form-control-plaintext" value="                 Qty:">
-
-    </div>
-
-    <div class="form-group mb-2">
-        <label for="qty2" class="sr-only">Qty2</label>
-        <input type="number" id="qty" class="form-control input-sm quantity" />
-
-    </div>
-
-    <div class="form-group mb-2">
-        <label for="qty" class="sr-only">Qty</label>
-        <input type="text" readonly class="form-control-plaintext" id="qty" value="  ">
-
-    </div>
-    <button type="button" id="add" class="btn btn-outline-info mb-2">Add</button>
+<div>
+    <label>Item</label>
+    <select id="product">
+        <option value="0">Choose Item</option>
+        @foreach (var p in products)
+        {
+            <option data-desc="@p.Description" value="@(@p.Id)">[@p.Id] @p.Description</option>
+        }
+    </select>
+    <label>Qty</label>
+    <input id="qty" type="number" min="0" />
+    <button id="add">Add</button>
 </div>
 
+<div>
+    <button id="save" class="btn btn-primary">Save Draft</button>
+    <button id="submit" class="btn btn-success">Submit</button>
+</div>
 
-<br />
-<br />
-
-<table style="margin-left:auto; margin-right:auto;" class="noborder">
-
-    <tr class="noborder">
-        <td class="noborder">
-            <input type="button" id="savedraft" class="btn btn-warning" value="Save Draft" />
-        </td>
-        <td class="noborder">
-            <input type="button" id="submit" class="btn btn-primary" value="Submit" />
-        </td>
-    </tr>
-
-</table>
-
-
-
-
-
-
-
-
-<script src="~/js/reqStationery.js"></script>
+<script src="~/js/ReqStationery.js"></script>

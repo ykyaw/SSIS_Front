@@ -52,17 +52,11 @@
 @if ((string)ViewData["Role"] == "Department Employee ")
 {
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="Department" asp-action="viewRequisitionEmp">Requisition</a>
+        <a class="nav-link text-dark" asp-controller="Department" asp-action="ReqStationery">Request Stationery</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="Department" asp-action="viewDisbursementDeptRep">Disbursement</a>
+        <a class="nav-link text-dark" asp-controller="Department" asp-action="Requisition">Requisition Forms</a>
     </li>
-    @*@if ((string)ViewData["Role"] == "EmployeeRep")
-        {*@
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="Department" asp-action="updateCollectionPoint">Set Collection Point</a>
-    </li>
-    //}
 }
 
 @if ((string)ViewData["Role"] == "Department Head ")
