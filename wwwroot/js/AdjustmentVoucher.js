@@ -2,6 +2,7 @@
     $("#generate").click(function () {
         let product = $("#product").val();
         let productid = product.split("/")[0];
+        console.log(productid)
         let description = product.split("/")[1];
         let quantity = $("#qtyAdjusted").val();
         let reason = $("#reason").val();
@@ -34,7 +35,7 @@
         let AdjustmentVoucherId = $("#voucherId").attr("value");
         let VoucherDetails = [];
         $(".productId").each(function () {
-            let productid = $(this).text()
+            let productid = $(this).text().trim()
             let quantity = +$(this).nextAll('.quantity').text()
             let price = +$(this).nextAll('.price').text()
             let totalprice = +$(this).nextAll('.totalprice').text()
@@ -67,7 +68,7 @@
         let AdjustmentVoucherId = $("#voucherId").attr("value");
         let VoucherDetails = [];
         $(".productId").each(function () {
-            let productid = $(this).text()
+            let productid = $(this).text().trim()
             let quantity = +$(this).nextAll('.quantity').text()
             let price = +$(this).nextAll('.price').text()
             let totalprice = +$(this).nextAll('.totalprice').text()
