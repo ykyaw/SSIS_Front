@@ -34,12 +34,12 @@ namespace SSIS_FRONT.Controllers
         public IActionResult Verify(Employee user)
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/Login/Verify";
-            Result<Object> result = HttpUtils.Post(url, user,Request,Response);
+            Result<Dictionary<string,Object>> result = HttpUtils.Post(url, user,new Dictionary<string, object>(),Request,Response);
             if (result.code != 200)
             {
                 return RedirectToAction("Index", "Home", new { isLogin = false });
             }
-            string token = result.data.ToString();
+            string token = result.data["token"].ToString();
             if (!string.IsNullOrEmpty(token))
             {
                 return RedirectToAction("Privacy", "Home");
