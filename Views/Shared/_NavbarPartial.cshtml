@@ -3,77 +3,77 @@
 @if ((string)ViewData["Role"] == CommonConstant.ROLE_NAME[CommonConstant.ROLE.STORE_CLERK])
 {
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="StoreClerk" asp-action="Requisition">Requisition</a>
+        <a class="nav-link text-light" asp-controller="StoreClerk" asp-action="Requisition">Requisition</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="StoreClerk" asp-action="Disbursement">Disbursement</a>
+        <a class="nav-link text-light" asp-controller="StoreClerk" asp-action="Disbursement">Disbursement</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="StoreClerk" asp-action="GenerateRetrieveForm">Retrieval</a>
+        <a class="nav-link text-light" asp-controller="StoreClerk" asp-action="GenerateRetrieveForm">Retrieval</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="StoreClerk" asp-action="Catalogue">Catalogue</a>
+        <a class="nav-link text-light" asp-controller="StoreClerk" asp-action="Catalogue">Catalogue</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="StoreClerk" asp-action="PurchaseRequest">Purchase Request</a>
+        <a class="nav-link text-light" asp-controller="StoreClerk" asp-action="PurchaseRequest">Purchase Request</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="StoreClerk" asp-action="PurchaseOrder">PO</a>
+        <a class="nav-link text-light" asp-controller="StoreClerk" asp-action="PurchaseOrder">PO</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="StoreClerk" asp-action="DeliveryOrder">DO</a>
+        <a class="nav-link text-light" asp-controller="StoreClerk" asp-action="DeliveryOrder">DO</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="StoreClerk" asp-action="AdjustmentVoucher">Adjustment Voucher</a>
+        <a class="nav-link text-light" asp-controller="StoreClerk" asp-action="AdjustmentVoucher">Adjustment Voucher</a>
     </li>
 }
 
 @if ((string)ViewData["Role"] == CommonConstant.ROLE_NAME[CommonConstant.ROLE.STORE_SUPERVISOR])
 {
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="Store" asp-action="Vouchers">Adjustment Voucher</a>
+        <a class="nav-link text-light" asp-controller="Store" asp-action="Vouchers">Adjustment Voucher</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="StoreClerk" asp-action="PurchaseRequest">Purchase Request</a>
+        <a class="nav-link text-light" asp-controller="StoreClerk" asp-action="PurchaseRequest">Purchase Request</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="Supervisor" asp-action="Forecast">Data Analysis</a>
+        <a class="nav-link text-light" asp-controller="Supervisor" asp-action="Forecast">Data Analysis</a>
     </li>
 }
 
 @if ((string)ViewData["Role"] == CommonConstant.ROLE_NAME[CommonConstant.ROLE.STORE_MANAGER])
 {
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="Store" asp-action="Vouchers">Adjustment Voucher</a>
+        <a class="nav-link text-light" asp-controller="Store" asp-action="Vouchers">Adjustment Voucher</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="Store" asp-action="Supplier">Supplier</a>
+        <a class="nav-link text-light" asp-controller="Store" asp-action="Supplier">Supplier</a>
     </li>
 }
 
 @if ((string)ViewData["Role"] == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_EMPLOYEE])
 {
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="Department" asp-action="ReqStationery">Request Stationery</a>
+        <a class="nav-link text-light" asp-controller="Department" asp-action="ReqStationery">Request Stationery</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="Department" asp-action="Requisition">Requisition Forms</a>
+        <a class="nav-link text-light" asp-controller="Department" asp-action="Requisition">Requisition Forms</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="Department" asp-action="CollectionPoint">Set Collection Point</a>
+        <a class="nav-link text-light" asp-controller="Department" asp-action="CollectionPoint">Set Collection Point</a>
     </li>
 }
 
 @if ((string)ViewData["Role"] == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD])
 {
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="Department" asp-action="Requisition">Requisition Forms</a>
+        <a class="nav-link text-light" asp-controller="Department" asp-action="Requisition">Requisition Forms</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="Department" asp-action="Delegate">Delegate Authority</a>
+        <a class="nav-link text-light" asp-controller="Department" asp-action="Delegate">Delegate Authority</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="Department" asp-action="DeptRep">Assign Dept Rep</a>
+        <a class="nav-link text-light" asp-controller="Department" asp-action="DeptRep">Assign Dept Rep</a>
     </li>
 
 }
