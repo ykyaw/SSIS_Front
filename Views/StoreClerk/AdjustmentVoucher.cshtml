@@ -3,42 +3,52 @@
     ViewData["Title"] = "Adjustment Voucher";
     List<AdjustmentVoucher> vouchers = (List<AdjustmentVoucher>)ViewData["adjustmentVoucherListToHTML"];
     string role = (string)ViewData["Role"];
+    int clerkid = (int)ViewData["clerkid"];
+    string name = (string)ViewData["Name"];
 }
 
 <h1>Adjustment Voucher List</h1>
+<input id="clerkid" type="hidden" value="@clerkid" />
 <input type="text" placeholder="search" id="search" />
 
 <div>
     <a class="btn btn-primary" asp-controller="StoreClerk" asp-action="GenerateAdjustmentVoucher">Issue Adjustment Voucher</a>
 </div>
 <div>
-    <a class="btn btn-primary" asp-controller="StoreClerk" asp-action="AdjustmentVoucherByClerkId">View My Adjustment Voucher History</a>
+    <a class="btn btn-primary" id="viewclerkhistory" value="@name" asp-controller="StoreClerk" asp-action="AdjustmentVoucherByClerkId()">View My Adjustment Voucher History</a>
+</div>
+<div>
+    @*<a class="btn btn-primary" id="allvouchers">View All Voucher List</a>*@
 </div>
 <table class="table table-striped">
     <thead>
         <tr>
             <th>Voucher#</th>
+            <th>Initiated By</th>
             <th>Date Issued</th>
             <th>Status</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
+
+        
         @foreach (AdjustmentVoucher adv in vouchers)
         {
             <tr class="adjustmentvoucher">
                 <td class="adjustmentvoucherid">@adv.Id</td>
-                <td class="initiateDate">@adv.InitiatedDate</td>
+                <td class="clerkid" data-id="@adv.InitiatedClerkId">@adv.InitiatedClerk.Name</td>
+                <td class="initiateDate">@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(adv.InitiatedDate)</td>
                 <td class="status" value="@adv.Status">@adv.Status</td>
                 <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="AdjustmentVoucherDetails" asp-route-id="@adv.Id">Details</a></td>
-                @*@if (adv.Status == "Created")
+                @if (adv.Status == "Created" && adv.InitiatedClerkId == clerkid)
                 {
                     <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="AmendAdjustmentVoucher" asp-route-id="@adv.Id">Amend</a></td>
                 }
                 else
                 {
                     <td>   </td>
-                }*@
+                }
             </tr>
         }
     </tbody>

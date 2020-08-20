@@ -100,7 +100,7 @@ namespace SSIS_FRONT.Controllers
         }
         public bool AckDisbursement([FromBody] List<RequisitionDetail> requisitionDetails)
         {
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/rfld"; // CHANGE URL AFTER BACKEND COMPLETE
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/ackreq";
             Result<Object> result = HttpUtils.Put(url, requisitionDetails, Request, Response);
             return (bool)result.data;
         }
@@ -195,6 +195,13 @@ namespace SSIS_FRONT.Controllers
             ViewData["prDetailsByPr"] = prDetailsByPr;
 
             return View();
+        }
+        [HttpPost]
+        public bool GenerateQuote([FromBody] List<PurchaseRequestDetail> details)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/generatequote";
+            Result<Object> result = HttpUtils.Post(url, details, Request, Response);
+            return (bool)result.data;
         }
         [HttpPut]
         [Route("StoreClerk/PurchaseRequest")]
@@ -294,6 +301,11 @@ namespace SSIS_FRONT.Controllers
 
             return View();
         }
+        //public bool UpdateDelivery([FromBody] List<RequisitionDetail> requisitionDetails)
+        //{
+        //    string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/rfld"; // CHANGE URL AFTER BACKEND COMPLETE
+        //    Result<Object> result = HttpUtils.Put(url, requisitionDetails, Request, Response);
+        //}
 
         /**
          * @author WUYUDING
@@ -463,6 +475,9 @@ namespace SSIS_FRONT.Controllers
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/adv";
             Result<List<AdjustmentVoucher>> result = HttpUtils.Get(url, new List<AdjustmentVoucher>(), Request, Response);
             ViewData["adjustmentVoucherListToHTML"] = result.data;
+            int clerkid = (int)HttpContext.Session.GetInt32("Id");
+            ViewData["clerkid"] = clerkid;
+            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
             return View();
 
 
@@ -480,6 +495,8 @@ namespace SSIS_FRONT.Controllers
             string url1 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/findAdjustmentVoucher/" + advId;
             Result<AdjustmentVoucher> result1 = HttpUtils.Get(url1, new AdjustmentVoucher(), Request, Response);
 
+            int clerkid = (int)HttpContext.Session.GetInt32("Id");
+            ViewData["clerkid"] = clerkid;
             ViewData["adjustmentVoucherDetailsToHTML"] = result.data;
             ViewData["av"] = result1.data;
             return View();
@@ -508,11 +525,11 @@ namespace SSIS_FRONT.Controllers
         [Route("/StoreClerk/gettenderprice/{ProductId}")]
         public double GetTenderPriceById(string ProductId)
         {
-            //string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/supplier/" + ProductId;
-            //Result<List<TenderQuotation>> result = HttpUtils.Get(url, new List<TenderQuotation>(), Request, Response);
-            //double TenderQuotation = result.data.Where(x => x.Rank == 1).FirstOrDefault().Unitprice;
-            double TenderQuotation = 10.00;
-            return TenderQuotation;
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/FirstTenderbyProdutId/" + ProductId;
+            Result<TenderQuotation> result = HttpUtils.Get(url, new TenderQuotation(), Request, Response);
+            double tenderprice = (double)result.data.Unitprice;
+            //double TenderQuotation = 10.00;
+            return tenderprice;
         }
 
 
@@ -561,7 +578,7 @@ namespace SSIS_FRONT.Controllers
             ViewData["av"] = result1.data;
             ViewData["products"] = result2.data;
 
-            
+
 
             return View();
 
@@ -570,14 +587,17 @@ namespace SSIS_FRONT.Controllers
         [HttpGet]
         public IActionResult AdjustmentVoucherByClerkId()
         {
+            int clerkid = (int)HttpContext.Session.GetInt32("Id");
+            ViewData["clerkid"] = clerkid;
 
-            
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/findAdjustmentVoucherbyClerk/";
             Result<List<AdjustmentVoucher>> result = HttpUtils.Get(url, new List<AdjustmentVoucher>(), Request, Response);
             ViewData["avByClerk"] = result.data;
+
             return View();
 
         }
+
 
     }
 }

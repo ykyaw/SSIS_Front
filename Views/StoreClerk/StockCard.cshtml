@@ -5,71 +5,85 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<table class="noborder">
-    <tr>
-        <td>Item Code</td>
-        <td>@transactions[0].ProductId</td>
-    </tr>
-    <tr>
-        <td>Item Description</td>
-        <td>@transactions[0].Product.Description</td>
-    </tr>
-    <tr>
-        <td>Bin#</td>
-        <td>@transactions[0].Product.CategoryId</td>
-    </tr>
-    <tr>
-        <td>UOM</td>
-        <td>@transactions[0].Product.Uom</td>
-    </tr>
-    <tr>
-        <td>1st Supplier</td>
-        <td>@tenderQuotations[0].Supplier.Name</td>
-    </tr>
-    <tr>
-        <td>2nd Supplier</td>
-        <td>@tenderQuotations[1].Supplier.Name</td>
-    </tr>
-    <tr>
-        <td>3rd Supplier</td>
-        <td>@tenderQuotations[2].Supplier.Name</td>
-    </tr>
-</table>
 
-<table class="table table-striped">
-    <thead>
+@if (transactions.Count > 0)
+{
+
+    <table class="noborder">
         <tr>
-            <th>Date</th>
-            <th>Description</th>
-            <th>Quantity</th>
-            <th>Balance</th>
-            <th>Entered by</th>
+            <td>Item Code</td>
+            <td>@transactions[0].ProductId</td>
         </tr>
-    </thead>
-    <tbody id="transactionList">
-        @foreach (var t in transactions)
-        {
-            <tr>
-                <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(t.Date)</td>
-                <td>@t.Description</td>
-                <td>@t.Qty</td>
-                <td>@t.Balance</td>
-                <td>@t.UpdatedByEmp.Name</td>
-            </tr>
-        }
-    </tbody>
-</table>
+        <tr>
+            <td>Item Description</td>
+            <td>@transactions[0].Product.Description</td>
+        </tr>
+        <tr>
+            <td>Bin#</td>
+            <td>@transactions[0].Product.CategoryId</td>
+        </tr>
+        <tr>
+            <td>UOM</td>
+            <td>@transactions[0].Product.Uom</td>
+        </tr>
+        <tr>
+            <td>1st Supplier</td>
+            <td>@tenderQuotations[0].Supplier.Name</td>
+        </tr>
+        <tr>
+            <td>2nd Supplier</td>
+            <td>@tenderQuotations[1].Supplier.Name</td>
+        </tr>
+        <tr>
+            <td>3rd Supplier</td>
+            <td>@tenderQuotations[2].Supplier.Name</td>
+        </tr>
+    </table>
 
-<div>
-    <form id="newEntry">
-        <span>Add Entry:</span>
-        <input id="productId" type="hidden" value="@transactions[0].ProductId"/>
-        <input id="description" type="text" placeholder="Description" />
-        <input id="qty" type="number" value="0" />
-        <input id="balance" type="hidden" value="@transactions.Last().Balance"/>
-        <input id="updatedByEmp" type="hidden" value="@ViewData["Name"]" />
-        <button id="addEntry" type="button" class="btn btn-primary">Save</button>
-    </form>
-</div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Reference Code</th>
+                <th>Quantity</th>
+                <th>Balance</th>
+                <th>Entered by</th>
+            </tr>
+        </thead>
+        <tbody id="transactionList">
+            @foreach (var t in transactions)
+            {
+                <tr>
+                    <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(t.Date)</td>
+                    <td>@t.Description</td>
+                    <td>@t.RefCode</td>
+                    <td>@t.Qty</td>
+                    <td>@t.Balance</td>
+                    <td>@t.UpdatedByEmp.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div>
+        <form id="newEntry">
+            <span>Add Entry:</span>
+            <input id="productId" type="hidden" value="@transactions[0].ProductId" />
+            <input id="description" type="text" placeholder="Description" required/>
+            <input id="refcode" type="text" placeholder="Ref Code (optional)" />
+            <input id="qty" type="number" value="0" />
+            <input id="balance" type="hidden" value="@transactions.Last().Balance" />
+            <input id="updatedByEmp" type="hidden" value="@ViewData["Name"]" />
+            <button id="addEntry" type="button" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+
+}
+else
+{
+    <span>There is no transaction history for this product.</span>
+}
 
 <script src="~/js/StockCard.js"></script>

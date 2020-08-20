@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
-
+    validate();
+    $('input').on('keyup', validate);
     $('.number').change(function () {
         let cells = $(this).closest('tr').children('td');
         let number1 = +cells.eq(3).find('input').val();
@@ -9,21 +10,8 @@
         cells.eq(6).text(totalprice);
     });
 
-    $('.venderquote').keyup(function () {
-        let empty = false;
-        $(this).each(function () {
-            if ($(this).val().length == 0) {
-                empty = true;
-            }
-        });
-        if (empty) {
-            $('#submit').attr('disabled', 'disabled');
-        } else {
-            $('#submit').attr('disabled', false);
-        }
-    })
-
     $("#quote").on("click", function () {
+        let PurchaseRequestId = +$("#requestId").text();
         let Status = "Created";
         let details = [];
         $(".detailId").each(function () {
@@ -33,6 +21,8 @@
             let TotalPrice = number1 * number2;
             let detail = {
                 Id: +$(this).val(),
+                PurchaseRequestId,
+                ProductId: $(this).next().next().closest('td').data('productid'),
                 ReorderQty: +$(this).nextAll().eq(3).find('input').val(),
                 SupplierId: $(this).nextAll().eq(4).find('option:selected').data('sid'),
                 VenderQuote: $(this).nextAll().eq(5).find('input').val(),
@@ -152,3 +142,19 @@
     })
 
 });
+
+function validate() {
+    let inputs = 0;
+    let myinputs = $("input");
+    myinputs.each(function (e) {
+        if ($(this).val()) {
+            inputs += 1;
+        }
+    });
+
+    if (inputs == myinputs.length) {
+        $("#submit").prop("disabled", false);
+    } else {
+        $("#submit").prop("disabled", true);
+    }
+}

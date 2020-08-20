@@ -35,7 +35,7 @@
             <tr>
                 <input class="detailId" type="hidden" value="@kvp.Key.Id" />
                 <td>@kvp.Key.ProductId</td>
-                <td>@kvp.Key.Product.Description</td>
+                <td data-productid="@kvp.Key.ProductId">@kvp.Key.Product.Description</td>
                 <td>@kvp.Key.CurrentStock</td>
 
                 @if (role == "Clerk" && kvp.Key.Status == "Created")
@@ -45,14 +45,14 @@
                     </td>
                     <td>
                         <select class="supplierid number">
-                            @foreach (var v in kvp.Value)
+                            @foreach (var v in kvp.Value) 
                             {
-                                <option data-sid="@v.SupplierId" value="@v.Unitprice">@v.Supplier.Name</option>
+                                <option data-sid="@v.SupplierId" value="@v.Unitprice">Rank @v.Rank: @v.Supplier.Name</option>
                             }
                         </select>
                     </td>
                     <td>
-                        <input  class="venderquote" type="text" value="@kvp.Key.VenderQuote"/>
+                        <input class="venderquote" type="text" value="@kvp.Key.VenderQuote" />
                     </td>
                 }
                 else
@@ -80,7 +80,7 @@
         <div id="clerkButton">
             <button id="quote" class="btn btn-primary">Generate Quote</button>
             <button id="update" class="btn btn-primary">Update</button>
-            <button id="submit" class="btn btn-success" disabled>Submit for Approval</button>
+            <button id="submit" class="btn btn-success" disabled="disabled">Submit for Approval</button>
         </div>
     }
 }

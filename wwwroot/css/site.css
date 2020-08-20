@@ -79,3 +79,6 @@ table,tr,td,th {
 }
 
 
+.nav-item > a:hover, .nav-item > a:focus {
+    background-color: #40754B;
+}

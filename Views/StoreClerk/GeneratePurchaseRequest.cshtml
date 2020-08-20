@@ -13,7 +13,7 @@
                 <option value="0">Choose Item</option>
                 @foreach (var p in products)
                 {
-                    <option value="@p.Id">@p.Description</option>
+                    <option value="@p.Id">[@p.Id] @p.Description</option>
                 }
             </select>
         </td>
@@ -30,7 +30,7 @@
                     <option value="0">Choose Item</option>
                     @foreach (var p in products)
                     {
-                        <option value="@p.Id">@p.Description</option>
+                        <option value="@p.Id">[@p.Id] @p.Description</option>
                     }
                 </select>
             </td>

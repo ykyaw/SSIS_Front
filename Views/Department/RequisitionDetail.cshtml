@@ -1,0 +1,81 @@
+﻿@using SSIS_FRONT.Common;
+
+@{
+    ViewData["Title"] = "Requisition Form";
+    Requisition requisition = (Requisition)ViewData["requisition"];
+    string role = (string)ViewData["Role"];
+}
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <table id="form">
+        <tr>
+            <td>Form ID</td>
+            <td><span id="requisitionId">@requisition.Id</span></td>
+        </tr>
+        <tr>
+            <td>Employee Name</td>
+            <td>@requisition.ReqByEmp.Name</td>
+        </tr>
+        <tr>
+            <td>Requested Date</td>
+            <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(requisition.CreatedDate)</td>
+        </tr>
+        <tr>
+            <td>Status</td>
+            <td id="status">@requisition.Status</td>
+        </tr>
+        @if (requisition.Status == CommonConstant.RequsitionStatus.rejected)
+        {
+            <tr>
+                <td>Rejected Reason</td>
+                <td>@requisition.Remarks</td>
+            </tr>
+        }
+        @if (role != CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD])
+        {
+            if (@requisition.Status == CommonConstant.RequsitionStatus.confirmed || @requisition.Status == CommonConstant.RequsitionStatus.completed)
+            {
+                <tr>
+                    <td>Collection Point</td>
+                    <td>@requisition.CollectionPoint.Location (@requisition.CollectionPoint.CollectionTime)</td>
+                </tr>
+                <tr>
+                    <td>Disbursement Date</td>
+                    <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(requisition.CollectionDate)</td>
+                </tr>
+            }
+        }
+    </table>
+</div>
+
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Qty</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var r in requisition.RequisitionDetails)
+            {
+                <tr>
+                    <td>@r.Product.Description</td>
+                    <td>@r.QtyNeeded</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD] && requisition.Status == CommonConstant.RequsitionStatus.approved)
+{
+    <div id="updaterequisition">
+        <textarea id="remarks" rows="3" placeholder="Reason"></textarea>
+        <button id="reject" class="btn btn-danger">Reject</button>
+        <button id="approve" class="btn btn-success">Approve</button>
+    </div>
+}
+
+<script src="~/js/DeptRequisition.js"></script>
