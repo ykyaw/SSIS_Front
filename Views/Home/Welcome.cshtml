@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "";
+    string role = (string)ViewData["Role"];
+    string name = (string)ViewData["Name"];
+}
+<h1>@ViewData["Title"]</h1>
+
+<div class="container">
+    <h3 style="font-weight: lighter"><i>Successfully signed in as @role.</i></h3>
+    <br /><br />
+    <h2>Welcome, @name!</h2>
+    <br /><br /><br /><br />
+    <button id="withToken" class="btn btn-outline-secondary">request with token</button>
+
+
+</div>
+
+
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/testToken.js"></script>

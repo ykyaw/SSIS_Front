@@ -32,19 +32,16 @@
                 <td>@requisition.Remarks</td>
             </tr>
         }
-        @if (role != CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD])
+        if (@requisition.Status == CommonConstant.RequsitionStatus.confirmed || @requisition.Status == CommonConstant.RequsitionStatus.completed)
         {
-            if (@requisition.Status == CommonConstant.RequsitionStatus.confirmed || @requisition.Status == CommonConstant.RequsitionStatus.completed)
-            {
-                <tr>
-                    <td>Collection Point</td>
-                    <td>@requisition.CollectionPoint.Location (@requisition.CollectionPoint.CollectionTime)</td>
-                </tr>
-                <tr>
-                    <td>Disbursement Date</td>
-                    <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(requisition.CollectionDate)</td>
-                </tr>
-            }
+        <tr>
+            <td>Collection Point</td>
+            <td>@requisition.CollectionPoint.Location (@requisition.CollectionPoint.CollectionTime)</td>
+        </tr>
+        <tr>
+            <td>Disbursement Date</td>
+            <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(requisition.CollectionDate)</td>
+        </tr>
         }
     </table>
 </div>

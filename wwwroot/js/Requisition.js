@@ -4,6 +4,11 @@
     let Id = +$('#requisitionId').text();
     $('#confirm').click(function () {
         let dateString = $("input[type='date']").val();
+        if (dateString == "") {
+            alert("Please select a Disbursement Date to confirm!")
+            return 
+        }
+        console.log(dateString);
         let CollectionDate = new Date(dateString);
         let requisition = {
             Id,
@@ -18,8 +23,8 @@
                 $('#status').fadeOut(function () {
                     $(this).text("Confirmed").fadeIn();
                 });
-                $("<tr><td>Disbursement Date" +
-                    "</td><td>" + (CollectionDate.getFullYear() + "/" + ('0' + (CollectionDate.getMonth() + 1)).slice(-2) + "/" + CollectionDate.getDate()) +
+                $("<tr><td>Disbursement Date: " +
+                    "</td><td>&nbsp;&nbsp;&nbsp;</td><td>" + (CollectionDate.getFullYear() + "/" + ('0' + (CollectionDate.getMonth() + 1)).slice(-2) + "/" + CollectionDate.getDate()) +
                     "</td></tr>").hide().appendTo('#form').fadeIn();
             })
             .catch(function (err) {

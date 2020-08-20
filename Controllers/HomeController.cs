@@ -60,7 +60,7 @@ namespace SSIS_FRONT.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Welcome()
         {
             ViewData["Role"] = GetRole();
             ViewData["Name"] = GetName();

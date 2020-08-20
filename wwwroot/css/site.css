@@ -74,11 +74,15 @@ body {
     border: none;
 }
 
-table,tr,td,th {
+/*table,tr,td,th {
     border:1px solid gray
-}
+}*/
 
 
 .nav-item > a:hover, .nav-item > a:focus {
     background-color: #40754B;
+}
+
+.titlecenter {
+    text-align: center;
 }

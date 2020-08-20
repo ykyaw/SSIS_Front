@@ -1,0 +1,87 @@
+﻿@using SSIS_FRONT.Common;
+@using SSIS_FRONT.Utils;
+
+@{
+    ViewData["Title"] = "Disbursement List";
+    List<RequisitionDetail> disbursement = (List<RequisitionDetail>)ViewData["disbursement"];
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <span>Disbursement Date: </span>
+    <span>@TimeUtil.convertTimestampToyyyyMMdd(disbursement[0].Requisition.CollectionDate)</span>
+    <input id="requisitionid" value="" @disbursement[0].RequisitionId type="hidden" />
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Item Description</th>
+            <th>Qty Requisited</th>
+            <th>Qty Disbursed</th>
+            <th>Remarks</th>
+            <th>Qty Received</th>
+            <th>Dept Remarks</th>
+            <th>Clerk Remarks</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var d in disbursement)
+        {
+            <tr>
+                <input class="detailid" type="hidden" value="@d.Id" />
+                <td>@d.Product.Description</td>
+                <td>@d.QtyNeeded</td>
+                <td>@d.QtyDisbursed</td>
+                <td>@d.DisburseRemark</td>
+                @if (disbursement[0].Requisition.Status == CommonConstant.RequsitionStatus.confirmed)
+                {
+                    <td><input type="number" /></td>
+                    <td><input type="text" /></td>
+                }
+                else
+                {
+                    <td>@d.QtyReceived</td>
+                    <td>@d.RepRemark</td>
+                }
+                <td></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <button id="acknowledge" type="button" class="btn btn-primary">Acknowledge Item Received</button>
+</div>
+
+<table>
+    <tr>
+        <td>Received by</td>
+        @if (disbursement[0].Requisition.Status != CommonConstant.RequsitionStatus.confirmed)
+        {
+            <td></td>
+            <td></td>
+        }
+        else
+        {
+            <td>@disbursement[0].Requisition.ReceivedByRep.Name</td>
+            <td>@TimeUtil.convertTimestampToyyyyMMdd(disbursement[0].Requisition.ReceivedDate)</td>
+        }
+    </tr>
+    <tr>
+        <td>Acknowledged by (Clerk)</td>
+        @if (disbursement[0].Requisition.Status != CommonConstant.RequsitionStatus.completed)
+        {
+            <td>@disbursement[0].Requisition.AckByClerk.Name</td>
+            <td>@TimeUtil.convertTimestampToyyyyMMdd(disbursement[0].Requisition.AckDate)</td>
+        }
+        else
+        {
+            <td></td>
+            <td></td>
+        }
+    </tr>
+</table>
+
+<script src="~/js/DeptDisbursement.js"></script>
