@@ -4,10 +4,43 @@
     string errMsg = (string)ViewData["errMsg"];
 }
 
-<h1>@ViewData["Title"]</h1>
+<h2 class="titlecenter">@ViewData["Title"]</h2>
 
 <span style="color:red;">@errMsg</span>
-<div>
+<div class="container" style="margin-top:30px">
+    <div class="row justify-content-center">
+        <div class="col-3">
+            <label class="form-control font-weight-bold" style="border: 0;">Date of Disbursement:</label>
+
+        </div>
+        <div class="col-3">
+            <input id="date" type="date" min="1990-05-30" class="form-control" />
+
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-3">
+            <label class="form-control font-weight-bold" style="border: 0;">Department:</label>
+
+        </div>
+        <div class="col-3">
+            <select id="departmentid" class="form-control">
+                @foreach (var d in departments)
+                {
+                    <option value="@d.Id">@d.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-2">
+            <button id="submit" class="btn btn-primary form-control font-weight-bold"style="margin-top:30px" >Submit</button>
+        </div>          
+    </div>
+    
+</div>
+
+@*<div>
     <div>
         <span>Date of Disbursement: </span>
         <input id="date" type="date" />
@@ -23,6 +56,6 @@
     </div>
     <div></div>
     <button id="submit" class="btn btn-success">Submit</button>
-</div>
+</div>*@
 
 <script src="~/js/Disbursement.js"></script>
