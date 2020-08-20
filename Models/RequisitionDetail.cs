@@ -18,6 +18,7 @@ namespace SSIS_FRONT.Models
         public string DisburseRemark { get; set; }
         public string RepRemark { get; set; }
         public string ClerkRemark { get; set; }
+        public int? RetrievalId { get; set; }
 
         // FKs
         public Requisition Requisition { get; set; }

@@ -1,0 +1,54 @@
+﻿@using SSIS_FRONT.Common;
+
+@{
+    ViewData["Title"] = "Generate Disbursement List";
+    string role = (string)ViewData["Role"];
+    List<Requisition> disbursements = (List<Requisition>)ViewData["disbursements"];
+}
+
+<h4>Generate Disbursement List by Date</h4>
+
+@if (role != CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD])
+{
+    <form action="/Department/DisbursementForm" method="put" onsubmit="return dateTransform()">
+        <span>Generate Disbursement by Date</span>
+        <input type="date" />
+        <input type="hidden" id="date" name="date" />
+        <button id="generate">Generate</button>
+    </form>
+}
+
+<div id="forms">
+    <h4>Disbursement Forms</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Requisition ID</th>
+                <th>Collection Date</th>
+                <th>Requested By</th>
+                <th>Status</th>
+                @if (role != CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD])
+                {
+                    <th></th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var d in disbursements)
+            {
+                <tr class="search">
+                    <td>@d.Id</td>
+                    <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(d.CollectionDate)</td>
+                    <td>@d.ReqByEmp.Name</td>
+                    <td>@d.Status</td>
+                    @if (role != CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD])
+                    {
+                        <td><button class="disbursement">Disbursement</button></td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script src="~/js/GenerateRetrieval.js"></script>

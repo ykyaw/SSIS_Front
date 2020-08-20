@@ -1,12 +1,11 @@
 ﻿@{
     ViewData["Title"] = "Delegate Authority";
     List<Employee> employees = (List<Employee>)ViewData["employees"];
-    @*Employee deptrep = (Employee)ViewData["deptrep"];*@
+    Employee deptrep = (Employee)ViewData["deptrep"];
 }
 
 <div>
-    <h4>Assigned Department Representative: <span id="rep">Temporary until backend complete</span></h4>
-    @*<h4>Assigned Department Representative: <span id="rep">@deptrep.Name</span></h4>*@
+    <h4>Assigned Department Representative: <span id="rep">@deptrep.Name</span></h4>
 </div>
 
 <div>
