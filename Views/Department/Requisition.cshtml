@@ -8,14 +8,6 @@
 <div class="input-group">
     <span class="input-group-addon">Search</span>
     <input type="text" id="search" class="form-control" placeholder="Type here" />
-    @*<span class="input-group-addon">Filter by</span>
-        <select id="select" class="form-control">
-            <option value="">Select Department</option>
-            @foreach (var d in departments)
-            {
-                <option>@d.Name</option>
-            }
-        </select>*@
 </div>
 
 <h1>@ViewData["Title"]</h1>
@@ -25,24 +17,17 @@
         <tr>
             <th>Form ID</th>
             <th>Requested Date</th>
-            @if (role == SSIS_FRONT.Common.CommonConstant.ROLE_NAME[SSIS_FRONT.Common.CommonConstant.ROLE.DEPARTMENT_HEAD])
-            {
-                <th>Department</th>
-            }
             <th>Status</th>
             <th></th>
         </tr>
     </thead>
-    <tbody class="search">
+    <tbody>
         @foreach (var r in requisitions)
         {
-            <tr>
+            <tr class="search">
                 <td>@r.Id</td>
                 <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(r.CreatedDate)</td>
-                @if (role == SSIS_FRONT.Common.CommonConstant.ROLE_NAME[SSIS_FRONT.Common.CommonConstant.ROLE.DEPARTMENT_HEAD])
-                {
-                    <td>@r.Department.Name</td>
-                }
+                <td>@r.ReqByEmp.Name</td>
                 <td>@r.Status</td>
                 <td><a class="btn btn-primary" asp-controller="Department" asp-action="Requisition" asp-route-id="@r.Id">Details</a></td>
             </tr>

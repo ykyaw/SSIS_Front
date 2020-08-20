@@ -17,10 +17,10 @@
             <th></th>
         </tr>
     </thead>
-    <tbody class="search">
+    <tbody>
         @foreach (var po in purchaseOrders)
         {
-            <tr>
+            <tr class="search">
                 <td>@po.Id</td>
                 <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(po.OrderedDate)</td>
                 <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="PurchaseOrder" asp-route-id="@po.Id">Details</a></td>

@@ -30,12 +30,12 @@
             <th></th>
         </tr>
     </thead>
-    <tbody class="search">
+    <tbody>
         @foreach (var p in products)
         {
-            <tr>
+            <tr class="search">
                 <td>@p.Id</td>
-                <td>@p.Category.Name</td>
+                <td class="select">@p.Category.Name</td>
                 <td>@p.Description</td>
                 <td>@p.ReorderLvl</td>
                 <td>@p.ReorderQty</td>

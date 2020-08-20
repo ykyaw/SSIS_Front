@@ -17,10 +17,10 @@
             <th></th>
         </tr>
     </thead>
-    <tbody class="search">
+    <tbody>
         @foreach (var d in deliveryOrders)
         {
-            <tr class="Search">
+            <tr class="search">
                 <td>@d.Id</td>
                 <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(d.OrderedDate)</td>
                 <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="DeliveryOrder" asp-route-id="@d.Id">Update Item Received</a></td>
