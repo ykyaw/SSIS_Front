@@ -26,11 +26,18 @@ namespace SSIS_FRONT.Controllers
         {
             return View();
         }
-
+        public string GetRole()
+        {
+            return CommonConstant.ROLE_NAME[HttpContext.Session.GetString("Role")];
+        }
+        public string GetName()
+        {
+            return HttpContext.Session.GetString("Name");
+        }
         public IActionResult RequestStationery()
         {
-            ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
-            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+            ViewData["Role"] = GetRole();
+            ViewData["Name"] = GetName();
 
             string url1 = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/catalogue";
             Result<List<Product>> result1 = HttpUtils.Get(url1, new List<Product>(), Request, Response);
@@ -59,9 +66,9 @@ namespace SSIS_FRONT.Controllers
 
         public IActionResult Requisition()
         {
-            string role = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            string role = GetRole();
             ViewData["Role"] = role;
-            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+            ViewData["Name"] = GetName();
 
             string url;
             if (role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD])
@@ -81,9 +88,9 @@ namespace SSIS_FRONT.Controllers
         [Route("Department/Requisition/{Id}")]
         public IActionResult RequisitionDetail(int Id)
         {
-            string role = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            string role = GetRole();
             ViewData["Role"] = role;
-            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+            ViewData["Name"] = GetName();
 
             string url1;
             if (role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD])
@@ -104,10 +111,17 @@ namespace SSIS_FRONT.Controllers
             return View();
         }
 
+        public bool UpdateRequisition([FromBody] Requisition requisition)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/depthead/arr";
+            Result<Object> result = HttpUtils.Post(url, requisition, Request, Response);
+            return (bool)result.data;
+        }
+
         public IActionResult CollectionPoint()
         {
-            ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
-            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+            ViewData["Role"] = GetRole();
+            ViewData["Name"] = GetName();
 
             string url1 = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/dept";
             Result<Department> result1 = HttpUtils.Get(url1, new Department(), Request, Response);
@@ -179,8 +193,8 @@ namespace SSIS_FRONT.Controllers
 
         public IActionResult Delegate()
         {
-            ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
-            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+            ViewData["Role"] = GetRole();
+            ViewData["Name"] = GetName();
 
             string url = cfg.GetValue<string>("Hosts:Boot") + "/depthead/gae";
             Result<List<Employee>> result = HttpUtils.Get(url, new List<Employee>(), Request, Response);
@@ -235,8 +249,8 @@ namespace SSIS_FRONT.Controllers
 
         public IActionResult DeptRep()
         {
-            ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
-            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+            ViewData["Role"] = GetRole();
+            ViewData["Name"] = GetName();
 
             string url = cfg.GetValue<string>("Hosts:Boot") + "/depthead/gae";
             Result<List<Employee>> result = HttpUtils.Get(url, new List<Employee>(), Request, Response);
@@ -251,6 +265,5 @@ namespace SSIS_FRONT.Controllers
             Result<Object> result = HttpUtils.Put(url, Id, Request, Response);
             return (bool)result.data;
         }
-
     }
 }

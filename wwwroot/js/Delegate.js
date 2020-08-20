@@ -1,4 +1,7 @@
 ﻿$(document).ready(function () {
+    fromdate.min = new Date().toISOString().split("T")[0]
+    todate.min = new Date($("#fromdate").val())
+
     $("#assign").on("click", function () {
         let Id = +$('input[type=radio]:checked', '#employee').val();
         let name = $('input[type=radio]:checked', '#employee').next().text();

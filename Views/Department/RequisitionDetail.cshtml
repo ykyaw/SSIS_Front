@@ -1,6 +1,9 @@
-﻿@{
+﻿@using SSIS_FRONT.Common;
+
+@{
     ViewData["Title"] = "Requisition Form";
     Requisition requisition = (Requisition)ViewData["requisition"];
+    string role = (string)ViewData["Role"]
 }
 <h1>@ViewData["Title"]</h1>
 
@@ -11,10 +14,6 @@
             <td><span id="requisitionId">@requisition.Id</span></td>
         </tr>
         <tr>
-            <td>Department Name</td>
-            <td>@requisition.Department.Name</td>
-        </tr>
-        <tr>
             <td>Employee Name</td>
             <td>@requisition.ReqByEmp.Name</td>
         </tr>
@@ -23,23 +22,29 @@
             <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(requisition.CreatedDate)</td>
         </tr>
         <tr>
-            <td>Collection Point</td>
-            <td>@requisition.CollectionPoint.Location</td>
-        </tr>
-        <tr>
-            <td>Dept Rep Name</td>
-            <td>@requisition.ApprovedBy.Name</td>
-        </tr>
-        <tr>
             <td>Status</td>
             <td id="status">@requisition.Status</td>
         </tr>
-        @if (@requisition.Status == "Confirmed" || @requisition.Status == "Completed")
+        @if (requisition.Status == CommonConstant.RequsitionStatus.rejected)
         {
             <tr>
-                <td>Disbursement Date</td>
-                <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(requisition.CollectionDate)</td>
+                <td>Rejected Reason</td>
+                <td>@requisition.Remarks</td>
             </tr>
+        }
+        @if (role != CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD])
+        {
+            if (@requisition.Status == CommonConstant.RequsitionStatus.confirmed || @requisition.Status == CommonConstant.RequsitionStatus.completed)
+            {
+                <tr>
+                    <td>Collection Point</td>
+                    <td>@requisition.CollectionPoint.Location (@requisition.CollectionPoint.CollectionTime)</td>
+                </tr>
+                <tr>
+                    <td>Disbursement Date</td>
+                    <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(requisition.CollectionDate)</td>
+                </tr>
+            }
         }
     </table>
 </div>
@@ -64,14 +69,13 @@
     </table>
 </div>
 
-
-@if (requisition.Status == "Approved")
+@if (role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD] && requisition.Status == CommonConstant.RequsitionStatus.approved)
 {
-    <div id="confirmDate">
-        <span>Disbursement Date</span>
-        <input id="date" type="date" min="1990-05-30" />
-        <button id="confirm" class="btn btn-success">Confirm</button>
+    <div id="updaterequisition">
+        <textarea id="remarks" rows="3" placeholder="Reason"></textarea>
+        <button id="reject" class="btn btn-danger">Reject</button>
+        <button id="approve" class="btn btn-success">Approve</button>
     </div>
 }
 
-<script src="~/js/Requisition.js"></script>
+<script src="~/js/DeptRequisition.js"></script>
