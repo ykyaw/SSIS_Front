@@ -27,7 +27,23 @@ namespace SSIS_FRONT.Controllers
             this.httpClient = httpClient;
             this.cfg = cfg;
         }
-
+        public string GetRole()
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/drep";
+            Result<Employee> result = HttpUtils.Get(url, new Employee(), Request, Response);
+            if (result.data.Id == HttpContext.Session.GetInt32("Id"))
+            {
+                return CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_REPRESENTATIVE];
+            }
+            else
+            {
+                return CommonConstant.ROLE_NAME[HttpContext.Session.GetString("Role")];
+            }
+        }
+        public string GetName()
+        {
+            return HttpContext.Session.GetString("Name");
+        }
         public IActionResult Index(bool isLogin=true,bool isLogout=false)
         {
             if (isLogout)
@@ -44,8 +60,8 @@ namespace SSIS_FRONT.Controllers
 
         public IActionResult Privacy()
         {
-            ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
-            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+            ViewData["Role"] = GetRole();
+            ViewData["Name"] = GetName();
             return View();
         }
 

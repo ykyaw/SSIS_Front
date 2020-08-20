@@ -28,7 +28,16 @@ namespace SSIS_FRONT.Controllers
         }
         public string GetRole()
         {
-            return CommonConstant.ROLE_NAME[HttpContext.Session.GetString("Role")];
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/drep";
+            Result<Employee> result = HttpUtils.Get(url, new Employee(), Request, Response);
+            if (result.data.Id == HttpContext.Session.GetInt32("Id"))
+            {
+                return CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_REPRESENTATIVE];
+            }
+            else
+            {
+                return CommonConstant.ROLE_NAME[HttpContext.Session.GetString("Role")];
+            }            
         }
         public string GetName()
         {
