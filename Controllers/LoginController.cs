@@ -42,7 +42,7 @@ namespace SSIS_FRONT.Controllers
             string token = result.data["token"].ToString();
             if (!string.IsNullOrEmpty(token))
             {
-                return RedirectToAction("Privacy", "Home");
+                return RedirectToAction("Welcome", "Home");
             }
             else
             {

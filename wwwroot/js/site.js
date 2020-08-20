@@ -2,6 +2,17 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+
+$(document).ready(function () {
+    let url = window.location.pathname;
+    if (url == "/") {
+        $('#ssisfront').attr("href", "")
+    }
+    else {
+        $('#ssisfront').attr("href", "/Home/Welcome")
+    }
+});
+
 function Post(url, value) {
     return $.ajax({
         type: "POST",
