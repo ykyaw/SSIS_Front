@@ -100,12 +100,12 @@
 
     $("#reject").on("click", function () {
         let Remarks = $("#Reason").val();
-        let PurchaseRequestId = $("#requestId").text();
+        let PurchaseRequestId = +$("#requestId").text();
         let Status = "Rejected";
         let details = [];
         $(".detailId").each(function () {
             let detail = {
-                Id: $(this).val(),
+                Id: +$(this).val(),
                 Remarks,
                 PurchaseRequestId,
                 Status
@@ -121,12 +121,12 @@
             })
     })
     $("#approve").on("click", function () {
-        let PurchaseRequestId = $("#requestId").text();
+        let PurchaseRequestId = +$("#requestId").text();
         let Status = "Approved";
         let details = [];
         $(".detailId").each(function () {
             let detail = {
-                Id: $(this).val(),
+                Id: +$(this).val(),
                 PurchaseRequestId,
                 Status
             }

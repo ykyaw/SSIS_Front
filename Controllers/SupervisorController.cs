@@ -88,6 +88,15 @@ namespace SSIS_FRONT.Controllers
             ViewData["Items"] = result.data;
             return View();
         }
-        
+
+        [HttpPut]
+        [Route("Store/PurchaseRequestDetail")]
+        public bool UpdatePurchaseRequestDetail([FromBody]List<PurchaseRequestDetail> details)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "﻿/storesup/updatepr";
+            Result<Object> result = HttpUtils.Put(url, details, Request, Response);
+            return (bool)result.data;
+        }
+
     }
 }
