@@ -6,10 +6,10 @@
     List<Requisition> disbursements = (List<Requisition>)ViewData["disbursements"];
 }
 
-<h4>Generate Disbursement List by Date</h4>
-
 @if (role != CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD])
 {
+    <h4>Generate Disbursement List by Date</h4>
+
     <form action="/Department/DisbursementForm" method="put" onsubmit="return dateTransform()">
         <span>Generate Disbursement by Date</span>
         <input type="date" />
