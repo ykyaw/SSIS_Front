@@ -29,13 +29,13 @@
             <th></th>
         </tr>
     </thead>
-    <tbody class="search">
+    <tbody>
         @foreach (var r in requisitions)
         {
-            <tr>
+            <tr class="search">
                 <td>@r.Id</td>
                 <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(r.CreatedDate)</td>
-                <td>@r.Department.Name</td>
+                <td class="select">@r.Department.Name</td>
                 <td>@r.Status</td>
                 <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="Requisition" asp-route-id="@r.Id">Details</a></td>
             </tr>
