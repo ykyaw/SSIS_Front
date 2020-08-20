@@ -29,28 +29,30 @@ namespace SSIS_FRONT.Controllers
         }
         public string GetRole()
         {
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/drep";
-            Result<Employee> result = HttpUtils.Get(url, new Employee(), Request, Response);
-            if (result.data.Id == HttpContext.Session.GetInt32("Id"))
+            int id = (int)HttpContext.Session.GetInt32("Id");
+            string role = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            if (role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_EMPLOYEE])
             {
-                return CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_REPRESENTATIVE];
+                string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/drep";
+                Result<Employee> result = HttpUtils.Get(url, new Employee(), Request, Response);
+                if (result.data.Id == id)
+                {
+                    return CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_REPRESENTATIVE];
+                }
             }
-            else
-            {
-                return CommonConstant.ROLE_NAME[HttpContext.Session.GetString("Role")];
-            }
+            return role;
         }
         public string GetName()
         {
             return HttpContext.Session.GetString("Name");
         }
-        public IActionResult Index(bool isLogin=true,bool isLogout=false)
+        public IActionResult Index(bool isLogin = true, bool isLogout = false)
         {
             if (isLogout)
             {
                 ViewData["errmsg"] = "";
             }
-            else if(!isLogin)
+            else if (!isLogin)
             {
                 ViewData["errmsg"] = "username or password incorrect";
             }
@@ -75,7 +77,7 @@ namespace SSIS_FRONT.Controllers
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/Login/Test";
             Employee user = new Employee() { Email = "123@tt.com", Password = "123" };
-            Result<Employee> result = HttpUtils.Post(url, user,new Employee(), Request,Response);
+            Result<Employee> result = HttpUtils.Post(url, user, new Employee(), Request, Response);
             return result;
         }
 
@@ -83,7 +85,7 @@ namespace SSIS_FRONT.Controllers
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/Login/Index";
             Employee user = new Employee() { Email = "123@tt.com", Password = "123" };
-            Result<Object> result = HttpUtils.Post(url, user, Request,Response);
+            Result<Object> result = HttpUtils.Post(url, user, Request, Response);
             return result;
         }
     }
