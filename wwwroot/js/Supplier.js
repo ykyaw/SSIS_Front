@@ -8,15 +8,15 @@
                 //let result = JSON.parse(response);
                 console.log(quotations);
                 let $tr = `<tr id=${quotations[0].productId}><td>${quotations[0].productId}</td><td>${quotations[0].product.description}</td>`;
-                $tr += `<td>${quotations.filter(function (item) { return item.rank == 1 })[0].supplier.name}</td>`;
-                $tr += `<td>${quotations.filter(function (item) { return item.rank == 2 })[0].supplier.name}</td>`;
-                $tr += `<td>${quotations.filter(function (item) { return item.rank == 3 })[0].supplier.name}</td>`;
+                $tr += `<td id='firstName'>${quotations.filter(function (item) { return item.rank == 1 })[0].supplier.name}</td>`;
+                $tr += `<td id='secondName'>${quotations.filter(function (item) { return item.rank == 2 })[0].supplier.name}</td>`;
+                $tr += `<td id='thirdName'>${quotations.filter(function (item) { return item.rank == 3 })[0].supplier.name}</td>`;
                 $("table").append($tr);
                 $("table").fadeIn();
 
 
                 let $suppliers=quotations.map(function (item) {
-                    return `<option value='${item.supplier.id}'>${item.supplier.name}</option>`;
+                    return `<option value='${item.supplier.id}/${item.supplier.name}'>${item.supplier.name}</option>`;
                 })
                 $(".rankSelect").children().remove();
                 $(".rankSelect").each(function () {
@@ -30,9 +30,9 @@
     })
 
     $("#save").on("click", function () {
-        let first = $("#1st").val();
-        let second = $("#2nd").val();
-        let third = $("#3rd").val();
+        let [first,firstName] = $("#1st").val().split("/");
+        let [second,secondName] = $("#2nd").val().split("/");
+        let [third,thirdName] = $("#3rd").val().split("/");
         console.log(first, second, third);
         if (first == third || first == second || second == third) {
             alert("suplier can not be same");
@@ -60,8 +60,11 @@
         quotations.push(rank3);
         Put(`/TenderQuotations/${ProductId}`, quotations)
             .then(function (response) {
-                //let result = JSON.parse(response);
-                console.log(response);
+                if (response) {
+                    $("#firstName").text(firstName);
+                    $("#secondName").text(secondName);
+                    $("#thirdName").text(thirdName);
+                }
             })
             .catch(function (err) {
                 console.log(err);
