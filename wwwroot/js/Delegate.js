@@ -16,18 +16,26 @@
             DelegateFromDate: delegateFromDate.getTime(),
             DelegateToDate: delegateToDate.getTime()
         }
-        Put(`/Department/AssignDelegate`, employee)
-            .then(function (response) {
-                console.log(response);
-                //alert("success: " + response);
-                $('<tr><td>' + name +
-                    '</td><td>' + fromdatestring +
-                    '</td><td>' + todatestring +
-                    '</td><td>' + '<button class="btn btn-primary">Edit</button><button class="btn btn-danger">Delete</button>' +
-                    '</td></tr>').hide().appendTo('#delegates').fadeIn();
-            })
-            .catch(function (err) {
-                //alert("error: " + JSON.parse(err));
-            })
+        if (isNaN(employee.Id)) {
+            alert("Please select an employee");
+        } else if (isNaN(employee.DelegateFromDate) || isNaN(employee.DelegateToDate)) {
+            alert("Pleaes input both dates")
+        } else {
+            Put(`/Department/AssignDelegate`, employee)
+                .then(function (response) {
+                    console.log(response);
+                    //alert("success: " + response);
+                    $('.hide').fadeOut();
+                    $('<tr><td>' + name +
+                        '</td><td>' + fromdatestring +
+                        '</td><td>' + todatestring +
+                        '</td><td>' + '<button class="btn btn-primary">Edit</button><button class="btn btn-danger">Delete</button>' +
+                        '</td></tr>').hide().appendTo('#delegates').fadeIn();
+                })
+                .catch(function (err) {
+                    //alert("error: " + JSON.parse(err));
+                })
+        }
+
     })
 })
