@@ -399,10 +399,14 @@ namespace SSIS_FRONT.Controllers
             string url1 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/findAdjustmentVoucher/" + advId;
             Result<AdjustmentVoucher> result1 = HttpUtils.Get(url1, new AdjustmentVoucher(), Request, Response);
 
+            string url2 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/catalogue";
+            Result<List<Product>> result2 = HttpUtils.Get(url2, new List<Product>(), Request, Response);
+
             int clerkid = (int)HttpContext.Session.GetInt32("Id");
             ViewData["clerkid"] = clerkid;
             ViewData["adjustmentVoucherDetailsToHTML"] = result.data;
             ViewData["av"] = result1.data;
+            ViewData["products"] = result2.data;
             return View();
         }
 
@@ -441,6 +445,14 @@ namespace SSIS_FRONT.Controllers
 
 
 
+        [HttpPut]
+        public bool SaveEmptyAdjustmentVoucherDetails([FromBody] string AdjustmentVoucherId)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/SaveEmptyAdjustmentDetails/";
+            Result<Object> result = HttpUtils.Put(url, AdjustmentVoucherId, Request, Response);
+            return (bool)result.data;
+        }
+
 
         [HttpPut]
         public bool SaveAdjustmentVoucherDetails([FromBody]List<AdjustmentVoucherDetail> voucherDetails)
@@ -463,36 +475,36 @@ namespace SSIS_FRONT.Controllers
         }
 
 
-        [Route("/StoreClerk/AmendAdjustmentVoucher/{avId}")]
-        public IActionResult AmendAdjustmentVoucher(string avId)
-        {
-            ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
-            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+        //[Route("/StoreClerk/AmendAdjustmentVoucher/{avId}")]
+        //public IActionResult AmendAdjustmentVoucher(string avId)
+        //{
+        //    ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+        //    ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
 
-            string role = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
-            string name = (string)HttpContext.Session.GetString("Name");
-            ViewData["Role"] = role;
-            ViewData["Name"] = name;
-
-
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/advdet/" + avId;
-            Result<List<AdjustmentVoucherDetail>> result = HttpUtils.Get(url, new List<AdjustmentVoucherDetail>(), Request, Response);
-
-            string url1 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/findAdjustmentVoucher/" + avId;
-            Result<AdjustmentVoucher> result1 = HttpUtils.Get(url1, new AdjustmentVoucher(), Request, Response);
+        //    string role = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+        //    string name = (string)HttpContext.Session.GetString("Name");
+        //    ViewData["Role"] = role;
+        //    ViewData["Name"] = name;
 
 
-            string url2 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/catalogue";
-            Result<List<Product>> result2 = HttpUtils.Get(url2, new List<Product>(), Request, Response);
-            ViewData["avdetails"] = result.data;
-            ViewData["av"] = result1.data;
-            ViewData["products"] = result2.data;
+        //    string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/advdet/" + avId;
+        //    Result<List<AdjustmentVoucherDetail>> result = HttpUtils.Get(url, new List<AdjustmentVoucherDetail>(), Request, Response);
+
+        //    string url1 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/findAdjustmentVoucher/" + avId;
+        //    Result<AdjustmentVoucher> result1 = HttpUtils.Get(url1, new AdjustmentVoucher(), Request, Response);
+
+
+        //    string url2 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/catalogue";
+        //    Result<List<Product>> result2 = HttpUtils.Get(url2, new List<Product>(), Request, Response);
+        //    ViewData["avdetails"] = result.data;
+        //    ViewData["av"] = result1.data;
+        //    ViewData["products"] = result2.data;
 
 
 
-            return View();
+        //    return View();
 
-        }
+        //}
 
         [HttpGet]
         public IActionResult AdjustmentVoucherByClerkId()

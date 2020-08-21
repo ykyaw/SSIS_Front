@@ -6,13 +6,17 @@
 }
 
 <h1>Adjustment Voucher By Clerk</h1>
-<input type="text" placeholder="search" id="search" />
+<input id="clerkid" type="hidden" value="@clerkid" />
 
 <div>
     <a class="btn btn-primary" asp-controller="StoreClerk" asp-action="GenerateAdjustmentVoucher">Issue Adjustment Voucher</a>
 </div>
 <div>
-    <a class="btn btn-primary" asp-controller="StoreClerk" asp-action="AdjustmentVoucher">Back To All Vouvhers</a>
+    <a class="btn btn-primary" asp-controller="StoreClerk" asp-action="AdjustmentVoucher">Back To All Vouhers</a>
+</div>
+
+<div>
+    <input type="text" placeholder="search by keyword" id="search" />
 </div>
 <table class="table table-striped">
     <thead>
@@ -26,20 +30,21 @@
     <tbody>
         @foreach (AdjustmentVoucher adv in vouchers)
         {
-            <tr class="adjustmentvoucher">
-                <td class="adjustmentvoucherid">@adv.Id</td>
-                <td class="initiateDate">@adv.InitiatedDate</td>
-                <td class="status" value="@adv.Status">@adv.Status</td>
-                <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="AdjustmentVoucherDetails" asp-route-id="@adv.Id">Details</a></td>
-                @if (adv.Status == "Created" && adv.InitiatedClerkId == clerkid)
-                {
-                    <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="AmendAdjustmentVoucher" asp-route-id="@adv.Id">Amend</a></td>
-                }
-                else
-                {
-                    <td>   </td>
-                }
-            </tr>
+        <tr class="adjustmentvoucher">
+            <td class="adjustmentvoucherid">@adv.Id</td>
+            <td class="initiateDate">@adv.InitiatedDate</td>
+            <td class="status" value="@adv.Status">@adv.Status</td>
+            <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="AdjustmentVoucherDetails" asp-route-id="@adv.Id">Details</a></td>
+            @if (adv.Status == "Created" && adv.InitiatedClerkId == clerkid)
+            {
+                @*<td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="AmendAdjustmentVoucher" asp-route-id="@adv.Id">Amend</a></td>*@
+                <td>click Details to amend</td>
+            }
+            else
+            {
+                <td>   </td>
+            }
+        </tr>
         }
     </tbody>
 </table>
