@@ -1,4 +1,7 @@
 ﻿$(document).ready(function () {
+    if ($('#requestlist tr').length >= 1) {
+        $('#submit').prop('disabled', false);
+    }
     $('#add').click(function () {
         if (!$.isNumeric($('#qty').val())) {
             alert("Quantity must be a number");

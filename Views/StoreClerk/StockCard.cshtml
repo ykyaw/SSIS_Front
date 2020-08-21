@@ -90,30 +90,30 @@
                 </form>
             </div>*@
 
-<form id="newEntry">
-    <div class="row justify-content-start">
+        <form id="newEntry">
+            <div class="row justify-content-start">
 
-        <div class="col-2">
-            <label class="form-control font-weight-bold" style="border: 0;">Add Entry:</label>
-        </div>
-        <div class="col-3">
-            <input id="productId" type="hidden" value="@transactions[0].ProductId" />
-            <input id="description" type="text" placeholder="Description" class="form-control" required />
-        </div>
-        <div class="col-3">
-            <input id="refcode" type="text" placeholder="Ref Code (optional)" class="form-control" />
-        </div>
-        <div class="col-1">
-            <input id="qty" type="number" value="0" class="form-control" />
-            <input id="balance" type="hidden" value="@transactions.Last().Balance" />
-            <input id="updatedByEmp" type="hidden" value="@ViewData["Name"]" />
-        </div>
-        <div class="col-1">
-            <button id="addEntry" type="button" class="btn btn-primary form-control font-weight-bold">Save</button>
-        </div>
+                <div class="col-2">
+                    <label class="form-control font-weight-bold" style="border: 0;">Add Entry:</label>
+                </div>
+                <div class="col-3">
+                    <input id="productId" type="hidden" value="@transactions[0].ProductId" />
+                    <input id="description" type="text" placeholder="Description" class="form-control" required />
+                </div>
+                <div class="col-3">
+                    <input id="refcode" type="text" placeholder="Ref Code (optional)" class="form-control" />
+                </div>
+                <div class="col-1">
+                    <input id="qty" type="number" value="0" class="form-control" />
+                    <input id="balance" type="hidden" value="@transactions.Last().Balance" />
+                    <input id="updatedByEmp" type="hidden" value="@ViewData["Name"]" />
+                </div>
+                <div class="col-1">
+                    <button id="addEntry" type="button" class="btn btn-primary form-control font-weight-bold">Save</button>
+                </div>
 
-    </div>
-</form>
+            </div>
+        </form>
 
     }
     else

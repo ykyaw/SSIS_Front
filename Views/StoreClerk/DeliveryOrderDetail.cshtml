@@ -1,4 +1,6 @@
-﻿@{
+﻿@using SSIS_FRONT.Utils;
+
+@{
     ViewData["Title"] = "Delivery Order";
     List<PurchaseOrderDetail> dods = (List<PurchaseOrderDetail>)ViewData["deliveryOrderDetails"];
 }
@@ -6,7 +8,7 @@
 
 <div>
     <span>PO Number:</span>
-    <span>@dods[0].PurchaseOrderId</span>
+    <span id="poid">@dods[0].PurchaseOrderId</span>
 </div>
 
 <div>
@@ -32,17 +34,17 @@
                     <td>@dod.ProductId</td>
                     <td>@dod.Product.Description</td>
                     <td>@dod.QtyPurchased</td>
-                    @if (dod.Status == "Approved")
+                    @if (dod.Status == "Pending Delivery")
                     {
-                        <td><input class="qtyReceived" type="number" value="@dod.QtyPurchased" /></td>
-                        <td><input class="date" type="date" /></td>
-                        <td><input class="vendordo" type="text" /></td>
-                        <td><input class="remarks" type="text" /></td>
+                        <td><input class="replace" type="number" value="@dod.QtyPurchased" /></td>
+                        <td><input class="replace" type="date" /></td>
+                        <td><input class="replace" type="text" /></td>
+                        <td><input class="replace" type="text" /></td>
                     }
                     else
                     {
                         <td>@dod.QtyReceived</td>
-                        <td>@dod.ReceivedDate</td>
+                        <td>@TimeUtil.convertTimestampToyyyyMMdd(dod.ReceivedDate)</td>
                         <td>@dod.SupplierDeliveryNo</td>
                         <td>@dod.Remark</td>
                     }
@@ -53,8 +55,8 @@
 </div>
 
 <div>
-    <button id="save" class="btn btn-success" disabled>Save</button>
+    <button id="save" class="btn btn-success">Save</button>
 </div>
 
-<script src="~/js/DeliveryOrder"></script>
+<script src="~/js/DeliveryOrder.js"></script>
 

@@ -301,11 +301,12 @@ namespace SSIS_FRONT.Controllers
 
             return View();
         }
-        //public bool UpdateDelivery([FromBody] List<RequisitionDetail> requisitionDetails)
-        //{
-        //    string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/rfld"; // CHANGE URL AFTER BACKEND COMPLETE
-        //    Result<Object> result = HttpUtils.Put(url, requisitionDetails, Request, Response);
-        //}
+        public bool UpdateDelivery([FromBody] List<PurchaseOrderDetail> purchaseOrderDetails)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/updatepod";
+            Result<Object> result = HttpUtils.Put(url, purchaseOrderDetails, Request, Response);
+            return (bool)result.data;
+        }
 
         /**
          * @author WUYUDING
