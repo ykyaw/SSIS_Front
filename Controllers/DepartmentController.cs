@@ -113,6 +113,8 @@ namespace SSIS_FRONT.Controllers
             Result<List<Product>> result2 = HttpUtils.Get(url2, new List<Product>(), Request, Response);
             ViewData["products"] = result2.data;
 
+            ViewData["Id"] = HttpContext.Session.GetInt32("Id");
+
             return View();
         }
         public bool UpdateRequisition([FromBody] Requisition requisition)
