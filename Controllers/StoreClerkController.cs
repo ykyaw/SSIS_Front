@@ -356,7 +356,11 @@ namespace SSIS_FRONT.Controllers
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/ret";
             Result<Object> result = HttpUtils.Put(url, retrieval, Request, Response);
-            throw new Exception("an exception");
+            //throw new Exception("an exception");
+            if(result.code != 200)
+            {
+                throw new Exception(result.msg);
+            }
             return (bool)result.data;
         }
 
