@@ -1,12 +1,12 @@
 ﻿
 @{
-    ViewData["Title"] = "RetrieveForm";
+    ViewData["Title"] = "Retrieval Form";
     Retrieval retrieval = (Retrieval)ViewData["Retrieval"];
     string disbursedDate = SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(retrieval.DisbursedDate);
     Dictionary<string, List<RequisitionDetail>> categoryByProduct = (Dictionary<string, List<RequisitionDetail>>)ViewData["categoryByProduct"];
 }
 
-<h1>Retrieve Form</h1>
+<h1>@ViewData["Title"]</h1>
 <span>For Date of disbursement: @disbursedDate</span>
 
 <h6 id="retrievalId" value="@retrieval.Id">Retrieval Id: @retrieval.Id</h6>
@@ -59,4 +59,4 @@
 
 
 
-<script src="~/js/RetrievealForm.js" asp-append-version="true"></script>
+<script src="~/js/RetrievalForm.js" asp-append-version="true"></script>
