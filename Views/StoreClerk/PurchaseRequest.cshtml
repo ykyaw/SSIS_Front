@@ -2,13 +2,14 @@
     ViewData["Title"] = "Purchase Request List";
     Dictionary<long, List<PurchaseRequestDetail>> prDetailsByPr = (Dictionary<long, List<PurchaseRequestDetail>>)ViewData["prDetailsByPr"];
 }
-<h1>@ViewData["Title"]</h1>
+    <h2 class="titlecenter">@ViewData["Title"]</h2>
 
 <div>
     <a class="btn btn-primary" asp-controller="StoreClerk" asp-action="GeneratePurchaseRequest">Raise Purchase Request</a>
 </div>
 
-<table class="table table-striped">
+
+<table class="table table-striped" style="margin-top:20px">
     <thead>
         <tr>
             <th>Purchase Request No</th>
@@ -22,7 +23,7 @@
             <tr class="Search">
                 <td>@kvp.Key</td>
                 <td>@kvp.Value[0].Status</td>
-                <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="PurchaseRequest" asp-route-id="@kvp.Key">Details</a></td>
+                <td><a class="btn btn-info" asp-controller="StoreClerk" asp-action="PurchaseRequest" asp-route-id="@kvp.Key">Details</a></td>
             </tr>
         }
     </tbody>
