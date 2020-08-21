@@ -1,4 +1,5 @@
 ﻿@using SSIS_FRONT.Common;
+@using SSIS_FRONT.Utils;
 
 @{
     ViewData["Title"] = "Requisition Form";
@@ -19,7 +20,7 @@
         </tr>
         <tr>
             <td>Requested Date</td>
-            <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(requisition.CreatedDate)</td>
+            <td>@TimeUtil.convertTimestampToyyyyMMdd(requisition.CreatedDate)</td>
         </tr>
         <tr>
             <td>Status</td>
@@ -32,7 +33,7 @@
                 <td>@requisition.Remarks</td>
             </tr>
         }
-        if (@requisition.Status == CommonConstant.RequsitionStatus.confirmed || @requisition.Status == CommonConstant.RequsitionStatus.completed)
+        @if (requisition.Status == CommonConstant.RequsitionStatus.confirmed || @requisition.Status == CommonConstant.RequsitionStatus.completed)
         {
         <tr>
             <td>Collection Point</td>
@@ -40,7 +41,7 @@
         </tr>
         <tr>
             <td>Disbursement Date</td>
-            <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(requisition.CollectionDate)</td>
+            <td>@TimeUtil.convertTimestampToyyyyMMdd(requisition.CollectionDate)</td>
         </tr>
         }
     </table>

@@ -93,8 +93,16 @@ namespace SSIS_FRONT.Controllers
         [Route("Store/PurchaseRequestDetail")]
         public bool UpdatePurchaseRequestDetail([FromBody]List<PurchaseRequestDetail> details)
         {
-            string url = cfg.GetValue<string>("Hosts:Boot") + "﻿/storesup/updatepr";
+            
+                    /* THIS DOES NOT WORK */
+            //string url = cfg.GetValue<string>("Hosts:Boot") + "﻿/storesup/updatepr";
+            //Result<Object> result = HttpUtils.Put(url, details, Request, Response);
+
+            
+                    /*BUT THIS ONE WORK. WHY?!*/
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storesup/updatepr";
             Result<Object> result = HttpUtils.Put(url, details, Request, Response);
+
             return (bool)result.data;
         }
 

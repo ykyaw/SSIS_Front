@@ -1,8 +1,19 @@
-﻿@{
+﻿@using SSIS_FRONT.Common;
+
+@{
     ViewData["Title"] = "Requisition Forms";
     string role = (string)ViewData["Role"];
     List<Requisition> requisitions = (List<Requisition>)ViewData["requisitions"];
 }
+
+@if (role != CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD])
+{
+    <div>
+        <a class="btn btn-primary" asp-controller="Department" asp-action="RequestStationery">Request Stationery</a>
+    </div>
+}
+
+<br />
 
 <div class="input-group">
     <span class="input-group-addon">Search</span>

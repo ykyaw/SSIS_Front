@@ -1,13 +1,12 @@
-﻿
-@{
-    ViewData["Title"] = "GenerateRetrieveForm";
+﻿@{
+    ViewData["Title"] = "Generate Retrieval Form";
     string errMsg = (string)ViewData["errMsg"];
 }
 
-<h2 class="titlecenter">Generate Retrieve Form</h2>
+<h2 class="titlecenter">@ViewData["Title"]</h2>
 
 <span style="color:red;">@errMsg</span>
-<form action="/StoreClerk/RetrieveForm" method="post" onsubmit="return dateTransform()">
+<form action="/StoreClerk/RetrievalForm" method="post" onsubmit="return dateTransform()">
     <div class="container" style="margin-top:30px">
         <div class="row justify-content-center">
             <div class="col-4">
