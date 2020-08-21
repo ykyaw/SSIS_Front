@@ -16,6 +16,9 @@
             .then(function (response) {
                 //let result = JSON.parse(response);
                 console.log(response);
+                if (response.code && response.code != 200) {
+                    alert(response.msg);
+                }
                 alert("success: " + response);
             })
             .catch(function (err) {
