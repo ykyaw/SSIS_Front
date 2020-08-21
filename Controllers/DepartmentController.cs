@@ -154,6 +154,12 @@ namespace SSIS_FRONT.Controllers
 
             return View();
         }
+        public bool AckDisbursement([FromBody] List<RequisitionDetail> requisitionDetails)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/ack";
+            Result<Object> result = HttpUtils.Put(url, requisitionDetails, Request, Response);
+            return (bool)result.data;
+        }
         public IActionResult CollectionPoint()
         {
             ViewData["Role"] = GetRole();
