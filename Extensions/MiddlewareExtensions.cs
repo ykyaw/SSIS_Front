@@ -12,6 +12,7 @@ namespace SSIS_FRONT.Extensions
         public static IApplicationBuilder UseMiddlewareExtensions(this IApplicationBuilder app)
         {
             app.UseMiddleware<TokenMiddleware>();
+            app.UseMiddleware<ExceptionMiddleWare>();
             return app;
         }
     }

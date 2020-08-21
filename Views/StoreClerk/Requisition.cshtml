@@ -1,4 +1,6 @@
-﻿@{
+﻿@using SSIS_FRONT.Utils;
+
+@{
     ViewData["Title"] = "Requisition Forms";
     List<Requisition> requisitions = (List<Requisition>)ViewData["requisitions"];
     List<Department> departments = (List<Department>)ViewData["departments"];
@@ -50,6 +52,7 @@
             <th>Requested Date</th>
             <th>Department</th>
             <th>Status</th>
+            <th>Disbursement Date</th>
             <th></th>
         </tr>
     </thead>
@@ -58,9 +61,10 @@
         {
             <tr class="search">
                 <td>@r.Id</td>
-                <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(r.CreatedDate)</td>
+                <td>@TimeUtil.convertTimestampToyyyyMMdd(r.CreatedDate)</td>
                 <td class="select">@r.Department.Name</td>
                 <td>@r.Status</td>
+                <td>@TimeUtil.convertTimestampToyyyyMMdd(r.CollectionDate)</td>
                 <td><a class="btn btn-info" asp-controller="StoreClerk" asp-action="Requisition" asp-route-id="@r.Id">Details</a></td>
             </tr>
         }

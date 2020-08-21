@@ -12,9 +12,16 @@
         } else {
             $('<tr>' + '<input class="productid" type="hidden" value="' + $('#product').val() + '" />' +
                 '<td>' + $('#product').find(':selected').data('desc') +
-                '</td><td>' + +$('#qty').val() +
+                '</td><td>' + '<input type="number" min="1" value="' + $('#qty').val() + '" />' +
+                '</td><td>' + '<input type="button" value="Remove" />' +
                 '</td></tr>').hide().appendTo('#requestlist').fadeIn();
         }
+    });
+
+    $('#requestlist').on('click', 'input[type="button"]', function () {
+        $(this).closest('tr').fadeOut(200, function () {
+            $(this).remove();
+        });
     });
 
     $('#save').click(function () {
@@ -49,7 +56,7 @@ function getUpdatedDetails() {
         let detail = {
             RequisitionId,
             ProductId: $(this).val(),
-            QtyNeeded: +$(this).next().next().text()
+            QtyNeeded: +$(this).nextAll().find('input[type="number"]').val()
         }
         details.push(detail);
     });

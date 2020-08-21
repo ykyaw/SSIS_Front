@@ -310,7 +310,7 @@ namespace SSIS_FRONT.Controllers
         /**
          * @author WUYUDING
          */
-        public IActionResult GenerateRetrieveForm(string errMsg = "")
+        public IActionResult GenerateRetrievalForm(string errMsg = "")
         {
             ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
             ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
@@ -319,127 +319,13 @@ namespace SSIS_FRONT.Controllers
             return View();
         }
 
-        public IActionResult RetrieveForm(long date)
+        public IActionResult RetrievalForm(long date)
         {
-            //List<RequisitionDetail> requisitionDetails = new List<RequisitionDetail>();
-            //RequisitionDetail rd1 = new RequisitionDetail()
-            //{
-            //    Id = 1,
-            //    Product = new Product()
-            //    {
-            //        Id = "1",
-            //        Category = new Category()
-            //        {
-            //            Id = 1,
-            //            Name = "pencils",
-            //            BinNo = "A7"
-            //        }
-            //    },
-            //    Requisition = new Requisition()
-            //    {
-            //        Id = 1,
-            //        Department = new Department()
-            //        {
-            //            Id = "1",
-            //            Name = "English"
-            //        }
-            //    },
-            //    QtyNeeded = 5,
-            //};
-            //RequisitionDetail rd2 = new RequisitionDetail()
-            //{
-            //    Id = 2,
-            //    Product = new Product()
-            //    {
-            //        Id = "1",
-            //        Category = new Category()
-            //        {
-            //            Id = 1,
-            //            Name = "pencils",
-            //            BinNo = "A7"
-            //        }
-            //    },
-            //    Requisition = new Requisition()
-            //    {
-            //        Id = 2,
-            //        Department = new Department()
-            //        {
-            //            Id = "2",
-            //            Name = "Math"
-            //        }
-            //    },
-            //    QtyNeeded = 3,
-            //};
-            //RequisitionDetail rd3 = new RequisitionDetail()
-            //{
-            //    Id = 3,
-            //    Product = new Product()
-            //    {
-            //        Id = "2",
-            //        Category = new Category()
-            //        {
-            //            Id = 1,
-            //            Name = "pen",
-            //            BinNo = "B9"
-            //        }
-            //    },
-            //    Requisition = new Requisition()
-            //    {
-            //        Id = 3,
-            //        Department = new Department()
-            //        {
-            //            Id = "2",
-            //            Name = "Math"
-            //        }
-            //    },
-            //    QtyNeeded = 10,
-            //};
-            //RequisitionDetail rd4 = new RequisitionDetail()
-            //{
-            //    Id = 4,
-            //    Product = new Product()
-            //    {
-            //        Id = "2",
-            //        Category = new Category()
-            //        {
-            //            Id = 1,
-            //            Name = "pen",
-            //            BinNo = "B9"
-            //        }
-            //    },
-            //    Requisition = new Requisition()
-            //    {
-            //        Id = 4,
-            //        Department = new Department()
-            //        {
-            //            Id = "1",
-            //            Name = "English"
-            //        }
-            //    },
-            //    QtyNeeded = 20,
-            //};
-            //requisitionDetails.Add(rd1);
-            //requisitionDetails.Add(rd2);
-            //requisitionDetails.Add(rd3);
-            //requisitionDetails.Add(rd4);
-            //Retrieval retrieval = new Retrieval()
-            //{
-            //    Id = 128939232,
-            //    Status = CommonConstant.RetrievalFormStatus.CREATING,
-            //    Clerk = new Employee()
-            //    {
-            //        Name = "Esther",
-            //        Id = 1
-            //    },
-            //    RequisitionDetails = requisitionDetails,
-            //    DisbursedDate = date
-            //};
-            //string json = JsonConvert.SerializeObject(retrieval);
             ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
             ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
 
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/ret";
-            Result<Retrieval> result = HttpUtils.Post(url, date, new Retrieval(), Request, Response);
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/ret/"+date;
+            Result<Retrieval> result = HttpUtils.Get(url,  new Retrieval(), Request, Response);
             if (result.code == 200)
             {
                 Dictionary<string, List<RequisitionDetail>> categoryByProduct = new Dictionary<string, List<RequisitionDetail>>();
@@ -461,7 +347,7 @@ namespace SSIS_FRONT.Controllers
             }
             else
             {
-                return RedirectToAction("GenerateRetrieveForm", "StoreClerk", new { errMsg = result.msg });
+                return RedirectToAction("GenerateRetrievalForm", "StoreClerk", new { errMsg = result.msg });
             }
         }
 
@@ -470,12 +356,7 @@ namespace SSIS_FRONT.Controllers
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/ret";
             Result<Object> result = HttpUtils.Put(url, retrieval, Request, Response);
-
-            if(result.code != 200)
-            {
-                throw new Exception(result.msg);
-            }
-
+            throw new Exception("an exception");
             return (bool)result.data;
         }
 
