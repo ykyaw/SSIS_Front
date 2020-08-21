@@ -54,9 +54,6 @@
 @if ((string)ViewData["Role"] == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_EMPLOYEE])
 {
     <li class="nav-item">
-        <a class="nav-link text-light" asp-controller="Department" asp-action="RequestStationery">Request Stationery</a>
-    </li>
-    <li class="nav-item">
         <a class="nav-link text-light" asp-controller="Department" asp-action="Requisition">Requisition</a>
     </li>
     <li class="nav-item">
@@ -66,9 +63,6 @@
 
 @if ((string)ViewData["Role"] == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_REPRESENTATIVE])
 {
-    <li class="nav-item">
-        <a class="nav-link text-light" asp-controller="Department" asp-action="RequestStationery">Request Stationery</a>
-    </li>
     <li class="nav-item">
         <a class="nav-link text-light" asp-controller="Department" asp-action="Requisition">Requisition</a>
     </li>
