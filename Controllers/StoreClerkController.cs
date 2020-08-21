@@ -81,10 +81,14 @@ namespace SSIS_FRONT.Controllers
 
             return View();
         }
-        public IActionResult DisbursementDetail([FromBody] Requisition requisition)
+        public IActionResult DisbursementDetail(long date, string deptid)
         {
             ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
             ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+
+            Requisition requisition = new Requisition();
+            requisition.CollectionDate = date;
+            requisition.DepartmentId = deptid;
 
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/disbursement";
             Result<List<RequisitionDetail>> result = HttpUtils.Post(url, requisition, new List<RequisitionDetail>(), Request, Response);
