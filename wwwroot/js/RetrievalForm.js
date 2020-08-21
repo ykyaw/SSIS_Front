@@ -18,8 +18,9 @@
                 console.log(response);
                 if (response.code && response.code != 200) {
                     alert(response.msg);
+                } else {
+                    alert("update successfully");
                 }
-                alert("success: " + response);
             })
             .catch(function (err) {
                 alert("error: " + JSON.parse(err));
@@ -32,9 +33,12 @@
         retrieval.Status = "Retrieved";
         Put("/StoreClerk/Retrieval", retrieval)
             .then(function (response) {
-                //let result = JSON.parse(response);
-                console.log(response);
-                alert("success: " + response);
+                if (response.code && response.code != 200) {
+                    alert(response.msg);
+                    $("#status").text("Retrieved");
+                } else {
+                    alert("finalise successfully");
+                }
             })
             .catch(function (err) {
                 alert("error: " + JSON.parse(err));

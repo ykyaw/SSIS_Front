@@ -10,7 +10,7 @@
 <span>For Date of disbursement: @disbursedDate</span>
 
 <h6 id="retrievalId" value="@retrieval.Id">Retrieval Id: @retrieval.Id</h6>
-<h6>Status:@retrieval.Status</h6>
+<h6>Status:<span id="status">@retrieval.Status</span></h6>
 <h6>Date of retrieval:</h6>
 <h6>Retrieved By: @retrieval.Clerk.Name</h6>
 @{
@@ -40,8 +40,8 @@
             <td> @kvp.Value[i].RequisitionId</td>
             <td>@kvp.Value[i].Requisition.Department.Name</td>
             <td>@kvp.Value[i].QtyNeeded</td>
-            <td><input type="number" class="actualNumber" value="@kvp.Value[i].QtyNeeded" /></td>
-            <td><input type="text" class="remarks" /></td>
+            <td><input type="number" class="actualNumber" value="@kvp.Value[i].QtyDisbursed" /></td>
+            <td><input type="text" class="remarks" value="@kvp.Value[i].DisburseRemark" /></td>
         </tr>
             }
 
