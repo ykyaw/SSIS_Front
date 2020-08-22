@@ -1,4 +1,6 @@
-﻿@{
+﻿@using SSIS_FRONT.Common;
+
+@{
     ViewData["Title"] = "Purchase Request Detail";
     Dictionary<PurchaseRequestDetail, List<TenderQuotation>> TQbyPRD = (Dictionary<PurchaseRequestDetail, List<TenderQuotation>>)ViewData["TQbyPRD"];
     string role = (string)ViewData["Role"];
@@ -146,7 +148,7 @@
         </tbody>
     </table>*@
 
-@if (role == "Clerk")
+@if (role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.STORE_CLERK])
 {
     if (TQbyPRD.Keys.First().Status == "Created")
     {
@@ -171,7 +173,7 @@
             </div>*@
     }
 }
-else
+else if (@TQbyPRD.Keys.First().Status == CommonConstant.PurchaseRequestStatus.pendapprov)
 {
     <div id="supervisorButton" class="container">
         <div class="row justify-content-start">
@@ -183,17 +185,17 @@ else
             <div class="col-1">
                 <button id="reject" class="btn btn-danger form-control">Reject</button>
             </div>
-            <div class="col-1">                
+            <div class="col-1">
                 <button id="approve" class="btn btn-success form-control font-weight-bold">Approve</button>
             </div>
         </div>
     </div>
 
     @*<div id="supervisorButton">
-        <textarea rows="3" placeholder="Reason"></textarea>
-        <button id="reject">Reject</button>
-        <button id="approve">Approve</button>
-    </div>*@
+            <textarea rows="3" placeholder="Reason"></textarea>
+            <button id="reject">Reject</button>
+            <button id="approve">Approve</button>
+        </div>*@
 }
 
 <script src="~/js/PurchaseRequest.js"></script>

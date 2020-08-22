@@ -1,6 +1,5 @@
 ﻿$(document).ready(function () {
     $('#acknowledge').click(function () {
-        let RequisitionId = +$('#requisitionid').val();
         let empname = $('#empname').val();
         let date = new Date();
         let dateString = date.getFullYear() + "/" + ('0' + (date.getMonth() + 1)).slice(-2) + "/" + date.getDate();
@@ -8,7 +7,7 @@
         $(".detailid").each(function () {
             let detail = {
                 Id: +$(this).val(),
-                RequisitionId,
+                RequisitionId: +$(this).data('rid'),
                 QtyReceived: +$(this).nextAll().eq(4).find('input').val(),
                 RepRemark: $(this).nextAll().eq(5).find('input').val()
             }

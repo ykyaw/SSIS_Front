@@ -12,7 +12,6 @@
 <div>
     <span>Disbursement Date: </span>
     <span>@TimeUtil.convertTimestampToyyyyMMdd(disbursementList[0].Requisition.CollectionDate)</span>
-    <input id="requisitionid" value="@disbursementList[0].RequisitionId" type="hidden" />
 </div>
 
 
@@ -33,7 +32,7 @@
         @foreach (var d in disbursementList)
         {
             <tr>
-                <input class="detailid" type="hidden" value="@d.Id" />
+                <input class="detailid" data-rid="@d.RequisitionId" type="hidden" value="@d.Id" />
                 <td>@d.Product.Description</td>
                 <td>@d.QtyNeeded</td>
                 <td>@d.QtyDisbursed</td>
@@ -80,14 +79,14 @@
 
         @if (disbursementList[0].Requisition.Status != CommonConstant.RequsitionStatus.completed)
         {
-            <td></td>
-            <td></td>
-        }
-        else
-        {
             <td id="clerk"></td>
             <input id="clerkname" value="@name" type="hidden" />
             <td id="date"></td>
+        }
+        else
+        {
+            <td>@disbursementList[0].Requisition.AckByClerk.Name</td>
+            <td>@TimeUtil.convertTimestampToyyyyMMdd(disbursementList[0].Requisition.AckDate)</td>
         }
     </tr>
 </table>

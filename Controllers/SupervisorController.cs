@@ -75,6 +75,9 @@ namespace SSIS_FRONT.Controllers
 
         public IActionResult BarChart()
         {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/catalogue";
+            Result<List<Product>> result = HttpUtils.Get(url, new List<Product>(), Request, Response);
+            ViewData["Items"] = result.data;
             return View();
         }
 
