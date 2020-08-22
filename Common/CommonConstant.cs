@@ -46,10 +46,15 @@ namespace SSIS_FRONT.Common
             {ROLE.DEPARTMENT_REPRESENTATIVE,"Department Representative"}
         };
 
+        public static class PurchaseOrderDetailStatus
+        {
+            public const string pending = "Pending Delivery"; //initial status upon creation
+            public const string received = "Received"; //received from supplier
+        }
         public static class PurchaseOrderStatus
         {
-            public const string approved = "Approved";
-            public const string received = "Received"; //received from supplier
+            public const string pending = "Pending Delivery"; //When >1 PurchaseOrderDetail is still pending delivery
+            public const string completed = "Completed"; //When all PurchaseOrderDetail is received
         }
 
         public static class RequsitionStatus
