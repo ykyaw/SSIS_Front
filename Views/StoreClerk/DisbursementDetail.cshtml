@@ -7,66 +7,151 @@
     string name = (string)ViewData["Name"];
 }
 
-<h1>@ViewData["Title"]</h1>
+<h2 class="titlecenter">@ViewData["Title"]</h2>
+<div class="container" style="margin-top: 20px;">
+    <table>
+        <tr>
+            <td>Disbursement Date: </td>
+            <td>&nbsp;&nbsp;&nbsp;</td>
+            <td>@TimeUtil.convertTimestampToyyyyMMdd(disbursementList[0].Requisition.CollectionDate)</td>
+        </tr>
+    </table>
+</div>
 
-<div>
+@*<div>
     <span>Disbursement Date: </span>
     <span>@TimeUtil.convertTimestampToyyyyMMdd(disbursementList[0].Requisition.CollectionDate)</span>
+</div>*@
+
+
+<div class="container" style="margin-top: 20px;">
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Item Description</th>
+                <th>Qty Requisited</th>
+                <th>Qty Disbursed</th>
+                <th>Remarks</th>
+                <th>Qty Received</th>
+                <th>Dept Remarks</th>
+                <th>Clerk Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var d in disbursementList)
+            {
+                <tr>
+                    <input class="detailid" data-rid="@d.RequisitionId" type="hidden" value="@d.Id" />
+                    <td>@d.Product.Description</td>
+                    <td>@d.QtyNeeded</td>
+                    <td>@d.QtyDisbursed</td>
+                    <td>@d.DisburseRemark</td>
+                    <td>@d.QtyReceived</td>
+                    <td>@d.RepRemark</td>
+                    @if (disbursementList[0].Requisition.Status == CommonConstant.RequsitionStatus.received)
+                    {
+                        <td><input class="replace" type="text" /></td>
+                    }
+                    else
+                    {
+                        <td>@d.ClerkRemark</td>
+                    }
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
 </div>
 
 
-
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Item Description</th>
-            <th>Qty Requisited</th>
-            <th>Qty Disbursed</th>
-            <th>Remarks</th>
-            <th>Qty Received</th>
-            <th>Dept Remarks</th>
-            <th>Clerk Remarks</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var d in disbursementList)
+<div class="container" style="margin-top: 20px;">
+    <div class="row justify-content-center">
+        @if (disbursementList[0].Requisition.Status == CommonConstant.RequsitionStatus.received)
         {
-            <tr>
-                <input class="detailid" data-rid="@d.RequisitionId" type="hidden" value="@d.Id" />
-                <td>@d.Product.Description</td>
-                <td>@d.QtyNeeded</td>
-                <td>@d.QtyDisbursed</td>
-                <td>@d.DisburseRemark</td>
-                <td>@d.QtyReceived</td>
-                <td>@d.RepRemark</td>
-                @if (disbursementList[0].Requisition.Status == CommonConstant.RequsitionStatus.received)
-                {
-                    <td><input class="replace" type="text" /></td>
-                }
-                else
-                {
-                    <td>@d.ClerkRemark</td>
-                }
-            </tr>
+            <div class="col-6">
+                <button id="acknowledge" type="button" class="btn btn-primary font-weight-bold">Acknowledge Disbursement Received by Dept Rep</button>
+            </div>
         }
-
-    </tbody>
-</table>
-
-@if (disbursementList[0].Requisition.Status == CommonConstant.RequsitionStatus.received)
-{
-    <div>
-        <button id="acknowledge" type="button" class="btn btn-primary">Acknowledge Disbursement Received by Dept Rep</button>
     </div>
-}
+</div>
 
-<table>
-    <tr>
-        <td>Received by</td>
+<div class="container" style="margin-top: 30px;">
+    <div class="row justify-content-center">
+        <div class="col-2">
+            <label class="form-control" style="border: 0;">Received by (Rep):</label>
+        </div>
         @if (disbursementList[0].Requisition.Status == CommonConstant.RequsitionStatus.received || disbursementList[0].Requisition.Status == CommonConstant.RequsitionStatus.completed)
         {
-            <td>@disbursementList[0].Requisition.ReceivedByRep.Name</td>
-            <td>@TimeUtil.convertTimestampToyyyyMMdd(disbursementList[0].Requisition.ReceivedDate)</td>
+            <div class="col-2">
+                <label class="form-control" style="border: 0;">@disbursementList[0].Requisition.ReceivedByRep.Name</label>
+            </div>
+            <div class="col-1">
+                <label class="form-control" style="border: 0;">Date: </label>
+            </div>
+            <div class="col-2">
+                <label class="form-control" style="border: 0;">@TimeUtil.convertTimestampToyyyyMMdd(disbursementList[0].Requisition.ReceivedDate)</label>
+            </div>
+
+        }
+        else
+        {
+            <div class="col-2">
+                <label class="form-control" style="border: 0;"></label>
+            </div>
+            <div class="col-1">
+                <label class="form-control" style="border: 0;">Date: </label>
+            </div>
+            <div class="col-2">
+                <label class="form-control" style="border: 0;"></label>
+            </div>
+        }
+
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-2">
+            <label class="form-control" style="border: 0;">Acknowledged by (Clerk):</label>
+        </div>
+        @if (disbursementList[0].Requisition.Status != CommonConstant.RequsitionStatus.completed)
+        {
+            <div class="col-2">
+                <label id="clerk" class="form-control" style="border: 0;"></label>
+            </div>
+            <div class="col-1">
+                <input id="clerkname" value="@name" type="hidden" />
+                <label class="form-control" style="border: 0;">Date: </label>
+            </div>
+            <div class="col-2">
+                <label id="date" class="form-control" style="border: 0;"></label>
+            </div>
+            
+
+        }
+        else
+        {
+            <div class="col-2">
+                <label class="form-control" style="border: 0;">@disbursementList[0].Requisition.AckByClerk.Name</label>
+            </div>
+            <div class="col-1">
+                <label class="form-control" style="border: 0;">Date: </label>
+            </div>
+            <div class="col-2">
+                <label class="form-control" style="border: 0;">@TimeUtil.convertTimestampToyyyyMMdd(disbursementList[0].Requisition.AckDate)</label>
+            </div>
+
+        }
+
+    </div>
+</div>
+
+@*<table>
+    <tr>
+        <td><big>Received by (Rep):</big></td>
+        @if (disbursementList[0].Requisition.Status == CommonConstant.RequsitionStatus.received || disbursementList[0].Requisition.Status == CommonConstant.RequsitionStatus.completed)
+        {
+            <td><big>@disbursementList[0].Requisition.ReceivedByRep.Name</big></td>
+            <td><big>@TimeUtil.convertTimestampToyyyyMMdd(disbursementList[0].Requisition.ReceivedDate)</big></td>
         }
         else
         {
@@ -75,20 +160,20 @@
         }
     </tr>
     <tr>
-        <td>Acknowledged by (Clerk)</td>
-
+        <td><big>Acknowledged by (Clerk):</big></td>
         @if (disbursementList[0].Requisition.Status != CommonConstant.RequsitionStatus.completed)
-        {
-            <td></td>
-            <td></td>
-        }
-        else
         {
             <td id="clerk"></td>
             <input id="clerkname" value="@name" type="hidden" />
             <td id="date"></td>
         }
+        else
+        {
+            <td><big>@disbursementList[0].Requisition.AckByClerk.Name</big></td>
+            <td><big>@TimeUtil.convertTimestampToyyyyMMdd(disbursementList[0].Requisition.AckDate)</big></td>
+        }
     </tr>
-</table>
+</table>*@
+
 
 <script src="~/js/Disbursement.js"></script>

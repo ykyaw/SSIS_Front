@@ -25,7 +25,7 @@
                 .then(function (response) {
                     console.log(response);
                     //alert("success: " + response);
-                    $('.hide').fadeOut();
+                    $('.hide').hide();
                     $('<tr><td>' + name +
                         '</td><td>' + fromdatestring +
                         '</td><td>' + todatestring +
@@ -38,4 +38,16 @@
         }
 
     })
+
+    $('#productlist').on('click', 'input[type="button"]', function () {
+        $(this).closest('tr').fadeOut(200, function () {
+            $(this).remove();
+        });
+    });
+
+    $('#productlist').on('click', 'input[type="button"]', function () {
+        $(this).closest('tr').fadeOut(200, function () {
+            $(this).remove();
+        });
+    });
 })

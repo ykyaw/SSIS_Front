@@ -1,4 +1,7 @@
-﻿@{
+﻿@using SSIS_FRONT.Common;
+@using SSIS_FRONT.Utils;
+
+@{
     ViewData["Title"] = "Delivery Orders";
     List<PurchaseOrder> deliveryOrders = (List<PurchaseOrder>)ViewData["deliveryOrders"];
 }
@@ -14,6 +17,7 @@
         <tr>
             <th>PO Number</th>
             <th>Order Date</th>
+            <th>Status</th>
             <th></th>
         </tr>
     </thead>
@@ -22,8 +26,16 @@
         {
             <tr class="search">
                 <td>@d.Id</td>
-                <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(d.OrderedDate)</td>
-                <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="DeliveryOrder" asp-route-id="@d.Id">Update Item Received</a></td>
+                <td>@TimeUtil.convertTimestampToyyyyMMdd(d.OrderedDate)</td>
+                <td>@d.Status</td>
+                @if (d.Status == CommonConstant.PurchaseOrderStatus.pending)
+                {
+                    <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="DeliveryOrder" asp-route-id="@d.Id">Update Item Received</a></td>
+                }
+                else
+                {
+                    <td></td>
+                }
             </tr>
         }
     </tbody>

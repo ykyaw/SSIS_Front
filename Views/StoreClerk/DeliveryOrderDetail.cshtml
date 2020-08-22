@@ -1,4 +1,5 @@
-﻿@using SSIS_FRONT.Utils;
+﻿@using SSIS_FRONT.Common;
+@using SSIS_FRONT.Utils;
 
 @{
     ViewData["Title"] = "Delivery Order";
@@ -34,7 +35,7 @@
                     <td>@dod.ProductId</td>
                     <td>@dod.Product.Description</td>
                     <td>@dod.QtyPurchased</td>
-                    @if (dod.Status == "Pending Delivery")
+                    @if (dod.Status == CommonConstant.PurchaseOrderDetailStatus.pending)
                     {
                         <td><input class="replace" type="number" value="@dod.QtyPurchased" /></td>
                         <td><input class="replace" type="date" /></td>
