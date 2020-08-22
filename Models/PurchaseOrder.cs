@@ -16,6 +16,7 @@ namespace SSIS_FRONT.Models
         public long? OrderedDate { get; set; }
         public long SupplyByDate { get; set; }
         public int? ApprovedBySupId { get; set; }
+        public string Status { get; set; }
         //public int? ReceivedByClerkId { get; set; }
         public int? CollectionPointId { get; set; }
 
