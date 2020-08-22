@@ -25,7 +25,7 @@
                 .then(function (response) {
                     console.log(response);
                     //alert("success: " + response);
-                    $('.hide').fadeOut();
+                    $('.hide').hide();
                     $('<tr><td>' + name +
                         '</td><td>' + fromdatestring +
                         '</td><td>' + todatestring +

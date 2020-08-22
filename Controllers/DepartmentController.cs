@@ -190,10 +190,12 @@ namespace SSIS_FRONT.Controllers
             Result<List<Employee>> result = HttpUtils.Get(url, new List<Employee>(), Request, Response);
             ViewData["employees"] = result.data;
 
-            long currentdate = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            DateTime dateTime = DateTime.UtcNow.Date;
+            DateTimeOffset dt = new DateTimeOffset(dateTime, TimeSpan.Zero).ToUniversalTime();
+            long date = dt.ToUnixTimeMilliseconds();
             List<Employee> delegates = result.data.OrderBy(x => x.DelegateFromDate).ToList();
             delegates.RemoveAll(x => x.DelegateToDate == null);
-            delegates.RemoveAll(x => x.DelegateToDate < currentdate);
+            delegates.RemoveAll(x => x.DelegateToDate < date);
 
             ViewData["delegates"] = delegates;
 

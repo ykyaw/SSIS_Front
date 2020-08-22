@@ -79,14 +79,14 @@
 
         @if (disbursementList[0].Requisition.Status != CommonConstant.RequsitionStatus.completed)
         {
-            <td></td>
-            <td></td>
-        }
-        else
-        {
             <td id="clerk"></td>
             <input id="clerkname" value="@name" type="hidden" />
             <td id="date"></td>
+        }
+        else
+        {
+            <td>@disbursementList[0].Requisition.AckByClerk.Name</td>
+            <td>@TimeUtil.convertTimestampToyyyyMMdd(disbursementList[0].Requisition.AckDate)</td>
         }
     </tr>
 </table>
