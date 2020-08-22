@@ -120,7 +120,7 @@ namespace SSIS_FRONT.Controllers
         public bool UpdateRequisition([FromBody] Requisition requisition)
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/depthead/arr";
-            Result<Object> result = HttpUtils.Post(url, requisition, Request, Response);
+            Result<Object> result = HttpUtils.Put(url, requisition, Request, Response);
             return (bool)result.data;
         }
         public IActionResult Disbursement()

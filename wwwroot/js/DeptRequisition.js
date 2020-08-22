@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
     $("#approve").click(function () {
-        let Id = +$("#reqdetailId").val();
+        let Id = +$("#requisitionId").text();
         let Remarks = $("#remarks").val();
         let requisition = {
             Id,
@@ -19,7 +19,7 @@
             })
     })
     $("#reject").click(function () {
-        let Id = +$("#reqdetailId").val();
+        let Id = +$("#requisitionId").text();
         let Remarks = $("#remarks").val();
         let requisition = {
             Id,

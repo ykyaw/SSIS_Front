@@ -38,4 +38,16 @@
         }
 
     })
+
+    $('#productlist').on('click', 'input[type="button"]', function () {
+        $(this).closest('tr').fadeOut(200, function () {
+            $(this).remove();
+        });
+    });
+
+    $('#productlist').on('click', 'input[type="button"]', function () {
+        $(this).closest('tr').fadeOut(200, function () {
+            $(this).remove();
+        });
+    });
 })

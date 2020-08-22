@@ -14,7 +14,7 @@
     <table id="form">
         <tr>
             <td>Form ID</td>
-            <td><span id="requisitionId">@requisition.Id</span></td>
+            <td id="requisitionId">@requisition.Id</td>
         </tr>
         <tr>
             <td>Employee Name</td>
@@ -103,7 +103,7 @@
     <script src="~/js/RequestStationery.js"></script>
 }
 
-@if (role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD] && requisition.Status == CommonConstant.RequsitionStatus.approved)
+@if (role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD] && requisition.Status == CommonConstant.RequsitionStatus.pendapprov)
 {
     <div id="updaterequisition">
         <textarea id="remarks" rows="3" placeholder="Reason"></textarea>
