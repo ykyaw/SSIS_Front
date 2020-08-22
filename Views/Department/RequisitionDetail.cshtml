@@ -28,10 +28,10 @@
             <td>Status</td>
             <td id="status">@requisition.Status</td>
         </tr>
-        @if (requisition.Status == CommonConstant.RequsitionStatus.rejected)
+        @if (requisition.Status == CommonConstant.RequsitionStatus.approved || requisition.Status == CommonConstant.RequsitionStatus.rejected)
         {
             <tr>
-                <td>Rejected Reason</td>
+                <td>Reason</td>
                 <td>@requisition.Remarks</td>
             </tr>
         }

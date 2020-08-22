@@ -13,6 +13,9 @@
                 console.log(response);
                 $('#updaterequisition').fadeOut();
                 $('#status').hide().text("Approved").fadeIn();
+                $('<tr><td>' + 'Reason' +
+                    '</td><td>' + Remarks +
+                    '</td></tr>').hide().appendTo('#form').fadeIn();
             })
             .catch(function (err) {
                 console.log("error: " + err);
@@ -32,7 +35,7 @@
                 console.log(response);
                 $('#updaterequisition').fadeOut();
                 $('#status').hide().text("Rejected").fadeIn();
-                $('<tr><td>' + 'Rejected Reason' +
+                $('<tr><td>' + 'Reason' +
                     '</td><td>' + Remarks +
                     '</td></tr>').hide().appendTo('#form').fadeIn();
             })
