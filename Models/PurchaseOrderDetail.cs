@@ -18,7 +18,7 @@ namespace SSIS_FRONT.Models
         public int? ReceivedByClerkId { get; set; }
         public long? ReceivedDate { get; set; }
         public double TotalPrice { get; set; }
-        public int? SupplierDeliveryNo { get; set; }
+        public string SupplierDeliveryNo { get; set; }
         public string Remark { get; set; }
         public string Status { get; set; }
 

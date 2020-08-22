@@ -6,15 +6,8 @@
     $('#save').on("click", function () {
         let details = [];
         $('.detailId').each(function () {
+
             let SupplierDeliveryNo = $(this).nextAll().eq(5).find('input');
-            if (SupplierDeliveryNo.is('input') && isNaN(SupplierDeliveryNo.val())) {
-                alert("Supplier Delivery Number cannot contain letters.");
-                return;
-            }
-            if (SupplierDeliveryNo.val() == "") {
-                alert("Supplier Delivery Number cannot be empty.");
-                return;
-            }
             let dateString = $(this).nextAll().eq(4).find('input').val();
             let date = new Date(dateString);
             let detail = {
@@ -22,11 +15,11 @@
                 PurchaseOrderId,
                 QtyReceived: +$(this).nextAll().eq(3).find('input').val(),
                 ReceivedDate: date.getTime(),
-                SupplierDeliveryNo: +SupplierDeliveryNo.val(),
+                SupplierDeliveryNo: SupplierDeliveryNo.val(),
                 Remark: $(this).nextAll().eq(6).find('input').val(),
                 Status: "Received"
             }
-            if (!(isNaN(detail.ReceivedDate) || isNaN(detail.SupplierDeliveryNo))) {
+            if (!(isNaN(detail.ReceivedDate) || SupplierDeliveryNo == '')) {
                 details.push(detail);
             }
         });
@@ -37,8 +30,8 @@
                 $('.detailId').each(function () {
                     let dateString = $(this).nextAll().eq(4).find('input').val();
                     let date = new Date(dateString);
-                    let SupplierDeliveryNo = +$(this).nextAll().eq(5).find('input').val();
-                    if (!(isNaN(date.getTime()) || isNaN(SupplierDeliveryNo))) {
+                    let SupplierDeliveryNo = $(this).nextAll().eq(5).find('input').val();
+                    if (!(isNaN(date.getTime()) || SupplierDeliveryNo == '')) {
                         $(this).siblings('td').find('input').fadeOut(function () {
                             let replacement = $('<span class=' + this.className + '>' + this.value + '</span>')
                             $(this).replaceWith(replacement).fadeIn();
@@ -50,7 +43,7 @@
                 })
             })
             .catch(function (err) {
-                //alert("error: " + JSON.parse(err));
+                alert("error: " + JSON.parse(err));
             })
     });
 });
