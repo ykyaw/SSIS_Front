@@ -1,4 +1,7 @@
 ﻿$(document).ready(function () {
+    if ($('#requestlist tr').length >= 1) {
+        $('#submit').prop('disabled', false);
+    }
     $('#add').click(function () {
         if (!$.isNumeric($('#qty').val())) {
             alert("Quantity must be a number");
@@ -10,6 +13,7 @@
             alert("Please select a product");
             return;
         } else {
+            $('#submit').prop('disabled', false);
             $('<tr>' + '<input class="productid" type="hidden" value="' + $('#product').val() + '" />' +
                 '<td>' + $('#product').find(':selected').data('desc') +
                 '</td><td>' + '<input type="number" min="1" value="' + $('#qty').val() + '" />' +
@@ -22,6 +26,9 @@
         $(this).closest('tr').fadeOut(200, function () {
             $(this).remove();
         });
+        if ($('#requestlist tr').length == 1) {
+            $('#submit').prop('disabled', true);
+        }
     });
 
     $('#save').click(function () {

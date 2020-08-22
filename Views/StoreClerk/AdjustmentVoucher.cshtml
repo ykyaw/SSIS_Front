@@ -9,13 +9,17 @@
 
 <h1>Adjustment Voucher List</h1>
 <input id="clerkid" type="hidden" value="@clerkid" />
-<input type="text" placeholder="search" id="search" />
+
 
 <div>
     <a class="btn btn-primary" asp-controller="StoreClerk" asp-action="GenerateAdjustmentVoucher">Issue Adjustment Voucher</a>
 </div>
 <div>
     <a class="btn btn-primary" id="viewclerkhistory" value="@name" asp-controller="StoreClerk" asp-action="AdjustmentVoucherByClerkId">View My Adjustment Voucher History</a>
+</div>
+
+<div>
+    <input type="text" placeholder="search by keyword" id="search" />
 </div>
 <div>
     @*<a class="btn btn-primary" id="allvouchers">View All Voucher List</a>*@
@@ -43,7 +47,8 @@
                 <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="AdjustmentVoucherDetails" asp-route-id="@adv.Id">Details</a></td>
                 @if (adv.Status == "Created" && adv.InitiatedClerkId == clerkid)
                 {
-                    <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="AmendAdjustmentVoucher" asp-route-id="@adv.Id">Amend</a></td>
+                    @*<td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="AmendAdjustmentVoucher" asp-route-id="@adv.Id">Amend</a></td>*@
+                    <td>click Details to amend</td>
                 }
                 else
                 {

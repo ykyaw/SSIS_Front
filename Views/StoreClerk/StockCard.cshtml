@@ -3,87 +3,124 @@
     List<Transaction> transactions = (List<Transaction>)ViewData["transactions"];
     List<TenderQuotation> tenderQuotations = (List<TenderQuotation>)ViewData["tenderquotations"];
 }
-<h1>@ViewData["Title"]</h1>
+<h2 class="titlecenter">@ViewData["Title"]</h2>
+
+<div class="container" style="margin-top: 20px;">
 
 
-@if (transactions.Count > 0)
-{
+    @if (transactions.Count > 0)
+    {
 
-    <table class="noborder">
-        <tr>
-            <td>Item Code</td>
-            <td>@transactions[0].ProductId</td>
-        </tr>
-        <tr>
-            <td>Item Description</td>
-            <td>@transactions[0].Product.Description</td>
-        </tr>
-        <tr>
-            <td>Bin#</td>
-            <td>@transactions[0].Product.CategoryId</td>
-        </tr>
-        <tr>
-            <td>UOM</td>
-            <td>@transactions[0].Product.Uom</td>
-        </tr>
-        <tr>
-            <td>1st Supplier</td>
-            <td>@tenderQuotations[0].Supplier.Name</td>
-        </tr>
-        <tr>
-            <td>2nd Supplier</td>
-            <td>@tenderQuotations[1].Supplier.Name</td>
-        </tr>
-        <tr>
-            <td>3rd Supplier</td>
-            <td>@tenderQuotations[2].Supplier.Name</td>
-        </tr>
-    </table>
-
-
-    <table class="table table-striped">
-        <thead>
+        <table>
             <tr>
-                <th>Date</th>
-                <th>Description</th>
-                <th>Reference Code</th>
-                <th>Quantity</th>
-                <th>Balance</th>
-                <th>Entered by</th>
+                <td>Item Code: </td>
+                <td>&nbsp;&nbsp;&nbsp;</td>
+                <td>@transactions[0].ProductId</td>
             </tr>
-        </thead>
-        <tbody id="transactionList">
-            @foreach (var t in transactions)
-            {
+            <tr>
+                <td>Item Description: </td>
+                <td>&nbsp;&nbsp;&nbsp;</td>
+                <td>@transactions[0].Product.Description</td>
+            </tr>
+            <tr>
+                <td>Bin#: </td>
+                <td>&nbsp;&nbsp;&nbsp;</td>
+                <td>@transactions[0].Product.CategoryId</td>
+            </tr>
+            <tr>
+                <td>UOM: </td>
+                <td>&nbsp;&nbsp;&nbsp;</td>
+                <td>@transactions[0].Product.Uom</td>
+            </tr>
+            <tr>
+                <td>1st Supplier: </td>
+                <td>&nbsp;&nbsp;&nbsp;</td>
+                <td>@tenderQuotations[0].Supplier.Name</td>
+            </tr>
+            <tr>
+                <td>2nd Supplier: </td>
+                <td>&nbsp;&nbsp;&nbsp;</td>
+                <td>@tenderQuotations[1].Supplier.Name</td>
+            </tr>
+            <tr>
+                <td>3rd Supplier: </td>
+                <td>&nbsp;&nbsp;&nbsp;</td>
+                <td>@tenderQuotations[2].Supplier.Name</td>
+            </tr>
+        </table>
+        <br />
+
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(t.Date)</td>
-                    <td>@t.Description</td>
-                    <td>@t.RefCode</td>
-                    <td>@t.Qty</td>
-                    <td>@t.Balance</td>
-                    <td>@t.UpdatedByEmp.Name</td>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Reference Code</th>
+                    <th>Quantity</th>
+                    <th>Balance</th>
+                    <th>Entered by</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody id="transactionList">
+                @foreach (var t in transactions)
+                {
+                    <tr>
+                        <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(t.Date)</td>
+                        <td>@t.Description</td>
+                        <td>@t.RefCode</td>
+                        <td>@t.Qty</td>
+                        <td>@t.Balance</td>
+                        <td>@t.UpdatedByEmp.Name</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <br />
 
-    <div>
+        @*<div>
+                <form id="newEntry">
+                    <span>Add Entry:</span>
+                    <input id="productId" type="hidden" value="@transactions[0].ProductId" />
+                    <input id="description" type="text" placeholder="Description" required />
+                    <input id="refcode" type="text" placeholder="Ref Code (optional)" />
+                    <input id="qty" type="number" value="0" />
+                    <input id="balance" type="hidden" value="@transactions.Last().Balance" />
+                    <input id="updatedByEmp" type="hidden" value="@ViewData["Name"]" />
+                    <button id="addEntry" type="button" class="btn btn-primary">Save</button>
+                </form>
+            </div>*@
+
         <form id="newEntry">
-            <span>Add Entry:</span>
-            <input id="productId" type="hidden" value="@transactions[0].ProductId" />
-            <input id="description" type="text" placeholder="Description" required/>
-            <input id="refcode" type="text" placeholder="Ref Code (optional)" />
-            <input id="qty" type="number" value="0" />
-            <input id="balance" type="hidden" value="@transactions.Last().Balance" />
-            <input id="updatedByEmp" type="hidden" value="@ViewData["Name"]" />
-            <button id="addEntry" type="button" class="btn btn-primary">Save</button>
-        </form>
-    </div>
+            <div class="row justify-content-start">
 
-}
-else
-{
-    <span>There is no transaction history for this product.</span>
-}
+                <div class="col-2">
+                    <label class="form-control font-weight-bold" style="border: 0;">Add Entry:</label>
+                </div>
+                <div class="col-3">
+                    <input id="productId" type="hidden" value="@transactions[0].ProductId" />
+                    <input id="description" type="text" placeholder="Description" class="form-control" required />
+                </div>
+                <div class="col-3">
+                    <input id="refcode" type="text" placeholder="Ref Code (optional)" class="form-control" />
+                </div>
+                <div class="col-1">
+                    <input id="qty" type="number" value="0" class="form-control" />
+                    <input id="balance" type="hidden" value="@transactions.Last().Balance" />
+                    <input id="updatedByEmp" type="hidden" value="@ViewData["Name"]" />
+                </div>
+                <div class="col-1">
+                    <button id="addEntry" type="button" class="btn btn-primary form-control font-weight-bold">Save</button>
+                </div>
+
+            </div>
+        </form>
+
+    }
+    else
+    {
+        <span>There is no transaction history for this product.</span>
+    }
+</div>
+
 
 <script src="~/js/StockCard.js"></script>

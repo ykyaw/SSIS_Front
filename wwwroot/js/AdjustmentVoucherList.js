@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+    $("#allvouchers").hide();
     $("#search").on("input", debounce(function () {
         $(".adjustmentvoucher").each(function () {
             if (!$(this).html().includes($("#search").val())) {
@@ -8,11 +9,20 @@
             }
         })
     }, 1000));
-    $(".adjustmentvoucher").each(function () {
-        let status = $(this).nextAll('.status').val();
-        if (status != "Created") {
-            $(this).nextAll('#amend').disabled = true;
-           
-        }
-    })
+    $("#viewclerkhistory").click(function () {
+        $("#viewclerkhistory").hide();
+        $("#allvouchers").show();
+        let clerkid = $("input[type='hidden']").val();
+        console.log(clerkid)
+        $(".adjustmentvoucher").each(function () {
+            let clerkid2 = $(this).nextAll('.clerkid').attri("value");
+            console.log(clerkid2)
+            if (clerid2 != clerid) {
+                $(this).fadeOut();
+            } else {
+                $(this).fadeIn();
+            }
+        })
+    });
+
 })

@@ -1,96 +1,201 @@
-﻿@{
+﻿@using SSIS_FRONT.Common;
+
+@{
     ViewData["Title"] = "Purchase Request Detail";
     Dictionary<PurchaseRequestDetail, List<TenderQuotation>> TQbyPRD = (Dictionary<PurchaseRequestDetail, List<TenderQuotation>>)ViewData["TQbyPRD"];
     string role = (string)ViewData["Role"];
     @*string name = (string)ViewData["Name"];*@
 }
-<h1>@ViewData["Title"]</h1>
-
-<table>
-    <tr>
-        <td>Purchase Request No</td>
-        <td id="requestId">@TQbyPRD.Keys.First().PurchaseRequestId</td>
-    </tr>
-    <tr>
-        <td>Status</td>
-        <td>@TQbyPRD.Keys.First().Status</td>
-    </tr>
-</table>
-
-<table id="form">
-    <thead>
+<h2 class="titlecenter">@ViewData["Title"]</h2>
+<div class="container" style="margin-top: 20px;">
+    <table>
         <tr>
-            <th>Item Code</th>
-            <th>Description</th>
-            <th>Current Stock</th>
-            <th>Quantity to Order</th>
-            <th>Vendor</th>
-            <th>Vendor Quote #</th>
-            <th>Total Price</th>
+            <td>Purchase Request No: </td>
+            <td>&nbsp;&nbsp;&nbsp;</td>
+            <td id="requestId">@TQbyPRD.Keys.First().PurchaseRequestId</td>
         </tr>
-    </thead>
-    <tbody>
-        @foreach (KeyValuePair<PurchaseRequestDetail, List<TenderQuotation>> kvp in TQbyPRD)
-        {
+        <tr>
+            <td>Status: </td>
+            <td>&nbsp;&nbsp;&nbsp;</td>
+            <td>@TQbyPRD.Keys.First().Status</td>
+        </tr>
+
+    </table>
+</div>
+
+@*<table>
+        <tr>
+            <td>Purchase Request No</td>
+            <td id="requestId">@TQbyPRD.Keys.First().PurchaseRequestId</td>
+        </tr>
+        <tr>
+            <td>Status</td>
+            <td>@TQbyPRD.Keys.First().Status</td>
+        </tr>
+    </table>*@
+
+<div class="container" style="margin-top:20px">
+    <table class="table table-striped" id="form">
+        <thead>
             <tr>
-                <input class="detailId" type="hidden" value="@kvp.Key.Id" />
-                <td>@kvp.Key.ProductId</td>
-                <td data-productid="@kvp.Key.ProductId">@kvp.Key.Product.Description</td>
-                <td>@kvp.Key.CurrentStock</td>
-
-                @if (role == "Clerk" && kvp.Key.Status == "Created")
-                {
-                    <td>
-                        <input class="reorderqty number" type="number" min="0" value="@kvp.Key.ReorderQty" />
-                    </td>
-                    <td>
-                        <select class="supplierid number">
-                            @foreach (var v in kvp.Value) 
-                            {
-                                <option data-sid="@v.SupplierId" value="@v.Unitprice">Rank @v.Rank: @v.Supplier.Name</option>
-                            }
-                        </select>
-                    </td>
-                    <td>
-                        <input class="venderquote" type="text" value="@kvp.Key.VenderQuote" />
-                    </td>
-                }
-                else
-                {
-                    <td>
-                        @kvp.Key.ReorderQty
-                    </td>
-                    <td>
-                        @kvp.Key.Supplier.Name
-                    </td>
-                    <td>
-                        @kvp.Key.VenderQuote
-                    </td>
-                }
-                <td>@((kvp.Key.ReorderQty * kvp.Value[0].Unitprice).ToString("C"))</td>
+                <th>Item Code</th>
+                <th>Description</th>
+                <th>Current Stock</th>
+                <th>Quantity to Order</th>
+                <th>Vendor</th>
+                <th>Vendor Quote #</th>
+                <th>Total Price</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (KeyValuePair<PurchaseRequestDetail, List<TenderQuotation>> kvp in TQbyPRD)
+            {
+                <tr>
+                    <input class="detailId" type="hidden" value="@kvp.Key.Id" />
+                    <td>@kvp.Key.ProductId</td>
+                    <td data-productid="@kvp.Key.ProductId">@kvp.Key.Product.Description</td>
+                    <td>@kvp.Key.CurrentStock</td>
 
-@if (role == "Clerk")
+                    @if (role == "Clerk" && kvp.Key.Status == "Created")
+                    {
+                        <td>
+                            <input class="reorderqty number" type="number" min="0" value="@kvp.Key.ReorderQty" />
+                        </td>
+                        <td>
+                            <select class="supplierid number">
+                                @foreach (var v in kvp.Value)
+                                {
+                                    <option data-sid="@v.SupplierId" value="@v.Unitprice">Rank @v.Rank: @v.Supplier.Name</option>
+                                }
+                            </select>
+                        </td>
+                        <td>
+                            <input class="venderquote" type="text" value="@kvp.Key.VenderQuote" />
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @kvp.Key.ReorderQty
+                        </td>
+                        <td>
+                            @kvp.Key.Supplier.Name
+                        </td>
+                        <td>
+                            @kvp.Key.VenderQuote
+                        </td>
+                    }
+                    <td>@((kvp.Key.ReorderQty * kvp.Value[0].Unitprice).ToString("C"))</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@*<table id="form">
+        <thead>
+            <tr>
+                <th>Item Code</th>
+                <th>Description</th>
+                <th>Current Stock</th>
+                <th>Quantity to Order</th>
+                <th>Vendor</th>
+                <th>Vendor Quote #</th>
+                <th>Total Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (KeyValuePair<PurchaseRequestDetail, List<TenderQuotation>> kvp in TQbyPRD)
+            {
+                <tr>
+                    <input class="detailId" type="hidden" value="@kvp.Key.Id" />
+                    <td>@kvp.Key.ProductId</td>
+                    <td data-productid="@kvp.Key.ProductId">@kvp.Key.Product.Description</td>
+                    <td>@kvp.Key.CurrentStock</td>
+
+                    @if (role == "Clerk" && kvp.Key.Status == "Created")
+                    {
+                        <td>
+                            <input class="reorderqty number" type="number" min="0" value="@kvp.Key.ReorderQty" />
+                        </td>
+                        <td>
+                            <select class="supplierid number">
+                                @foreach (var v in kvp.Value)
+                                {
+                                    <option data-sid="@v.SupplierId" value="@v.Unitprice">Rank @v.Rank: @v.Supplier.Name</option>
+                                }
+                            </select>
+                        </td>
+                        <td>
+                            <input class="venderquote" type="text" value="@kvp.Key.VenderQuote" />
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @kvp.Key.ReorderQty
+                        </td>
+                        <td>
+                            @kvp.Key.Supplier.Name
+                        </td>
+                        <td>
+                            @kvp.Key.VenderQuote
+                        </td>
+                    }
+                    <td>@((kvp.Key.ReorderQty * kvp.Value[0].Unitprice).ToString("C"))</td>
+                </tr>
+            }
+        </tbody>
+    </table>*@
+
+@if (role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.STORE_CLERK])
 {
     if (TQbyPRD.Keys.First().Status == "Created")
     {
-        <div id="clerkButton">
-            <button id="quote" class="btn btn-primary">Generate Quote</button>
-            <button id="update" class="btn btn-primary">Update</button>
-            <button id="submit" class="btn btn-success" disabled="disabled">Submit for Approval</button>
+        <div id="clerkButton" class="container">
+            <div class="row justify-content-center">
+                <div class="col-2">
+                    <button id="quote" class="btn btn-primary form-control font-weight-bold">Generate Quote</button>
+                </div>
+                <div class="col-2">
+                    <button id="update" class="btn btn-warning font-weight-bold form-control">Update</button>
+                </div>
+                <div class="col-3">
+                    <button id="submit" class="btn btn-success font-weight-bold " disabled="disabled">Submit for Approval</button>
+                </div>
+            </div>
         </div>
+
+        @*<div id="clerkButton">
+                <button id="quote" class="btn btn-primary">Generate Quote</button>
+                <button id="update" class="btn btn-primary">Update</button>
+                <button id="submit" class="btn btn-success" disabled="disabled">Submit for Approval</button>
+            </div>*@
     }
 }
-else
+else if (@TQbyPRD.Keys.First().Status == CommonConstant.PurchaseRequestStatus.pendapprov)
 {
-    <div id="supervisorButton">
-        <textarea rows="3" placeholder="Reason"></textarea>
-        <button id="reject">Reject</button>
-        <button id="approve">Approve</button>
+    <div id="supervisorButton" class="container">
+        <div class="row justify-content-start">
+            <div class="col-2">
+                <textarea rows="3" placeholder="Reason" class="form-control"></textarea>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-1">
+                <button id="reject" class="btn btn-danger form-control">Reject</button>
+            </div>
+            <div class="col-1">
+                <button id="approve" class="btn btn-success form-control font-weight-bold">Approve</button>
+            </div>
+        </div>
     </div>
+
+    @*<div id="supervisorButton">
+            <textarea rows="3" placeholder="Reason"></textarea>
+            <button id="reject">Reject</button>
+            <button id="approve">Approve</button>
+        </div>*@
 }
 
 <script src="~/js/PurchaseRequest.js"></script>

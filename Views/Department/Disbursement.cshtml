@@ -43,7 +43,12 @@
                     <td>@d.Status</td>
                     @if (role != CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD])
                     {
-                        <td><button class="disbursement">Disbursement</button></td>
+                        <td>
+                            <form action="/Department/DisbursementForm" method="put">
+                                <input type="hidden" name="date" value="@d.CollectionDate" />
+                                <button>Disbursement</button>
+                            </form>
+                        </td>
                     }
                 </tr>
             }

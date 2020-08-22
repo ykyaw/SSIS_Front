@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = "Disbursement List";
     List<RequisitionDetail> disbursement = (List<RequisitionDetail>)ViewData["disbursement"];
+    string name = (string)ViewData["Name"];
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -11,7 +12,7 @@
 <div>
     <span>Disbursement Date: </span>
     <span>@TimeUtil.convertTimestampToyyyyMMdd(disbursement[0].Requisition.CollectionDate)</span>
-    <input id="requisitionid" value="" @disbursement[0].RequisitionId type="hidden" />
+    <input value="@disbursement[0].RequisitionId" type="hidden" />
 </div>
 
 <table class="table table-striped">
@@ -30,15 +31,15 @@
         @foreach (var d in disbursement)
         {
             <tr>
-                <input class="detailid" type="hidden" value="@d.Id" />
+                <input class="detailid" data-rid="@d.RequisitionId" type="hidden" value="@d.Id" />
                 <td>@d.Product.Description</td>
                 <td>@d.QtyNeeded</td>
                 <td>@d.QtyDisbursed</td>
                 <td>@d.DisburseRemark</td>
                 @if (disbursement[0].Requisition.Status == CommonConstant.RequsitionStatus.confirmed)
                 {
-                    <td><input type="number" /></td>
-                    <td><input type="text" /></td>
+                    <td><input class="replace" type="number" value="@d.QtyDisbursed" /></td>
+                    <td><input class="replace" type="text" /></td>
                 }
                 else
                 {
@@ -51,17 +52,21 @@
     </tbody>
 </table>
 
-<div>
-    <button id="acknowledge" type="button" class="btn btn-primary">Acknowledge Item Received</button>
-</div>
+@if (disbursement[0].Requisition.Status == CommonConstant.RequsitionStatus.confirmed)
+{
+    <div>
+        <button id="acknowledge" type="button" class="btn btn-primary">Acknowledge Item Received</button>
+    </div>
+}
 
 <table>
     <tr>
         <td>Received by</td>
-        @if (disbursement[0].Requisition.Status != CommonConstant.RequsitionStatus.confirmed)
+        @if (disbursement[0].Requisition.Status == CommonConstant.RequsitionStatus.confirmed)
         {
-            <td></td>
-            <td></td>
+            <td id="receivedby"></td>
+            <input id="empname" value="@name" type="hidden" />
+            <td id="receiveddate"></td>
         }
         else
         {
@@ -71,7 +76,7 @@
     </tr>
     <tr>
         <td>Acknowledged by (Clerk)</td>
-        @if (disbursement[0].Requisition.Status != CommonConstant.RequsitionStatus.completed)
+        @if (disbursement[0].Requisition.Status == CommonConstant.RequsitionStatus.completed)
         {
             <td>@disbursement[0].Requisition.AckByClerk.Name</td>
             <td>@TimeUtil.convertTimestampToyyyyMMdd(disbursement[0].Requisition.AckDate)</td>

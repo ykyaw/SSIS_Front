@@ -14,7 +14,7 @@
     <table id="form">
         <tr>
             <td>Form ID</td>
-            <td><span id="requisitionId">@requisition.Id</span></td>
+            <td id="formid">@requisition.Id</td>
         </tr>
         <tr>
             <td>Employee Name</td>
@@ -97,13 +97,13 @@
 
     <div>
         <button id="save" class="btn btn-primary">Save Draft</button>
-        <button id="submit" class="btn btn-success">Submit</button>
+        <button id="submit" class="btn btn-success" disabled>Submit</button>
     </div>
 
     <script src="~/js/RequestStationery.js"></script>
 }
 
-@if (role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD] && requisition.Status == CommonConstant.RequsitionStatus.approved)
+@if (role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD] && requisition.Status == CommonConstant.RequsitionStatus.pendapprov)
 {
     <div id="updaterequisition">
         <textarea id="remarks" rows="3" placeholder="Reason"></textarea>

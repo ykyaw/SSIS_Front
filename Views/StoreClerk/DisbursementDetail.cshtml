@@ -1,4 +1,7 @@
-﻿@{
+﻿@using SSIS_FRONT.Common;
+@using SSIS_FRONT.Utils;
+
+@{
     ViewData["Title"] = "Disbursement List";
     List<RequisitionDetail> disbursementList = (List<RequisitionDetail>)ViewData["disbursementList"];
     string name = (string)ViewData["Name"];
@@ -8,8 +11,7 @@
 
 <div>
     <span>Disbursement Date: </span>
-    <span>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(disbursementList[0].Requisition.CollectionDate)</span>
-    <input id="requisitionid" value="" @disbursementList[0].RequisitionId type="hidden" />
+    <span>@TimeUtil.convertTimestampToyyyyMMdd(disbursementList[0].Requisition.CollectionDate)</span>
 </div>
 
 
@@ -29,42 +31,64 @@
     <tbody>
         @foreach (var d in disbursementList)
         {
-        <tr>
-            <input class="detailid" type="hidden" value=@d.Id" "    />
-            <td>@d.Product.Description</td>
-            <td>@d.QtyNeeded</td>
-            <td>@d.QtyDisbursed</td>
-            <td>@d.DisburseRemark</td>
-            <td>@d.QtyReceived</td>
-            <td>@d.RepRemark</td>
-            @if (disbursementList[0].Requisition.Status != "Received")
-            {
-                <td><input type="text" /></td>
-            }
-        </tr>
+            <tr>
+                <input class="detailid" data-rid="@d.RequisitionId" type="hidden" value="@d.Id" />
+                <td>@d.Product.Description</td>
+                <td>@d.QtyNeeded</td>
+                <td>@d.QtyDisbursed</td>
+                <td>@d.DisburseRemark</td>
+                <td>@d.QtyReceived</td>
+                <td>@d.RepRemark</td>
+                @if (disbursementList[0].Requisition.Status == CommonConstant.RequsitionStatus.received)
+                {
+                    <td><input class="replace" type="text" /></td>
+                }
+                else
+                {
+                    <td>@d.ClerkRemark</td>
+                }
+            </tr>
         }
+
     </tbody>
 </table>
 
-<div>
-    <button id="acknowledge" type="button" class="btn btn-primary">Acknowledge Disbursement Received by Dept Rep</button>
-</div>
+@if (disbursementList[0].Requisition.Status == CommonConstant.RequsitionStatus.received)
+{
+    <div>
+        <button id="acknowledge" type="button" class="btn btn-primary">Acknowledge Disbursement Received by Dept Rep</button>
+    </div>
+}
 
 <table>
     <tr>
-        <td>Received by (Rep)</td>
-        @if (disbursementList[0].Requisition.Status != "Received" || disbursementList[0].Requisition.Status != "Completed")
+        <td>Received by</td>
+        @if (disbursementList[0].Requisition.Status == CommonConstant.RequsitionStatus.received || disbursementList[0].Requisition.Status == CommonConstant.RequsitionStatus.completed)
         {
             <td>@disbursementList[0].Requisition.ReceivedByRep.Name</td>
-            <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(disbursementList[0].Requisition.ReceivedDate)</td>
+            <td>@TimeUtil.convertTimestampToyyyyMMdd(disbursementList[0].Requisition.ReceivedDate)</td>
+        }
+        else
+        {
+            <td></td>
+            <td></td>
         }
     </tr>
     <tr>
         <td>Acknowledged by (Clerk)</td>
-        <td id="clerk"></td>
-        <input id="clerkname" value="@name" type="hidden" />
-        <td id="date"></td>
+
+        @if (disbursementList[0].Requisition.Status != CommonConstant.RequsitionStatus.completed)
+        {
+            <td></td>
+            <td></td>
+        }
+        else
+        {
+            <td id="clerk"></td>
+            <input id="clerkname" value="@name" type="hidden" />
+            <td id="date"></td>
+        }
     </tr>
 </table>
 
-<script src="~/js/DisbursementDetail.js"></script>
+<script src="~/js/Disbursement.js"></script>
