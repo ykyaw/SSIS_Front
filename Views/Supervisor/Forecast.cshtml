@@ -6,13 +6,20 @@
 
 <h1>Forecast</h1>
 
-Code <select> 
-    @foreach(Product product in products)
+Code <select>
+    @foreach (Product product in products)
     {
-        <option value="@product.Id">@product.Description</option>
+        <option value="@product.Id">@(product.Description+"/"+product.Id)</option>
     }
-    </select>
-
+</select>
 <button type="button" id="forecast">Forecast</button>
+<table>
+    <tr>
+        <th>Month</th>
+        <th>Forecast</th>
+    </tr>
+</table>
+
+<img id="forecast" />
 
 <script src="~/js/Forecast.js"></script>

@@ -10,7 +10,7 @@
         }
         Get(`http://localhost:5000/${itemCode}/${year}`)
             .then(function (response) {
-                console.log(response);
+                $("#barchart").attr("src", `data:image/png;base64,${response}`);
             })
             .catch(function (err) {
                 console.error(err);
