@@ -117,7 +117,7 @@
             }
 
             VoucherDetails.push(AdjustmentVoucherDetail);
-
+        }) //missing bracket added by TK for bugfix
             console.log(VoucherDetails)
             if (VoucherDetails.length != 0) {
                 console.log(VoucherDetails);
@@ -135,7 +135,7 @@
             else {
                 alert("unable to submit a empty voucher")
             }
-        })
+        //}) //additional bracket removed by TK for bugfix
 
     })
 })
