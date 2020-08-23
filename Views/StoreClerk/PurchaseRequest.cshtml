@@ -7,7 +7,7 @@
 }
 <h2 class="titlecenter">@ViewData["Title"]</h2>
 
-@if (role != CommonConstant.ROLE_NAME[CommonConstant.ROLE.STORE_CLERK])
+@if (role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.STORE_CLERK])
 {
     <div>
         <a class="btn btn-primary" asp-controller="StoreClerk" asp-action="GeneratePurchaseRequest">Raise Purchase Request</a>

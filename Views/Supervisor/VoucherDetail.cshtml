@@ -1,17 +1,41 @@
-﻿
+﻿@using SSIS_FRONT.Common;
+@using SSIS_FRONT.Utils;
+
 @{
-    ViewData["Title"] = "VoucherDetail";
+    ViewData["Title"] = "Voucher Detail";
     AdjustmentVoucher voucher = (AdjustmentVoucher)ViewData["Voucher"];
     Employee emp = (Employee)ViewData["Employee"];
 }
 
-<h1>Voucher Detail</h1>
+<h1>@ViewData["Title"]</h1>
 
-<h4 id="role">@SSIS_FRONT.Common.CommonConstant.ROLE_NAME[emp.Role]</h4>
-<h5>Welcome, @emp.Name</h5>
-<h5>Voucher#  <span id="id">@voucher.Id</span></h5>
-<h5>Date Issue  @SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(voucher.InitiatedDate)</h5>
-<h5>Status  @voucher.Status</h5>
+<input id="role" type="hidden" value="@CommonConstant.ROLE_NAME[emp.Role]" />
+<table id="form">
+    <tr>
+        <td>Voucher#: </td>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        <td id="id">@voucher.Id</td>
+    </tr>
+    <tr>
+        <td>Date Issued: </td>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        <td>@TimeUtil.convertTimestampToyyyyMMdd(voucher.InitiatedDate)</td>
+    </tr>
+    <tr>
+        <td>Status: </td>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        <td id="status">@voucher.Status</td>
+    </tr>
+    @if (!(voucher.Reason == null || voucher.Reason == ""))
+    {
+        <tr>
+            <td>Reason: </td>
+            <td>&nbsp;&nbsp;&nbsp;</td>
+            <td id="status">@voucher.Reason</td>
+        </tr>
+    }
+</table>
+<br />
 
 <table>
     <tr>
@@ -44,13 +68,13 @@
     }
 </table>
 
-@if (voucher.Status != SSIS_FRONT.Common.CommonConstant.AdjVoucherStatus.APPROVED)
+@if (voucher.Status == CommonConstant.AdjVoucherStatus.PENDING_APPROVE)
 {
     <div id="operation">
         <textarea rows="3" placeholder="Reason" id="reason"></textarea>
-        <button id="reject" type="button">Reject</button>
+        <button id="reject" type="button" class="btn btn-danger">Reject</button>
+        <button id="approve" type="button" class="btn btn-success">Approve</button>
     </div>
-    <button id="approve" type="button">Approve</button>
 }
 
 <script src="~/js/VoucherDetail.js"></script>

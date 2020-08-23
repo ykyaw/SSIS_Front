@@ -115,6 +115,8 @@
         Put("/Store/PurchaseRequestDetail", details)
             .then(function (response) {
                 console.log(response);
+                $('#status').hide().text(Status).fadeIn();
+                $('#supervisorButton').fadeOut();
             })
             .catch(function (err) {
                 console.log(err);
@@ -135,6 +137,12 @@
         Put("/Store/PurchaseRequestDetail", details)
             .then(function (response) {
                 console.log(response);
+                $('#status').hide().text(Status).fadeIn();
+                $('#supervisorButton').fadeOut();
+                $('<tr><td>' + 'Reason: ' +
+                    '</td><td>' + '&nbsp;&nbsp;&nbsp;' +
+                    '</td><td>' + Reason +
+                    '</td></tr>').hide().appendTo($('#status').parent().parent()).fadeIn();
             })
             .catch(function (err) {
                 console.log(err);

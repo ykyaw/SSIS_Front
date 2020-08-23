@@ -103,7 +103,7 @@
     <script src="~/js/RequestStationery.js"></script>
 }
 
-@if (role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD] && requisition.Status == CommonConstant.RequsitionStatus.pendapprov)
+@if (role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD] && requisition.Status == CommonConstant.RequsitionStatus.pendapprov && requisition.ReqByEmpId != id)
 {
     <div id="updaterequisition">
         <textarea id="remarks" rows="3" placeholder="Reason"></textarea>

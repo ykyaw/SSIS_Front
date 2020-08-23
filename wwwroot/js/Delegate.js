@@ -13,8 +13,8 @@
         let todatestring = delegateToDate.getFullYear() + "/" + ('0' + (delegateToDate.getMonth() + 1)).slice(-2) + "/" + delegateToDate.getDate();
         let employee = {
             Id,
-            DelegateFromDate: delegateFromDate.getTime(),
-            DelegateToDate: delegateToDate.getTime()
+            DelegateFromDate: delegateFromDate.getTime() - 28800000,
+            DelegateToDate: delegateToDate.getTime() + 57599000
         }
         if (isNaN(employee.Id)) {
             alert("Please select an employee");

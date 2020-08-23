@@ -3,22 +3,24 @@
     let isMoreThan250 = false;
     $(".totalPrice").each(function () {
         if (+$(this).text().substring(1) > 250) {
-            isMoreThan250=true
+            isMoreThan250 = true
         }
     })
 
     $("#approve").on("click", function () {
         let Id = $("#id").text();
+        let Status = isMoreThan250 ? role == "Manager" ? "Approved" : "Pending Manager Approval" : "Approved";
         console.log(Id);
         let voucher = {
             Id,
-            Status: isMoreThan250 ? role == "Manager" ? "Approved" : "Pending Manager Approval" :"Approved"
+            Status
         }
         Put(`/Store/Voucher/${Id}`, voucher)
             .then(function (response) {
                 //let result = JSON.parse(response);
                 console.log(response);
-                alert("success: " + response);
+                $('#operation').fadeOut();
+                $('#status').hide().text(Status).fadeIn();
             })
             .catch(function (err) {
                 alert("error: " + JSON.parse(err));
@@ -38,7 +40,12 @@
             .then(function (response) {
                 //let result = JSON.parse(response);
                 console.log(response);
-                alert("success: " + response);
+                $('#operation').fadeOut();
+                $('#status').hide().text("Rejected").fadeIn();
+                $('<tr><td>' + 'Reason: ' +
+                    '</td><td>' + '&nbsp;&nbsp;&nbsp;' +
+                    '</td><td>' + Reason +
+                    '</td></tr>').hide().appendTo('#form').fadeIn();
             })
             .catch(function (err) {
                 alert("error: " + JSON.parse(err));

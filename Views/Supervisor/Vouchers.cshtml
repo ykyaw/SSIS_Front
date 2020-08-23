@@ -17,7 +17,7 @@
     </tr>
     @foreach(AdjustmentVoucher voucher in vouchers)
     {
-        <tr class="voucher">
+        <tr class="search">
             <td>@voucher.Id</td>
             <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(voucher.InitiatedDate)</td>
             <td>@voucher.Status</td>
@@ -26,4 +26,4 @@
     }
 </table>
 
-<script src="~/js/vouchers.js"></script>
+<script src="~/js/Search.js"></script>
