@@ -383,9 +383,6 @@ namespace SSIS_FRONT.Controllers
             ViewData["clerkid"] = clerkid;
             ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
             return View();
-
-
-
         }
 
 
@@ -446,9 +443,6 @@ namespace SSIS_FRONT.Controllers
             return tenderprice;
         }
 
-
-
-        [HttpPut]
         public bool SaveEmptyAdjustmentVoucherDetails([FromBody] string AdjustmentVoucherId)
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/SaveEmptyAdjustmentDetails/";
@@ -456,8 +450,6 @@ namespace SSIS_FRONT.Controllers
             return (bool)result.data;
         }
 
-
-        [HttpPut]
         public bool SaveAdjustmentVoucherDetails([FromBody]List<AdjustmentVoucherDetail> voucherDetails)
         {
             //List<AdjustmentVoucherDetail> avdetails = voucherDetails;
@@ -469,45 +461,12 @@ namespace SSIS_FRONT.Controllers
 
         }
 
-        [HttpPut]
         public bool SubmitAdjustmentVoucherDetails([FromBody]List<AdjustmentVoucherDetail> voucherDetails)
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/SubmitAdjustmentDetails/";
             Result<Object> result = HttpUtils.Put(url, voucherDetails, Request, Response);
             return (bool)result.data;
         }
-
-
-        //[Route("/StoreClerk/AmendAdjustmentVoucher/{avId}")]
-        //public IActionResult AmendAdjustmentVoucher(string avId)
-        //{
-        //    ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
-        //    ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
-
-        //    string role = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
-        //    string name = (string)HttpContext.Session.GetString("Name");
-        //    ViewData["Role"] = role;
-        //    ViewData["Name"] = name;
-
-
-        //    string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/advdet/" + avId;
-        //    Result<List<AdjustmentVoucherDetail>> result = HttpUtils.Get(url, new List<AdjustmentVoucherDetail>(), Request, Response);
-
-        //    string url1 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/findAdjustmentVoucher/" + avId;
-        //    Result<AdjustmentVoucher> result1 = HttpUtils.Get(url1, new AdjustmentVoucher(), Request, Response);
-
-
-        //    string url2 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/catalogue";
-        //    Result<List<Product>> result2 = HttpUtils.Get(url2, new List<Product>(), Request, Response);
-        //    ViewData["avdetails"] = result.data;
-        //    ViewData["av"] = result1.data;
-        //    ViewData["products"] = result2.data;
-
-
-
-        //    return View();
-
-        //}
 
         [HttpGet]
         public IActionResult AdjustmentVoucherByClerkId()
@@ -525,7 +484,5 @@ namespace SSIS_FRONT.Controllers
             return View();
 
         }
-
-
     }
 }

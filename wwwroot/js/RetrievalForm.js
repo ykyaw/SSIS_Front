@@ -19,7 +19,7 @@
                 if (response.code && response.code != 200) {
                     alert(response.msg);
                 } else {
-                    alert("update successfully");
+                    alert("Successfully updated");
                 }
             })
             .catch(function (err) {
@@ -35,9 +35,17 @@
             .then(function (response) {
                 if (response.code && response.code != 200) {
                     alert(response.msg);
-                    $("#status").text("Retrieved");
                 } else {
-                    alert("finalise successfully");
+                    let date = new Date();
+                    let dateString = date.getFullYear() + "/" + ('0' + (date.getMonth() + 1)).slice(-2) + "/" + date.getDate();
+                    $('#status').hide().text("Retrieved").fadeIn();
+                    $('#date').hide().text(dateString).fadeIn();
+                    $('#buttons').fadeOut();
+                    $('#comments').prop("disabled", true);
+                    $('.hideinputs').children('td').find('input').fadeOut(function () {
+                        let replacement = $('<span class=' + this.className + '>' + this.value + '</span>')
+                        $(this).replaceWith(replacement).fadeIn();
+                    })
                 }
             })
             .catch(function (err) {
