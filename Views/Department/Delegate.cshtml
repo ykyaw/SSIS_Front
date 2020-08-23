@@ -29,6 +29,7 @@
                 @foreach (var d in delegates)
                 {
                     <tr>
+                        <input class="empid" type="hidden" value="@d.Id"/>
                         <td>@d.Name</td>
                         <td>@TimeUtil.convertTimestampToyyyyMMdd(d.DelegateFromDate)</td>
                         <td>@TimeUtil.convertTimestampToyyyyMMdd(d.DelegateToDate)</td>

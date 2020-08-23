@@ -37,7 +37,7 @@
                     alert(response.msg);
                 } else {
                     let date = new Date();
-                    let dateString = date.getFullYear() + "/" + ('0' + (date.getMonth() + 1)).slice(-2) + "/" + date.getDate();
+                    let dateString = date.getFullYear() + "/" + ('0' + (date.getMonth() + 1)).slice(-2) + "/" + ('0' + date.getDate()).slice(-2);
                     $('#status').hide().text("Retrieved").fadeIn();
                     $('#date').hide().text(dateString).fadeIn();
                     $('#buttons').fadeOut();

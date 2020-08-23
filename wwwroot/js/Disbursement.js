@@ -2,7 +2,7 @@
     $('#acknowledge').click(function () {
         let clerkname = $('#clerkname').val();
         let date = new Date();
-        let dateString = date.getFullYear() + "/" + ('0' + (date.getMonth() + 1)).slice(-2) + "/" + date.getDate();
+        let dateString = date.getFullYear() + "/" + ('0' + (date.getMonth() + 1)).slice(-2) + "/" + ('0' + date.getDate()).slice(-2);
         let details = []
         $(".detailid").each(function () {
             let detail = {
