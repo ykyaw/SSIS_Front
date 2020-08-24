@@ -24,7 +24,7 @@
                     $(this).text("Confirmed").fadeIn();
                 });
                 $("<tr><td>Disbursement Date: " +
-                    "</td><td>&nbsp;&nbsp;&nbsp;</td><td>" + (CollectionDate.getFullYear() + "/" + ('0' + (CollectionDate.getMonth() + 1)).slice(-2) + "/" + ('0' + CollectionDate.getDate()).slice(-2) +
+                    "</td><td>&nbsp;&nbsp;&nbsp;</td><td>" + CollectionDate.getFullYear() + "/" + ('0' + (CollectionDate.getMonth() + 1)).slice(-2) + "/" + ('0' + CollectionDate.getDate()).slice(-2) +
                     "</td></tr>").hide().appendTo('#form').fadeIn();
             })
             .catch(function (err) {
