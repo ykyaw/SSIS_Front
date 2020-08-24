@@ -1,0 +1,113 @@
+﻿@using SSIS_FRONT.Common;
+@using SSIS_FRONT.Utils;
+
+@{
+    ViewData["Title"] = "Adjustment Voucher Details";
+    List<Product> products = (List<Product>)ViewData["products"];
+    AdjustmentVoucher av = (AdjustmentVoucher)ViewData["adjustmentVoucher"];
+    int clerkid = (int)ViewData["clerkid"];
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h6 id="voucherId" value="@av.Id">Voucher# : @av.Id</h6>
+<h6>Date Issued: @TimeUtil.convertTimestampToyyyyMMdd(av.InitiatedDate)</h6>
+<h6>Status: @av.Status</h6>
+<input type="hidden" value="@clerkid" />
+
+@if (av.Status == CommonConstant.AdjVoucherStatus.REJECTED)
+{
+    <h6>Reject Reason:@av.Reason</h6>
+}
+@if (av.ApprovedMgrId != null)
+{
+    <h6>By:@av.ApprovedMgr.Name </h6>
+}
+else if (av.ApprovedSup != null)
+{
+    <h6>By:@av.ApprovedSup.Name </h6>
+}
+else
+{
+    <h6></h6>
+}
+
+@if (av.Status == CommonConstant.AdjVoucherStatus.CREATED && av.InitiatedClerkId == clerkid)
+{
+    <div>
+        <label> Item</label>
+        <select id="product">
+            <option value="0">Choose Item</option>
+            @foreach (var p in products)
+            {
+                <option type="text" data-uom="@p.Uom" data-desc="@p.Description" value="@p.Id">[@p.Id] @p.Description</option>
+            }
+        </select>
+        <label>QTY</label>
+        <input type="number" id="qtyAdjusted" value="0" />
+        <label>Reason</label>
+        <input type="text" id="reason" />
+        <button id="generate" class="btn btn-primary">Generate</button>
+    </div>
+}
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Item Code</th>
+            <th>Description</th>
+            <th>Quantity Adjusted</th>
+            <th>Unit Of Measurement</th>
+            <th>Reason</th>
+            <th>Price</th>
+            <th>Total Price</th>
+            @if (av.Status == CommonConstant.AdjVoucherStatus.CREATED && av.InitiatedClerkId == clerkid)
+            {
+                <th></th>
+            }
+        </tr>
+    </thead>
+
+    <tbody id="avdetails">
+        @foreach (AdjustmentVoucherDetail avd in av.AdjustmentVoucherDetails)
+        {
+            <tr>
+                <input type="hidden" id="detailId" value="@avd.Id" />
+                <td class="productId">@avd.ProductId</td>
+                <td class="description">@avd.Product.Description</td>
+                <td class="quantity">@avd.QtyAdjusted</td>
+                <td class="uom">@avd.Product.Uom</td>
+                <td class="reason">@avd.Reason</td>
+                <td class="price">@avd.Unitprice.ToString("C")</td>
+                <td class="totalprice">@avd.TotalPrice.ToString("C")</td>
+                @if (av.Status == CommonConstant.AdjVoucherStatus.CREATED && av.InitiatedClerkId == clerkid)
+                {
+                    <td><input type="button" value="Remove" /></td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (av.AdjustmentVoucherDetails.Count() == 0)
+{
+    <div class="disappear">
+        <p>There is product saved in this adjustment voucher.</p>
+    </div>
+}
+
+@if (av.Status == CommonConstant.AdjVoucherStatus.CREATED && av.InitiatedClerkId == clerkid)
+{
+    <div>
+        <button class="btn btn-primary" type="button" id="save"> Save</button>
+        <button class="btn btn-primary" type="button" id="submit">Submit</button>
+    </div>
+}
+
+<div>
+    <a class="btn btn-primary" asp-controller="StoreClerk" asp-action="AdjustmentVoucher">Back to Adjustment Voucher List</a>
+</div>
+
+<script src="~/js/AdjustmentVoucherDetail.js"></script>
+

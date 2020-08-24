@@ -13,8 +13,8 @@
         let todatestring = delegateToDate.getFullYear() + "/" + ('0' + (delegateToDate.getMonth() + 1)).slice(-2) + "/" + ('0' + delegateToDate.getDate()).slice(-2);
         let employee = {
             Id,
-            DelegateFromDate: delegateFromDate.getTime() - 28800000,
-            DelegateToDate: delegateToDate.getTime() + 57599000
+            DelegateFromDate: delegateFromDate.getTime(),
+            DelegateToDate: delegateToDate.getTime() + (1000 * 24 * 60 * 60) - 1000
         }
         if (isNaN(employee.Id)) {
             alert("Please select an employee");
@@ -41,7 +41,7 @@
     })
 
     $('#delegates').on('click', 'button.delete', function () {
-        if (confirm("Are you sure?")) {
+        if (confirm("Are you sure you want to delete this delegate assignment?")) {
             let btn = $(this);
             let Id = +$(this).parent().siblings('.empid').val();
             let employee = {

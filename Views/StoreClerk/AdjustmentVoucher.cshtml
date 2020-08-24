@@ -1,29 +1,29 @@
-﻿
+﻿@using SSIS_FRONT.Common;
+@using SSIS_FRONT.Utils;
+
 @{
-    ViewData["Title"] = "Adjustment Voucher";
-    List<AdjustmentVoucher> vouchers = (List<AdjustmentVoucher>)ViewData["adjustmentVoucherListToHTML"];
-    string role = (string)ViewData["Role"];
+    ViewData["Title"] = "Adjustment Voucher List";
+    List<AdjustmentVoucher> adjustmentVoucher = (List<AdjustmentVoucher>)ViewData["adjustmentVoucher"];
     int clerkid = (int)ViewData["clerkid"];
     string name = (string)ViewData["Name"];
+    string role = (string)ViewData["Role"];
 }
 
-<h1>Adjustment Voucher List</h1>
-<input id="clerkid" type="hidden" value="@clerkid" />
+<h1>@ViewData["Title"]</h1>
 
+@if (role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.STORE_CLERK])
+{
+    <div>
+        <a class="btn btn-primary" asp-controller="StoreClerk" asp-action="GenerateAdjustmentVoucher">Issue Adjustment Voucher</a>
+        <input type="button" class="btn btn-primary" id="select" data-cid="@clerkid" value="View My Adjustment Vouchers" />
+    </div>
+}
 
-<div>
-    <a class="btn btn-primary" asp-controller="StoreClerk" asp-action="GenerateAdjustmentVoucher">Issue Adjustment Voucher</a>
-</div>
-<div>
-    <a class="btn btn-primary" id="viewclerkhistory" value="@name" asp-controller="StoreClerk" asp-action="AdjustmentVoucherByClerkId">View My Adjustment Voucher History</a>
+<div class="input-group">
+    <span class="input-group-addon">Search</span>
+    <input type="text" id="search" class="form-control" placeholder="Type here" />
 </div>
 
-<div>
-    <input type="text" placeholder="search by keyword" id="search" />
-</div>
-<div>
-    @*<a class="btn btn-primary" id="allvouchers">View All Voucher List</a>*@
-</div>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -35,31 +35,17 @@
         </tr>
     </thead>
     <tbody>
-
-        
-        @foreach (AdjustmentVoucher adv in vouchers)
+        @foreach (AdjustmentVoucher adv in adjustmentVoucher)
         {
-            <tr class="adjustmentvoucher">
-                <td class="adjustmentvoucherid">@adv.Id</td>
-                <td class="clerkid" data-id="@adv.InitiatedClerkId">@adv.InitiatedClerk.Name</td>
-                <td class="initiateDate">@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(adv.InitiatedDate)</td>
-                <td class="status" value="@adv.Status">@adv.Status</td>
-                <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="AdjustmentVoucherDetails" asp-route-id="@adv.Id">Details</a></td>
-                @if (adv.Status == "Created" && adv.InitiatedClerkId == clerkid)
-                {
-                    @*<td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="AmendAdjustmentVoucher" asp-route-id="@adv.Id">Amend</a></td>*@
-                    <td>click Details to amend</td>
-                }
-                else
-                {
-                    <td>   </td>
-                }
+            <tr class="search">
+                <td>@adv.Id</td>
+                <td class="select" value="@adv.InitiatedClerkId">@adv.InitiatedClerk.Name</td>
+                <td>@TimeUtil.convertTimestampToyyyyMMdd(adv.InitiatedDate)</td>
+                <td>@adv.Status</td>
+                <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="AdjustmentVoucher" asp-route-id="@adv.Id">Details</a></td>
             </tr>
         }
     </tbody>
 </table>
 
-
-
-
-<script src="~/js/AdjustmentVoucherList.js"></script>
+<script src="~/js/AdjustmentVoucher.js"></script>
