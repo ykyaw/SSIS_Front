@@ -5,15 +5,25 @@
     ViewData["Title"] = "Delivery Order";
     List<PurchaseOrderDetail> dods = (List<PurchaseOrderDetail>)ViewData["deliveryOrderDetails"];
 }
-<h1>@ViewData["Title"]</h1>
+<h2 class="titlecenter">@ViewData["Title"]</h2>
 
-<div>
-    <span>PO Number:</span>
-    <span id="poid">@dods[0].PurchaseOrderId</span>
+<div class="container" style="margin-top: 20px;">
+    <table>
+        <tr>
+            <td>PO Number: </td>
+            <td>&nbsp;&nbsp;&nbsp;</td>
+            <td id="poid">@dods[0].PurchaseOrderId</td>
+        </tr>
+    </table>
 </div>
 
-<div>
-    <table>
+@*<div>
+    <span>PO Number:</span>
+    <span id="poid">@dods[0].PurchaseOrderId</span>
+</div>*@
+
+<div class="container" style="margin-top: 20px;">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Item Code</th>
@@ -37,10 +47,10 @@
                     <td>@dod.QtyPurchased</td>
                     @if (dod.Status == CommonConstant.PurchaseOrderDetailStatus.pending)
                     {
-                        <td><input class="replace" type="number" value="@dod.QtyPurchased" /></td>
-                        <td><input class="replace" type="date" /></td>
-                        <td><input class="replace" type="text" /></td>
-                        <td><input class="replace" type="text" /></td>
+                        <td><input class="replace form-control" type="number" value="@dod.QtyPurchased" /></td>
+                        <td><input class="replace form-control" type="date" /></td>
+                        <td><input class="replace form-control" type="text" /></td>
+                        <td><input class="replace form-control" type="text" /></td>
                     }
                     else
                     {
@@ -55,8 +65,14 @@
     </table>
 </div>
 
-<div>
-    <button id="save" class="btn btn-success">Save</button>
+<div class="container justify-content-center" style="margin-top: 20px;">
+    <div class="row justify-content-center">
+        <div class="col-0">
+            <button id="save" class="btn btn-primary font-weight-bold">Save</button>
+        </div>
+    </div>
+    
+
 </div>
 
 <script src="~/js/DeliveryOrder.js"></script>

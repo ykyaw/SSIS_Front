@@ -17,7 +17,7 @@
                             '</td><td class="reason">' + reason +
                             '</td><td class="price">' + '$' + response.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") +
                             '</td><td class="totalprice">' + '$' + totalprice.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") +
-                            '</td><td> <input type="button" value="Remove"/>' +
+                            '</td><td> <input type="button" value="Remove" class="btn btn-danger"/>' +
                             '</td></tr>');
                     })
             }
