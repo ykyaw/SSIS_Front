@@ -1,4 +1,4 @@
-﻿@using SSIS_FRONT.Utils; 
+﻿@using SSIS_FRONT.Utils;
 
 @{
     ViewData["Title"] = "Generate Adjustment Voucher";
@@ -8,12 +8,59 @@
 
 }
 
-<h1>@ViewData["Title"]</h1>
+<h2 class="titlecenter">@ViewData["Title"]</h2>
 
-<h6 id="voucherId" value="@newAV.Id">Voucher# : @newAV.Id</h6>
-<h6>Date Issued: @TimeUtil.convertTimestampToyyyyMMdd(newAV.InitiatedDate)</h6>
+<div class="container" style="margin-top: 20px;">
+    <table>
+        <tr>
+            <td>Voucher#: </td>
+            <td>&nbsp;&nbsp;&nbsp;</td>
+            <td><span id="voucherId" value="@newAV.Id">@newAV.Id</span></td>
+        </tr>
+        <tr>
+            <td>Date Issued: </td>
+            <td>&nbsp;&nbsp;&nbsp;</td>
+            <td>@TimeUtil.convertTimestampToyyyyMMdd(newAV.InitiatedDate)</td>
+        </tr>
+    </table>
+</div>
 
-<div>
+@*<h6 id="voucherId" value="@newAV.Id">Voucher# : @newAV.Id</h6>
+<h6>Date Issued: @TimeUtil.convertTimestampToyyyyMMdd(newAV.InitiatedDate)</h6>*@
+
+<div class="container" style="margin-top: 20px;">
+    <div class="row justify-content-center">
+        <div class="col-0">
+            <label class="form-control font-weight-bold" style="border: 0;">Item:</label>
+        </div>
+        <div class="col-3">
+            <select id="product" class="form-control">
+                <option value="0">Choose Item</option>
+                @foreach (var p in products)
+                {
+                    <option type="text" data-uom="@p.Uom" data-desc="@p.Description" value="@p.Id">[@p.Id] @p.Description</option>
+                }
+            </select>
+        </div>
+        <div class="col-0">
+            <label class="form-control font-weight-bold" style="border: 0;">Qty:</label>        
+        </div>
+        <div class="col-1">
+            <input type="number" id="qtyAdjusted" value="0" class="form-control"/>
+        </div>
+        <div class="col-0">
+            <label class="form-control font-weight-bold" style="border: 0;">Reason:</label>        
+        </div>
+        <div class="col-3">
+            <input type="text" id="reason" class="form-control"/>
+        </div>
+        <div class="col-0">
+            <button id="generate" class="btn btn-primary font-weight-bold">Generate</button>
+        </div>
+    </div>
+</div>
+
+@*<div>
     <label> Item</label>
     <select id="product">
         <option value="0">Choose Item</option>
@@ -27,10 +74,10 @@
     <label>Reason</label>
     <input type="text" id="reason" />
     <button id="generate" class="btn btn-primary">Generate</button>
-</div>
+</div>*@
 
-<div>
-    <table>
+<div class="container" style="margin-top: 20px;">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Item Code</th>
@@ -47,12 +94,19 @@
         </tbody>
     </table>
 </div>
-<div>
-    <button class="btn btn-primary" type="button" id="save">Save</button>
-    <button class="btn btn-success" type="button" id="submit">Submit</button>
+<div class="container" style="margin-top: 20px;">
+    <div class="row justify-content-center">
+        <div class="col-1">
+            <button class="btn btn-warning font-weight-bold" type="button" id="save">Save</button>
+        </div>
+        <div class="col-1">
+            <button class="btn btn-success font-weight-bold" type="button" id="submit">Submit</button>
+        </div>
+    </div>
 </div>
-<div>
-    <a class="btn btn-primary" asp-controller="StoreClerk" asp-action="AdjustmentVoucher">Back to Adjustment Voucher List</a>
-</div>
+
+@*<div>
+        <a class="btn btn-primary" asp-controller="StoreClerk" asp-action="AdjustmentVoucher">Back to Adjustment Voucher List</a>
+    </div>*@
 
 <script src="~/js/AdjustmentVoucherDetail.js"></script>

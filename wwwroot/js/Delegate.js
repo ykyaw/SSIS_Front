@@ -30,7 +30,7 @@
                         '<td>' + name +
                         '</td><td>' + fromdatestring +
                         '</td><td>' + todatestring +
-                        '</td><td>' + '<button class="btn btn-primary">Edit</button><button class="btn btn-danger">Delete</button>' +
+                        '</td><td>' + '<button class="btn btn-warning" style="margin-right: 10px;">Edit</button><button class="btn btn-danger">Delete</button>' +
                         '</td></tr>').hide().appendTo('#delegates').fadeIn();
                 })
                 .catch(function (err) {

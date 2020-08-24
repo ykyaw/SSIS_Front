@@ -5,14 +5,18 @@
     Dictionary<long, List<PurchaseRequestDetail>> prDetailsByPr = (Dictionary<long, List<PurchaseRequestDetail>>)ViewData["prDetailsByPr"];
     string role = (string)ViewData["Role"];
 }
-<h2 class="titlecenter">@ViewData["Title"]</h2>
 
 @if (role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.STORE_CLERK])
 {
-    <div>
-        <a class="btn btn-primary" asp-controller="StoreClerk" asp-action="GeneratePurchaseRequest">Raise Purchase Request</a>
+    <div class="container" style="margin-top: 20px;"> 
+        <a class="btn btn-primary font-weight-bold" asp-controller="StoreClerk" asp-action="GeneratePurchaseRequest">Raise Purchase Request</a>
     </div>
 }
+<br />
+
+<h2 class="titlecenter">@ViewData["Title"]</h2>
+
+
 
 <table class="table table-striped" style="margin-top:20px">
     <thead>
