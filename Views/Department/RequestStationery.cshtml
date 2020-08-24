@@ -3,9 +3,9 @@
     List<Product> products = (List<Product>)ViewData["products"];
     Requisition requisition = (Requisition)ViewData["requisitions"];
 }
-<h1>@ViewData["Title"]</h1>
+    <h2 class="titlecenter">@ViewData["Title"]</h2>
 
-<table>
+@*<table>
     <tr>
         <td>Form ID</td>
         <td id="formid">@requisition.Id</td>
@@ -14,39 +14,100 @@
         <td>Request Date</td>
         <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(requisition.CreatedDate)</td>
     </tr>
-</table>
+</table>*@
 
-<br />
-
-<table class="table table-striped">
-    <thead>
+<div class="container" style="margin-top: 20px;">
+    <table id="form">
         <tr>
-            <th>Description</th>
-            <th>Quantity</th>
-            <th></th>
+            <td>Form ID: </td>
+            <td>&nbsp;&nbsp;&nbsp;</td>
+            <td id="formid">@requisition.Id</td>
         </tr>
-    </thead>
-    <tbody id="requestlist">
-    </tbody>
-</table>
-
-<div>
-    <label>Item</label>
-    <select id="product">
-        <option value="0">Choose Item</option>
-        @foreach (var p in products)
-        {
-            <option data-desc="@p.Description" value="@(@p.Id)">[@p.Id] @p.Description</option>
-        }
-    </select>
-    <label>Qty</label>
-    <input id="qty" type="number" min="0" />
-    <button id="add">Add</button>
+        <tr>
+            <td>Request Date: </td>
+            <td>&nbsp;&nbsp;&nbsp;</td>
+            <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(requisition.CreatedDate)</td>
+        </tr>
+    </table>
 </div>
 
-<div>
-    <button id="save" class="btn btn-primary">Save Draft</button>
-    <button id="submit" class="btn btn-success" disabled>Submit</button>
+<div class="container" style="margin-top: 20px;">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="requestlist">
+        </tbody>
+    </table>
 </div>
 
-<script src="~/js/RequestStationery.js"></script>
+        @*<table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Quantity</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="requestlist">
+            </tbody>
+        </table>*@
+<div class="container" style="margin-top: 20px;">
+    <div class="row justify-content-center">
+        <div class="col-1">
+            <label class="form-control font-weight-bold" style="border: 0;">Item: </label>
+        </div>
+        <div class="col-4">
+            <select id="product" class="form-control">
+                <option value="0">Choose Item</option>
+                @foreach (var p in products)
+                {
+                    <option data-desc="@p.Description" value="@(@p.Id)">[@p.Id] @p.Description</option>
+                }
+            </select>
+        </div>
+        <div class="col-1">
+            <label class="form-control font-weight-bold" style="border: 0;">Qty: </label>
+        </div>
+        <div class="col-1">
+            <input id="qty" class="form-control" type="number" min="0" />
+        </div>
+        <div class="col-1">
+            <button id="add" class="form-control btn btn-primary font-weight-bold">Add</button>
+        </div>
+    </div>
+    </div>
+
+    @*<div>
+            <label>Item</label>
+            <select id="product">
+                <option value="0">Choose Item</option>
+                @foreach (var p in products)
+                {
+                    <option data-desc="@p.Description" value="@(@p.Id)">[@p.Id] @p.Description</option>
+                }
+            </select>
+            <label>Qty</label>
+            <input id="qty" type="number" min="0" />
+            <button id="add">Add</button>
+        </div>*@
+
+    @*<div>
+        <button id="save" class="btn btn-primary">Save Draft</button>
+        <button id="submit" class="btn btn-success" disabled>Submit</button>
+    </div>*@
+
+    <div class="row justify-content-center" style="margin-top:20px">
+        <div class="col-2">
+            <button id="save" class="btn btn-primary font-weight-bold form-control">Save Draft</button>
+        </div>
+        <div class="col-2">
+            <button id="submit" class="btn btn-success font-weight-bold form-control" disabled>Submit</button>
+        </div>
+    </div>
+
+    <script src="~/js/RequestStationery.js"></script>

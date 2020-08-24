@@ -16,8 +16,8 @@
             $('#submit').prop('disabled', false);
             $('<tr>' + '<input class="productid" type="hidden" value="' + $('#product').val() + '" />' +
                 '<td>' + $('#product').find(':selected').data('desc') +
-                '</td><td>' + '<input type="number" min="1" value="' + $('#qty').val() + '" />' +
-                '</td><td>' + '<input type="button" value="Remove" />' +
+                '</td><td>' + '<input type="number" class="form-control" min="1" value="' + $('#qty').val() + '" />' +
+                '</td><td>' + '<input type="button" class="btn btn-danger" value="Remove" />' +
                 '</td></tr>').hide().appendTo('#requestlist').fadeIn();
         }
     });
