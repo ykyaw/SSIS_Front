@@ -13,7 +13,7 @@ namespace SSIS_FRONT.Utils
             {
                 return "";
             }
-            DateTime startTime = TimeZone.CurrentTimeZone.ToUniversalTime(new System.DateTime(1970, 1, 1));
+            DateTime startTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             DateTime dt = startTime.AddMilliseconds(Convert.ToDouble(timestamp));
             //System.Console.WriteLine(dt.ToString("yyyy/MM/dd HH:mm:ss:ffff"));
             return dt.ToString("yyyy/MM/dd");

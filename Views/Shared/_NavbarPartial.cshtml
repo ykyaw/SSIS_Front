@@ -92,3 +92,16 @@
         <a class="nav-link text-light" asp-controller="Department" asp-action="DeptRep">Assign Dept Rep</a>
     </li>
 }
+
+@if ((string)ViewData["Role"] == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_DELEGATE])
+{
+    <li class="nav-item">
+        <a class="nav-link text-light" asp-controller="Department" asp-action="Requisition">Requisition</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-light" asp-controller="Department" asp-action="Disbursement">Disbursement</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-light" asp-controller="Department" asp-action="DeptRep">Assign Dept Rep</a>
+    </li>
+}

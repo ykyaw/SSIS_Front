@@ -217,7 +217,7 @@
 </div>
 
     <div class="container" style="margin-top: 20px;">
-        @if (role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD] && requisition.Status == CommonConstant.RequsitionStatus.pendapprov && requisition.ReqByEmpId != id)
+        @if ((role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD] || role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_DELEGATE]) && requisition.Status == CommonConstant.RequsitionStatus.pendapprov && requisition.ReqByEmpId != id)
         {
             @*<div id="updaterequisition">
                     <textarea id="remarks" rows="3" placeholder="Reason"></textarea>

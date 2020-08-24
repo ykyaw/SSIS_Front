@@ -6,7 +6,7 @@
     List<Requisition> disbursements = (List<Requisition>)ViewData["disbursements"];
 }
 
-@if (role != CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD])
+@if (role != CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD] && role != CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_DELEGATE])
 {
     <h2 class="titlecenter">Generate Disbursement List by Date</h2>
 
@@ -44,7 +44,7 @@
                 <th>Collection Date</th>
                 <th>Requested By</th>
                 <th>Status</th>
-                @if (role != CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD])
+                @if (role != CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD] && role != CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_DELEGATE])
                 {
                     <th></th>
                 }
@@ -58,7 +58,7 @@
                     <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(d.CollectionDate)</td>
                     <td>@d.ReqByEmp.Name</td>
                     <td>@d.Status</td>
-                    @if (role != CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD])
+                    @if (role != CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD] && role != CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_DELEGATE])
                     {
                         <td>
                             <form action="/Department/DisbursementForm" method="put">

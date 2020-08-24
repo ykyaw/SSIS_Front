@@ -6,7 +6,7 @@
     List<Requisition> requisitions = (List<Requisition>)ViewData["requisitions"];
 }
 
-@if (role != CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD])
+@if (role != CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD] && role != CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_DELEGATE])
 {
     
     <div class="container" style="margin-top: 20px;">
