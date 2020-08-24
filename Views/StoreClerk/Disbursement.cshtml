@@ -1,6 +1,10 @@
-﻿@{
+﻿@using SSIS_FRONT.Common;
+@using SSIS_FRONT.Utils; 
+
+@{
     ViewData["Title"] = "Retrieve Disbursement List";
     List<Department> departments = (List<Department>)ViewData["departments"];
+    List<Requisition> disbursements = (List<Requisition>)ViewData["disbursements"];
     string errMsg = (string)ViewData["errMsg"];
 }
 
@@ -42,6 +46,40 @@
     </div>
 </form>
 
+<div id="forms" class="container" style="margin-top: 20px;">
+    <h2 class="titlecenter">Disbursement Forms</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Requisition ID</th>
+                <th>Collection Date</th>
+                <th>Requested By</th>
+                <th>Department</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var d in disbursements)
+            {
+                <tr class="search">
+                    <td>@d.Id</td>
+                    <td>@TimeUtil.convertTimestampToyyyyMMdd(d.CollectionDate)</td>
+                    <td>@d.ReqByEmp.Name</td>
+                    <td>@d.Department.Name</td>
+                    <td>@d.Status</td>
+                    <td>
+                        <form action="/StoreClerk/DisbursementDetail" method="post">
+                            <input type="hidden" name="date" value="@d.CollectionDate" />
+                            <input type="hidden" name="deptid" value="@d.DepartmentId" />
+                            <button class="btn btn-info font-weight-bold">Disbursement</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 @*<div>
         <div>

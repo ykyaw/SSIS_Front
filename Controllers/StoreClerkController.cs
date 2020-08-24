@@ -73,9 +73,13 @@ namespace SSIS_FRONT.Controllers
             ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
             ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
 
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/retrievealldept";
-            Result<List<Department>> result = HttpUtils.Get(url, new List<Department>(), Request, Response);
-            ViewData["departments"] = result.data;
+            string url1 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/retrievealldept";
+            Result<List<Department>> result1 = HttpUtils.Get(url1, new List<Department>(), Request, Response);
+            ViewData["departments"] = result1.data;
+
+            string url2 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/alldis";
+            Result<List<Requisition>> result2 = HttpUtils.Get(url2, new List<Requisition>(), Request, Response);
+            ViewData["disbursements"] = result2.data;
 
             ViewData["errMsg"] = errMsg;
 

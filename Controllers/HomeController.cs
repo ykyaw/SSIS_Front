@@ -39,17 +39,16 @@ namespace SSIS_FRONT.Controllers
                     return CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_DELEGATE];
                 }
             }
-
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/drep";
-            Result<Employee> result = HttpUtils.Get(url, new Employee(), Request, Response);
-            if (result.data.Id == HttpContext.Session.GetInt32("Id"))
+            if (Role != CommonConstant.ROLE.STORE_CLERK && Role == CommonConstant.ROLE.STORE_SUPERVISOR && Role != CommonConstant.ROLE.STORE_MANAGER)
             {
-                return CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_REPRESENTATIVE];
+                string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/drep";
+                Result<Employee> result = HttpUtils.Get(url, new Employee(), Request, Response);
+                if (result.data.Id == HttpContext.Session.GetInt32("Id"))
+                {
+                    return CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_REPRESENTATIVE];
+                }
             }
-            else
-            {
-                return CommonConstant.ROLE_NAME[HttpContext.Session.GetString("Role")];
-            }
+            return CommonConstant.ROLE_NAME[Role];
         }
         public string GetName()
         {
