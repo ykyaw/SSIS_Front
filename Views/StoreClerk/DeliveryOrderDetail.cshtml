@@ -18,9 +18,9 @@
 </div>
 
 @*<div>
-    <span>PO Number:</span>
-    <span id="poid">@dods[0].PurchaseOrderId</span>
-</div>*@
+        <span>PO Number:</span>
+        <span id="poid">@dods[0].PurchaseOrderId</span>
+    </div>*@
 
 <div class="container" style="margin-top: 20px;">
     <table class="table table-striped">
@@ -65,15 +65,16 @@
     </table>
 </div>
 
-<div class="container justify-content-center" style="margin-top: 20px;">
-    <div class="row justify-content-center">
-        <div class="col-0">
-            <button id="save" class="btn btn-primary font-weight-bold">Save</button>
+@if (dods[0].PurchaseOrder.Status == CommonConstant.PurchaseOrderStatus.pending)
+{
+    <div class="container justify-content-center" style="margin-top: 20px;">
+        <div class="row justify-content-center">
+            <div class="col-0">
+                <button id="save" class="btn btn-primary font-weight-bold">Save</button>
+            </div>
         </div>
     </div>
-    
-
-</div>
+}
 
 <script src="~/js/DeliveryOrder.js"></script>
 

@@ -2,6 +2,9 @@
     if ($('#requestlist tr').length >= 1) {
         $('#submit').prop('disabled', false);
     }
+    $('#product').change(function () {
+        $('#uom').text($(this).find(':selected').data('uom'))
+    });
     $('#add').click(function () {
         if (!$.isNumeric($('#qty').val())) {
             alert("Quantity must be a number");
@@ -17,6 +20,7 @@
             $('<tr>' + '<input class="productid" type="hidden" value="' + $('#product').val() + '" />' +
                 '<td>' + $('#product').find(':selected').data('desc') +
                 '</td><td>' + '<input type="number" class="form-control" min="1" max="99" value="' + $('#qty').val() + '" />' +
+                '</td><td>' + $('#product').find(':selected').data('uom') +
                 '</td><td>' + '<input type="button" class="btn btn-danger" value="Remove" />' +
                 '</td></tr>').hide().appendTo('#requestlist').fadeIn();
         }

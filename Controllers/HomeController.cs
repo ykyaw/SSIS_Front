@@ -39,7 +39,7 @@ namespace SSIS_FRONT.Controllers
                     return CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_DELEGATE];
                 }
             }
-            if (Role != CommonConstant.ROLE.STORE_CLERK && Role == CommonConstant.ROLE.STORE_SUPERVISOR && Role != CommonConstant.ROLE.STORE_MANAGER)
+            else if (Role == CommonConstant.ROLE.DEPARTMENT_EMPLOYEE)
             {
                 string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/drep";
                 Result<Employee> result = HttpUtils.Get(url, new Employee(), Request, Response);

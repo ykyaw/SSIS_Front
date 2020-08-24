@@ -58,9 +58,18 @@
 
                     @if (role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.STORE_CLERK] && kvp.Key.Status == CommonConstant.PurchaseRequestStatus.created)
                     {
-                        <td>
-                            <input class="reorderqty number form-control" type="number" min="0" value="@kvp.Key.ReorderQty" />
-                        </td>
+                        if (kvp.Key.SupplierId == null)
+                        {
+                            <td>
+                                <input class="reorderqty number form-control" type="number" min="0" value="@kvp.Key.Product.ReorderQty" />
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                <input class="reorderqty number form-control" type="number" min="0" value="@kvp.Key.ReorderQty" />
+                            </td>
+                        }
                         <td>
                             <select class="supplierid number form-control">
                                 @foreach (var v in kvp.Value)
