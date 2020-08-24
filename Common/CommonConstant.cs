@@ -34,6 +34,7 @@ namespace SSIS_FRONT.Common
             public static readonly string DEPARTMENT_HEAD = "dh";
             public static readonly string DEPARTMENT_EMPLOYEE = "de";
             public static readonly string DEPARTMENT_REPRESENTATIVE = "dr";
+            public static readonly string DEPARTMENT_DELEGATE = "dd";
         }
 
         public static Dictionary<string, string> ROLE_NAME = new Dictionary<string, string>()
@@ -43,7 +44,8 @@ namespace SSIS_FRONT.Common
             {ROLE.STORE_SUPERVISOR,"Supervisor" },
             {ROLE.DEPARTMENT_EMPLOYEE,"Department Employee"},
             {ROLE.DEPARTMENT_HEAD,"Department Head"},
-            {ROLE.DEPARTMENT_REPRESENTATIVE,"Department Representative"}
+            {ROLE.DEPARTMENT_REPRESENTATIVE,"Department Representative"},
+            {ROLE.DEPARTMENT_DELEGATE,"Department Delegate"}
         };
 
         public static class PurchaseOrderDetailStatus

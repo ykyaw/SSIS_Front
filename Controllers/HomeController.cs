@@ -29,18 +29,27 @@ namespace SSIS_FRONT.Controllers
         }
         public string GetRole()
         {
-            int id = (int)HttpContext.Session.GetInt32("Id");
-            string role = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
-            if (role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_EMPLOYEE])
+            string Role = HttpContext.Session.GetString("Role");
+            if (Role == CommonConstant.ROLE.DEPARTMENT_HEAD)
             {
-                string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/drep";
-                Result<Employee> result = HttpUtils.Get(url, new Employee(), Request, Response);
-                if (result.data.Id == id)
+                string url1 = cfg.GetValue<string>("Hosts:Boot") + "/depthead/cdel";
+                Result<Employee> result1 = HttpUtils.Get(url1, new Employee(), Request, Response);
+                if (result1.data != null && result1.data.Id == HttpContext.Session.GetInt32("Id"))
                 {
-                    return CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_REPRESENTATIVE];
+                    return CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_DELEGATE];
                 }
             }
-            return role;
+
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/drep";
+            Result<Employee> result = HttpUtils.Get(url, new Employee(), Request, Response);
+            if (result.data.Id == HttpContext.Session.GetInt32("Id"))
+            {
+                return CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_REPRESENTATIVE];
+            }
+            else
+            {
+                return CommonConstant.ROLE_NAME[HttpContext.Session.GetString("Role")];
+            }
         }
         public string GetName()
         {

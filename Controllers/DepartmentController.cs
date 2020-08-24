@@ -28,6 +28,17 @@ namespace SSIS_FRONT.Controllers
         }
         public string GetRole()
         {
+            string Role = HttpContext.Session.GetString("Role");
+            if (Role == CommonConstant.ROLE.DEPARTMENT_HEAD)
+            {
+                string url1 = cfg.GetValue<string>("Hosts:Boot") + "/depthead/cdel";
+                Result<Employee> result1 = HttpUtils.Get(url1, new Employee(), Request, Response);
+                if (result1.data != null && result1.data.Id == HttpContext.Session.GetInt32("Id"))
+                {
+                    return CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_DELEGATE];
+                }
+            }
+
             string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/drep";
             Result<Employee> result = HttpUtils.Get(url, new Employee(), Request, Response);
             if (result.data.Id == HttpContext.Session.GetInt32("Id"))
@@ -77,7 +88,7 @@ namespace SSIS_FRONT.Controllers
             ViewData["Name"] = GetName();
 
             string url;
-            if (role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD])
+            if (role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD] || role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_DELEGATE])
             {
                 url = cfg.GetValue<string>("Hosts:Boot") + "/depthead/rfl";
             }
@@ -98,7 +109,7 @@ namespace SSIS_FRONT.Controllers
             ViewData["Name"] = GetName();
 
             string url1;
-            if (role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD])
+            if (role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD] || role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_DELEGATE])
             {
                 url1 = cfg.GetValue<string>("Hosts:Boot") + "/depthead/rfld/" + Id;
             }
@@ -130,7 +141,7 @@ namespace SSIS_FRONT.Controllers
             ViewData["Name"] = GetName();
 
             string url;
-            if (role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD])
+            if (role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD] || role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_DELEGATE])
             {
                 url = cfg.GetValue<string>("Hosts:Boot") + "/depthead/dis";
             }
