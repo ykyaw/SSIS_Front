@@ -4,7 +4,6 @@
     Department department = (Department)ViewData["departments"];
 }
     
-<h2 class="titlecenter">Collection Point</h2>
     
 <div class="container" style="margin-top: 20px;">
         <table>
@@ -42,37 +41,30 @@
 
 <div class="container" style="margin-top: 20px;">
     <form id="collectionpoint">
-        <div class="row justify-content-center">
-            <div class="col-3">
-                <label class="form-control font-weight-bold" style="border: 0;"><big>Select Collection Point</big></label>
-            </div>
-        </div>
+
+        <h2 class="titlecenter">Select Collection Point</h2>
         @foreach (var c in collectionPoints)
         {
-            <div class="row justify-content-center form-check">
-                <div class="col-1">
-                    <input name="cp" class="form-check-input" type="radio" data-loc="@c.Location" data-time="@c.CollectionTime" value="@c.Id" />
+            <div class="row justify-content-center" style="margin-top: 20px;">
+                <div class="col-0">
+                    <input name="cp" type="radio" data-loc="@c.Location" data-time="@c.CollectionTime" value="@c.Id" />
                 </div>
-                <div class="col-6">
-                    <label class="form-check-label" style="border: 0;" > @c.Location @c.CollectionTime</label>
+                <div class="col-3">
+                    <label> @c.Location @c.CollectionTime</label>
                 </div>
+
+
+
             </div>
         }
-        @*<label>Select Collection Point</label>
-            <br />
-            @foreach (var c in collectionPoints)
-            {
-                <input name="cp" type="radio" data-loc="@c.Location" data-time="@c.CollectionTime" value="@c.Id" />
-                <label> @c.Location @c.CollectionTime</label>
-                <br />
-            }*@
     </form>
-            <div class="row justify-content-center">
-                <div class="col-2">
-                    <button id="change" type="button" class="btn btn-success form-control font-weight-bold">Change</button>
-                </div>
-            </div>
+
+    <div class="row justify-content-center" style="margin-top: 20px;">
+        <div class="col-2">
+            <button id="change" type="button" class="btn btn-success form-control font-weight-bold">Change</button>
+        </div>
+    </div>
     
 </div>
 
-            <script src="~/js/CollectionPoint.js"></script>
+<script src="~/js/CollectionPoint.js"></script>

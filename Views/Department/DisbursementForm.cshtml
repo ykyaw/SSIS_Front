@@ -50,8 +50,8 @@
                     <td>@d.DisburseRemark</td>
                     @if (disbursement[0].Requisition.Status == CommonConstant.RequsitionStatus.confirmed)
                     {
-                        <td><input class="replace" type="number" value="@d.QtyDisbursed" /></td>
-                        <td><input class="replace" type="text" /></td>
+                        <td><input class="replace form-control" type="number" value="@d.QtyDisbursed" /></td>
+                        <td><input class="replace form-control" type="text" /></td>
                     }
                     else
                     {

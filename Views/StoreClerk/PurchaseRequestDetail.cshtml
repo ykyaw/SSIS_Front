@@ -59,10 +59,10 @@
                     @if (role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.STORE_CLERK] && kvp.Key.Status == CommonConstant.PurchaseRequestStatus.created)
                     {
                         <td>
-                            <input class="reorderqty number" type="number" min="0" value="@kvp.Key.ReorderQty" />
+                            <input class="reorderqty number form-control" type="number" min="0" value="@kvp.Key.ReorderQty" />
                         </td>
                         <td>
-                            <select class="supplierid number">
+                            <select class="supplierid number form-control">
                                 @foreach (var v in kvp.Value)
                                 {
                                     <option data-sid="@v.SupplierId" value="@v.Unitprice">Rank @v.Rank: @v.Supplier.Name</option>
@@ -70,7 +70,7 @@
                             </select>
                         </td>
                         <td>
-                            <input class="venderquote" type="text" value="@kvp.Key.VenderQuote" />
+                            <input class="venderquote form-control" type="text" value="@kvp.Key.VenderQuote" />
                         </td>
                     }
                     else
