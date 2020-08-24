@@ -7,74 +7,105 @@
     Employee emp = (Employee)ViewData["Employee"];
 }
 
-<h1>@ViewData["Title"]</h1>
+<h2 class="titlecenter">@ViewData["Title"]</h2>
 
 <input id="role" type="hidden" value="@CommonConstant.ROLE_NAME[emp.Role]" />
-<table id="form">
-    <tr>
-        <td>Voucher#: </td>
-        <td>&nbsp;&nbsp;&nbsp;</td>
-        <td id="id">@voucher.Id</td>
-    </tr>
-    <tr>
-        <td>Date Issued: </td>
-        <td>&nbsp;&nbsp;&nbsp;</td>
-        <td>@TimeUtil.convertTimestampToyyyyMMdd(voucher.InitiatedDate)</td>
-    </tr>
-    <tr>
-        <td>Status: </td>
-        <td>&nbsp;&nbsp;&nbsp;</td>
-        <td id="status">@voucher.Status</td>
-    </tr>
-    @if (!(voucher.Reason == null || voucher.Reason == ""))
-    {
+
+<div class="container" style="margin-top: 20px;">
+    <table id="form">
         <tr>
-            <td>Reason: </td>
+            <td>Voucher#: </td>
             <td>&nbsp;&nbsp;&nbsp;</td>
-            <td id="status">@voucher.Reason</td>
+            <td id="id">@voucher.Id</td>
         </tr>
-    }
-</table>
-<br />
-
-<table>
-    <tr>
-        <th>Item Code</th>
-        <th>Description</th>
-        <th>Quantity Adjusted</th>
-        <th>Reason</th>
-        <th>Price</th>
-        <th>Total Price</th>
-    </tr>
-    @foreach (AdjustmentVoucherDetail detail in voucher.AdjustmentVoucherDetails)
-    {
         <tr>
-            <td>@detail.Product.Id</td>
-            <td>@detail.Product.Description</td>
-            <td>
-                @if (detail.QtyAdjusted > 0)
-                {
-                    @:+@detail.QtyAdjusted.ToString()
-                }
-                else
-                {
-                    @detail.QtyAdjusted
-                }
-            </td>
-            <td>@detail.Reason</td>
-            <td>$@Math.Abs(detail.TotalPrice / detail.QtyAdjusted)</td>
-            <td style=@(detail.TotalPrice>250?"color:red":"") class="totalPrice">$@detail.TotalPrice</td>
+            <td>Date Issued: </td>
+            <td>&nbsp;&nbsp;&nbsp;</td>
+            <td>@TimeUtil.convertTimestampToyyyyMMdd(voucher.InitiatedDate)</td>
         </tr>
-    }
-</table>
+        <tr>
+            <td>Status: </td>
+            <td>&nbsp;&nbsp;&nbsp;</td>
+            <td id="status">@voucher.Status</td>
+        </tr>
+        @if (!(voucher.Reason == null || voucher.Reason == ""))
+        {
+            <tr>
+                <td>Reason: </td>
+                <td>&nbsp;&nbsp;&nbsp;</td>
+                <td id="status">@voucher.Reason</td>
+            </tr>
+        }
+    </table>
 
-@if (voucher.Status == CommonConstant.AdjVoucherStatus.PENDING_APPROVE)
-{
-    <div id="operation">
-        <textarea rows="3" placeholder="Reason" id="reason"></textarea>
-        <button id="reject" type="button" class="btn btn-danger">Reject</button>
-        <button id="approve" type="button" class="btn btn-success">Approve</button>
-    </div>
-}
+</div>
+
+<div class="container" style="margin-top: 20px;">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Item Code</th>
+                <th>Description</th>
+                <th>Quantity Adjusted</th>
+                <th>Reason</th>
+                <th>Price</th>
+                <th>Total Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (AdjustmentVoucherDetail detail in voucher.AdjustmentVoucherDetails)
+            {
+                <tr>
+                    <td>@detail.Product.Id</td>
+                    <td>@detail.Product.Description</td>
+                    <td>
+                        @if (detail.QtyAdjusted > 0)
+                        {
+                            @:+@detail.QtyAdjusted.ToString()
+                        }
+                        else
+                        {
+                            @detail.QtyAdjusted
+                        }
+                    </td>
+                    <td>@detail.Reason</td>
+                    <td>$@Math.Abs(detail.TotalPrice / detail.QtyAdjusted)</td>
+                    <td style=@(detail.TotalPrice>250?"color:red":"") class="totalPrice">$@detail.TotalPrice</td>
+                </tr>
+            }
+        </tbody>
+        
+    </table>
+
+</div>
+
+<div class="container" style="margin-top: 20px;">
+
+    @if (voucher.Status == CommonConstant.AdjVoucherStatus.PENDING_APPROVE)
+    {
+        @*<div id="operation">
+            <textarea rows="3" placeholder="Reason" id="reason"></textarea>
+            <button id="reject" type="button" class="btn btn-danger">Reject</button>
+            <button id="approve" type="button" class="btn btn-success">Approve</button>
+        </div>*@
+
+        <div id="operation" class="container" style="margin-top: 20px">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <textarea rows="3" placeholder="Reason" id="reason" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="row justify-content-center" style="margin-top: 20px">
+                <div class="col-1">
+                    <button id="reject" type="button" class="btn btn-danger font-weight-bold">Reject</button>
+                </div>
+                <div class="col-1">
+                    <button id="approve" type="button" class="btn btn-success font-weight-bold">Approve</button>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
 
 <script src="~/js/VoucherDetail.js"></script>
