@@ -87,7 +87,7 @@
 @if (av.Status == CommonConstant.AdjVoucherStatus.CREATED && av.InitiatedClerkId == clerkid)
 {
     <div class="container" style="margin-top: 20px;">
-        <div class="row justify-content-start">
+        <div class="row justify-content-center">
             <div class="col-0">
                 <label class="form-control font-weight-bold" style="border: 0;">Item:</label>
             </div>
@@ -178,7 +178,7 @@
 @if (av.AdjustmentVoucherDetails.Count() == 0)
 {
     <div class="disappear container" style="margin-top: 20px;">
-        <p>There is product saved in this adjustment voucher.</p>
+        <p>There is no product saved in this adjustment voucher.</p>
     </div>
 }
 
