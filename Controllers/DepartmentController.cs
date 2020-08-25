@@ -133,6 +133,14 @@ namespace SSIS_FRONT.Controllers
             Result<Object> result = HttpUtils.Put(url, requisition, Request, Response);
             return (bool)result.data;
         }
+
+        public Requisition RepeatRequisition([FromBody] List<RequisitionDetail> requisitionDetails)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/hrf";
+            Result<Requisition> result = HttpUtils.Post(url, requisitionDetails, new Requisition(), Request, Response);
+            return result.data;
+        }
+
         public IActionResult Disbursement()
         {
             string role = GetRole();

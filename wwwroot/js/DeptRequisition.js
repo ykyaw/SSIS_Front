@@ -43,4 +43,24 @@
                 console.log("error: " + err);
             })
     })
+
+    $('#repeat').click(function () {
+        let details = [];
+        $(".productid").each(function () {
+            let detail = {
+                ProductId: $(this).val(),
+                QtyNeeded: +$(this).nextAll('.qtyneeded').text()
+            }
+            details.push(detail);
+        });
+        Post(`/Department/RepeatRequisition/`, details)
+            .then(function (response) {
+                //let result = JSON.parse(response);
+                console.log(response);
+                window.location.href = "/Department/Requisition/" + +response.id;
+            })
+            .catch(function (err) {
+                console.log("error: " + err);
+            })
+    })
 })
