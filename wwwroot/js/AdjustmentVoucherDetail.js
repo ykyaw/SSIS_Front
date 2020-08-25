@@ -59,7 +59,7 @@
                 .then(function (response) {
                     console.log(response);
                     alert("Adjustment Voucher Submited, pending approval");
-                    window.location.href = "/StoreClerk/AdjustmentVoucherDetails/" + response.ad;
+                    window.location.href = "/StoreClerk/AdjustmentVoucher/" + details[0].AdjustmentVoucherId;
                 })
                 .catch(function (err) {
                     //alert("error: " + JSON.parse(err));

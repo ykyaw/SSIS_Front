@@ -1,4 +1,4 @@
-﻿@using SSIS_FRONT.Utils; 
+﻿@using SSIS_FRONT.Utils;
 
 @{
     ViewData["Title"] = "Delegate Authority";
@@ -31,8 +31,8 @@
                     <tr>
                         <input class="empid" type="hidden" value="@d.Id" />
                         <td>@d.Name</td>
-                        <td>@TimeUtil.convertTimestampToyyyyMMdd(d.DelegateFromDate)</td>
-                        <td>@TimeUtil.convertTimestampToyyyyMMdd(d.DelegateToDate)</td>
+                        <td class="fromdate">@TimeUtil.convertTimestampToyyyyMMdd(d.DelegateFromDate)</td>
+                        <td class="todate">@TimeUtil.convertTimestampToyyyyMMdd(d.DelegateToDate)</td>
                         <td>
                             <button class="edit btn btn-warning" style="margin-right: 10px;">Edit</button><button class="delete btn btn-danger">Delete</button>
                         </td>
@@ -72,13 +72,13 @@
         <label class="form-control font-weight-bold" style="border: 0;">Start Date:</label>
     </div>
     <div class="col-0">
-        <input id="fromdate" type="date" class="form-control"/>
+        <input id="fromdate" type="date" class="form-control" />
     </div>
     <div class="col-0">
         <label class="form-control font-weight-bold" style="border: 0;">End Date:</label>
     </div>
     <div class="col-0">
-        <input id="todate" type="date" class="form-control"/>
+        <input id="todate" type="date" class="form-control" />
     </div>
     <div class="col-0">
         &nbsp;&nbsp;<button id="assign" class="btn btn-success font-weight-bold">Assign as Delegate</button>
@@ -86,14 +86,14 @@
 </div>
 
 @*<div>
-    <span>Start Date: </span>
-    <input id="fromdate" type="date" />
-    <span>End Date: </span>
-    <input id="todate" type="date" />
-</div>
+        <span>Start Date: </span>
+        <input id="fromdate" type="date" />
+        <span>End Date: </span>
+        <input id="todate" type="date" />
+    </div>
 
-<div>
-    <button id="assign" class="btn btn-success">Assign as Delegate</button>
-</div>*@
+    <div>
+        <button id="assign" class="btn btn-success">Assign as Delegate</button>
+    </div>*@
 
 <script src="~/js/Delegate.js"></script>

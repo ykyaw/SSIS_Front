@@ -1,4 +1,4 @@
-﻿@using SSIS_FRONT.Utils; 
+﻿@using SSIS_FRONT.Utils;
 
 @{
     ViewData["Title"] = "Generate Retrieval Form";
@@ -56,8 +56,8 @@
                     <td>@r.Clerk.Name</td>
                     <td>@r.Status</td>
                     <td>
-                        <form action="/StoreClerk/RetrievalForm" method="post">
-                            <input type="hidden" name="date" value="@r.DisbursedDate" />
+                        <form action="/StoreClerk/RetrievalDetail" method="post">
+                            <input type="hidden" name="id" value="@r.Id" />
                             <button class="btn btn-primary">Details</button>
                         </form>
                     </td>

@@ -364,6 +364,38 @@ namespace SSIS_FRONT.Controllers
             }
         }
 
+        public IActionResult RetrievalDetail(int id)
+        {
+            ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/retid/" + id;
+            Result<Retrieval> result = HttpUtils.Get(url, new Retrieval(), Request, Response);
+            if (result.code == 200)
+            {
+                Dictionary<string, List<RequisitionDetail>> categoryByProduct = new Dictionary<string, List<RequisitionDetail>>();
+                foreach (RequisitionDetail detail in result.data.RequisitionDetails)
+                {
+                    if (categoryByProduct.ContainsKey(detail.Product.Id))
+                    {
+                        categoryByProduct[detail.Product.Id].Add(detail);
+                    }
+                    else
+                    {
+                        categoryByProduct.Add(detail.Product.Id, new List<RequisitionDetail>());
+                        categoryByProduct[detail.Product.Id].Add(detail);
+                    }
+                }
+                ViewData["categoryByProduct"] = categoryByProduct;
+                ViewData["Retrieval"] = result.data;
+                return View("RetrievalForm");
+            }
+            else
+            {
+                return RedirectToAction("GenerateRetrievalForm", "StoreClerk", new { errMsg = result.msg });
+            }
+        }
+
         [HttpPut]
         public bool Retrieval([FromBody] Retrieval retrieval)
         {
