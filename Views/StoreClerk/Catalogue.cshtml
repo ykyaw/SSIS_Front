@@ -1,6 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Stationery Catalogue";
-    List<Product> products = (List<Product>)ViewData["products"];
+    List<Transaction> products = (List<Transaction>)ViewData["products"];
     List<string> categories = (List<string>)ViewData["categories"];
 }
 
@@ -50,6 +50,7 @@
             <th>Item Code</th>
             <th>Category</th>
             <th>Description</th>
+            <th>Current Stock</th>
             <th>Reorder Level</th>
             <th>Reorder Quantity</th>
             <th>Unit of Measurement</th>
@@ -60,12 +61,13 @@
         @foreach (var p in products)
         {
             <tr class="search">
-                <td>@p.Id</td>
-                <td class="select">@p.Category.Name</td>
-                <td>@p.Description</td>
-                <td>@p.ReorderLvl</td>
-                <td>@p.ReorderQty</td>
-                <td>@p.Uom</td>
+                <td>@p.ProductId</td>
+                <td class="select">@p.Product.Category.Name</td>
+                <td>@p.Product.Description</td>
+                <td>@p.Balance</td>
+                <td>@p.Product.ReorderLvl</td>
+                <td>@p.Product.ReorderQty</td>
+                <td>@p.Product.Uom</td>
                 <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="StockCard" asp-route-id="@p.Id">Stock Card</a></td>
             </tr>
         }

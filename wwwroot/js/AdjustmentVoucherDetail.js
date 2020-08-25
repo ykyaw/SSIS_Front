@@ -38,14 +38,18 @@
 
     $('#save').click(function () {
         let details = getUpdatedDetails();
-        Put(`/StoreClerk/SaveVoucher`, details)
-            .then(function (response) {
-                console.log(response);
-                alert("Adjustment Voucher Details Saved");
-            })
-            .catch(function (err) {
-                //alert("error: " + JSON.parse(err));
-            })
+        if (details.length != 0) {
+            Put(`/StoreClerk/SaveVoucher`, details)
+                .then(function (response) {
+                    console.log(response);
+                    alert("Adjustment Voucher Details Saved");
+                })
+                .catch(function (err) {
+                    //alert("error: " + JSON.parse(err));
+                })
+        } else {
+            alert("Adjustment Voucher Details Saved")
+        }
     })
 
     $('#submit').click(function () {
@@ -55,7 +59,7 @@
                 .then(function (response) {
                     console.log(response);
                     alert("Adjustment Voucher Submited, pending approval");
-                    window.location.href = "/StoreClerk/AdjustmentVoucherDetails/" + AdjustmentVoucherId;
+                    window.location.href = "/StoreClerk/AdjustmentVoucherDetails/" + response.ad;
                 })
                 .catch(function (err) {
                     //alert("error: " + JSON.parse(err));

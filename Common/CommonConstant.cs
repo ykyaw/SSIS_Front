@@ -12,9 +12,10 @@ namespace SSIS_FRONT.Common
             public static readonly int INVALID_TOKEN = 510;
         }
 
-        public static class RetrievalFormStatus
+        public static class RetrievalStatus
         {
-            public static readonly string CREATING = "creating";
+            public const string created = "Created"; //upon creation of retrieval form
+            public const string retrieved = "Retrieved"; //after clicking retrieved
         }
 
         public static class AdjVoucherStatus
@@ -68,12 +69,6 @@ namespace SSIS_FRONT.Common
             public const string confirmed = "Confirmed"; //after approved, and after clerk entered a disbursement time
             public const string received = "Received"; // after department rep received at collection point, and pressed the button to indicate he received. This will trigger the button for clerk to click acknowledged
             public const string completed = "Completed"; //after clerk click acknowledged, requsition status is completed
-        }
-
-        public static class RetrievalStatus
-        {
-            public const string created = "Created"; //upon creation of retrieval form
-            public const string retrieved = "Retrieved"; //after clicking retrieved
         }
 
         public static class PurchaseRequestStatus

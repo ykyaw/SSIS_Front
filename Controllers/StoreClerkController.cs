@@ -117,11 +117,11 @@ namespace SSIS_FRONT.Controllers
             ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
             ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
 
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/catalogue";
-            Result<List<Product>> result = HttpUtils.Get(url, new List<Product>(), Request, Response);
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/glt";
+            Result<List<Transaction>> result = HttpUtils.Get(url, new List<Transaction>(), Request, Response);
             ViewData["products"] = result.data;
 
-            List<string> categories = result.data.Select(x => x.Category.Name).Distinct().ToList();
+            List<string> categories = result.data.Select(x => x.Product.Category.Name).Distinct().ToList();
             ViewData["categories"] = categories;
 
             return View();
@@ -323,6 +323,10 @@ namespace SSIS_FRONT.Controllers
         {
             ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
             ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/allrf";
+            Result<List<Retrieval>> result = HttpUtils.Get(url, new List<Retrieval>(), Request, Response);
+            ViewData["retrievals"] = result.data;
 
             ViewData["errMsg"] = errMsg;
             return View();

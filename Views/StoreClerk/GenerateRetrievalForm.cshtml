@@ -1,5 +1,8 @@
-﻿@{
+﻿@using SSIS_FRONT.Utils; 
+
+@{
     ViewData["Title"] = "Generate Retrieval Form";
+    List<Retrieval> retrievals = (List<Retrieval>)ViewData["retrievals"];
     string errMsg = (string)ViewData["errMsg"];
 }
 
@@ -25,12 +28,43 @@
         </div>
     </div>
 </form>
-    @*<form action="/StoreClerk/RetrieveForm" method="post" onsubmit="return dateTransform()">
-            <span>Enter planned date of disbursement: </span>
-            <input type="date" />
-            <input type="hidden" id="date" name="date" />
-            <button type="submit">Generate</button>
-        </form>*@
+@*<form action="/StoreClerk/RetrieveForm" method="post" onsubmit="return dateTransform()">
+        <span>Enter planned date of disbursement: </span>
+        <input type="date" />
+        <input type="hidden" id="date" name="date" />
+        <button type="submit">Generate</button>
+    </form>*@
 
+<div id="forms" class="container" style="margin-top: 20px;">
+    <h2 class="titlecenter">Retrieval Forms</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Retrieval ID</th>
+                <th>Disbursement Date</th>
+                <th>Retrieved By</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var r in retrievals)
+            {
+                <tr class="search">
+                    <td>@r.Id</td>
+                    <td>@TimeUtil.convertTimestampToyyyyMMdd(r.DisbursedDate)</td>
+                    <td>@r.Clerk.Name</td>
+                    <td>@r.Status</td>
+                    <td>
+                        <form action="/StoreClerk/RetrievalForm" method="post">
+                            <input type="hidden" name="date" value="@r.DisbursedDate" />
+                            <button class="btn btn-primary">Details</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
-    <script src="~/js/GenerateRetrieval.js"></script>
+<script src="~/js/GenerateRetrieval.js"></script>
