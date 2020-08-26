@@ -424,6 +424,14 @@ namespace SSIS_FRONT.Controllers
             return View();
         }
 
+        [Route("/StoreClerk/DeleteAdjustmentVoucher/{Id}")]
+        public bool DeleteAdjustmentVoucher(string id)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/dav/" + id;
+            Result<Object> result = HttpUtils.Delete(url, Request, Response);
+            return (bool)result.data;
+        }
+
         [Route("StoreClerk/AdjustmentVoucher/{advId}")]
         public IActionResult AdjustmentVoucherDetail(string advId)
         {

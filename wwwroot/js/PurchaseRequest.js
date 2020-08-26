@@ -99,7 +99,7 @@
     })
 
     $("#reject").on("click", function () {
-        let Remarks = $("#Reason").val();
+        let Remarks = $("textarea#Reason").val();
         let PurchaseRequestId = +$("#requestId").text();
         let Status = "Rejected";
         let details = [];
@@ -117,18 +117,24 @@
                 console.log(response);
                 $('#status').hide().text(Status).fadeIn();
                 $('#supervisorButton').fadeOut();
+                $('<tr><td>' + 'Reason: ' +
+                    '</td><td>' + '&nbsp;&nbsp;&nbsp;' +
+                    '</td><td>' + Remarks +
+                    '</td></tr>').hide().appendTo($('#status').parent().parent()).fadeIn();
             })
             .catch(function (err) {
                 console.log(err);
             })
     })
     $("#approve").on("click", function () {
+        let Remarks = $("textarea#Reason").val();
         let PurchaseRequestId = +$("#requestId").text();
         let Status = "Approved";
         let details = [];
         $(".detailId").each(function () {
             let detail = {
                 Id: +$(this).val(),
+                Remarks,
                 PurchaseRequestId,
                 Status
             }
@@ -141,7 +147,7 @@
                 $('#supervisorButton').fadeOut();
                 $('<tr><td>' + 'Reason: ' +
                     '</td><td>' + '&nbsp;&nbsp;&nbsp;' +
-                    '</td><td>' + Reason +
+                    '</td><td>' + Remarks +
                     '</td></tr>').hide().appendTo($('#status').parent().parent()).fadeIn();
             })
             .catch(function (err) {

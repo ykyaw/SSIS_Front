@@ -19,8 +19,7 @@
             .then(function (response) {
                 //let result = JSON.parse(response);
                 console.log(response);
-                $('#operation').fadeOut();
-                $('#status').hide().text(Status).fadeIn();
+                location.reload();
             })
             .catch(function (err) {
                 alert("error: " + JSON.parse(err));

@@ -1,4 +1,5 @@
-﻿
+﻿@using SSIS_FRONT.Utils; 
+
 @{
     ViewData["Title"] = "Vouchers";
     List<AdjustmentVoucher> vouchers = (List<AdjustmentVoucher>)ViewData["Vouchers"];
@@ -34,7 +35,7 @@
             {
                 <tr class="search">
                     <td>@voucher.Id</td>
-                    <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(voucher.InitiatedDate)</td>
+                    <td>@TimeUtil.convertTimestampToyyyyMMdd(voucher.InitiatedDate)</td>
                     <td>@voucher.Status</td>
                     <td><a href="/Voucher/@voucher.Id" class="btn btn-info">Details</a></td>
                 </tr>

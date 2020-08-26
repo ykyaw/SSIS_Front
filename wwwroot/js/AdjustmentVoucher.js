@@ -37,4 +37,20 @@
             $('#select').val("View All Adjustment Vouchers");
         }
     })
+    $('#list').on('click', 'button.delete', function () {
+        if (confirm("Are you sure you want to delete this Adjustment Voucher?")) {
+            let Id = $(this).parent().siblings('.listid').text();
+            Delete(`/StoreClerk/DeleteAdjustmentVoucher/` + Id)
+                .then(function (response) {
+                    console.log(response);
+                    $(this).closest('tr').fadeOut(200, function () {
+                        $(this).remove();
+                    });
+                })
+                .catch(function (err) {
+                    //alert("error: " + JSON.parse(err));
+                })
+        }
+        return false;
+    })
 })

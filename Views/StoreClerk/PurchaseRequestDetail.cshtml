@@ -19,7 +19,14 @@
             <td>&nbsp;&nbsp;&nbsp;</td>
             <td id="status">@TQbyPRD.Keys.First().Status</td>
         </tr>
-
+        @if (TQbyPRD.Keys.First().Status == CommonConstant.PurchaseRequestStatus.approved || TQbyPRD.Keys.First().Status == CommonConstant.PurchaseRequestStatus.rejected)
+        {
+            <tr>
+                <td>Reason: </td>
+                <td>&nbsp;&nbsp;&nbsp;</td>
+                <td id="status">@TQbyPRD.Keys.First().Remarks</td>
+            </tr>
+        }
     </table>
 </div>
 
@@ -191,10 +198,10 @@ else if (@TQbyPRD.Keys.First().Status == CommonConstant.PurchaseRequestStatus.pe
             </div>
         </div>
         <div class="row justify-content-center" style="margin-top: 20px">
-            <div class="col-1">
+            <div class="col-2">
                 <button id="reject" class="btn btn-danger form-control font-weight-bold">Reject</button>
             </div>
-            <div class="col-1">
+            <div class="col-2">
                 <button id="approve" class="btn btn-success form-control font-weight-bold">Approve</button>
             </div>
         </div>

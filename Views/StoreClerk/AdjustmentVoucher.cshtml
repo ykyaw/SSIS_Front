@@ -16,7 +16,7 @@
         <input type="button" class="btn btn-primary font-weight-bold" id="select" data-cid="@clerkid" value="View My Adjustment Vouchers" />
     </div>
 }
-<br/>
+<br />
 
 <h2 class="titlecenter">@ViewData["Title"]</h2>
 
@@ -49,15 +49,21 @@
                 <th></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="list">
             @foreach (AdjustmentVoucher adv in adjustmentVoucher)
             {
                 <tr class="search">
-                    <td>@adv.Id</td>
+                    <td class="listid">@adv.Id</td>
                     <td class="select" value="@adv.InitiatedClerkId">@adv.InitiatedClerk.Name</td>
                     <td>@TimeUtil.convertTimestampToyyyyMMdd(adv.InitiatedDate)</td>
                     <td>@adv.Status</td>
-                    <td><a class="btn btn-info" asp-controller="StoreClerk" asp-action="AdjustmentVoucher" asp-route-id="@adv.Id">Details</a></td>
+                    <td>
+                        <a class="btn btn-info" asp-controller="StoreClerk" asp-action="AdjustmentVoucher" asp-route-id="@adv.Id">Details</a>
+                        @if (adv.Status == CommonConstant.AdjVoucherStatus.CREATED && adv.InitiatedClerkId == clerkid)
+                        {
+                            <button class="delete btn btn-danger">Delete</button>
+                        }
+                    </td>
                 </tr>
             }
         </tbody>
