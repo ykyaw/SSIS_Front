@@ -52,7 +52,19 @@
                 <td class="listid">@r.Id</td>
                 <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(r.CreatedDate)</td>
                 <td>@r.ReqByEmp.Name</td>
-                <td>@r.Status</td>
+                <td>
+                    <span class="input-group-addon">
+                        <a class='my-tool-tip' data-toggle="tooltip" data-placement="right" title="Completed (Disbursed and acknowledged by Dept and Store)&#013;&#010;
+                           Received (Disbursement acknowledged by Dept)&#013;&#010;
+                           Confirmed (Collection date has been set)&#013;&#010;
+                           Rejected (rejected by Dept Head)&#013;&#010;
+                           Approved (approved by Dept Head and is being processed by Store)&#013;&#010;
+                           Pending Approval (to be processed by Dept Head)&#013;&#010;
+                           Created (Draft)">
+                            @r.Status
+                        </a>
+                    </span>
+                </td>
                 <td>
                     <a class="btn btn-info" asp-controller="Department" asp-action="Requisition" asp-route-id="@r.Id">Details</a>
                     @if (r.Status == CommonConstant.RequsitionStatus.created && r.ReqByEmpId == empid)

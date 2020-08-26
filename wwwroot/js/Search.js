@@ -1,4 +1,9 @@
 ﻿$(document).ready(function () {
+    $("a.my-tool-tip").tooltip({
+        open: function (event, ui) {
+            ui.tooltip.css("width", "4000px");
+        }
+    });
     let select = "";
     $('#search, #select').on('input', function () {
         $('.search').each(function (index) {

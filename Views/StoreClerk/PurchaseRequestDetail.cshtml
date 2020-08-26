@@ -101,7 +101,16 @@
                             @kvp.Key.VenderQuote
                         </td>
                     }
-                    <td>@((kvp.Key.TotalPrice).ToString("C"))</td>
+                    <td>
+                        @if (kvp.Key.SupplierId == null)
+                        {
+                            @((kvp.Key.Product.ReorderQty * kvp.Value[0].Unitprice).ToString("C"))
+                        }
+                        else
+                        {
+                            @((kvp.Key.TotalPrice).ToString("C"))
+                        }
+                    </td>
                 </tr>
             }
         </tbody>
