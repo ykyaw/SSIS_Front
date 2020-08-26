@@ -10,6 +10,8 @@ namespace SSIS_FRONT.Common
         public static class ErrorCode
         {
             public static readonly int INVALID_TOKEN = 510;
+            public static readonly int NO_PERMISSION = 511;
+            public static readonly string NO_PERMISSION_MSG = "sorry, you hove no permission to access this api";
         }
 
         public static class RetrievalFormStatus

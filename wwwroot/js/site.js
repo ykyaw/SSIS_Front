@@ -20,6 +20,10 @@ function Post(url, value) {
         url: url,
         data: JSON.stringify( value ),
         success: function (response) {
+            if (response.includes("No permission to access function")) {
+                window.location.href = "/Home/NoPermission";
+                return;
+            }
             return Promise.resolve(response);
         },
         error: function (response) {
@@ -36,6 +40,10 @@ function Get(url) {
         contentType: "application/json",
         url: url,
         success: function (response) {
+            if (response.includes("No permission to access function")) {
+                window.location.href = "/Home/NoPermission";
+                return;
+            }
             return Promise.resolve(response);
         },
         error: function (response) {
@@ -53,6 +61,10 @@ function Put(url, value) {
         url: url,
         data: JSON.stringify(value),
         success: function (response) {
+            if (response.includes("No permission to access function")) {
+                window.location.href = "/Home/NoPermission";
+                return;
+            }
             return Promise.resolve(response);
         },
         error: function (response) {
@@ -69,6 +81,10 @@ function Delete(url) {
         contentType: "application/json",
         url: url,
         success: function (response) {
+            if (response.includes("No permission to access function")) {
+                window.location.href = "/Home/NoPermission";
+                return;
+            }
             return Promise.resolve(response);
         },
         error: function (err) {

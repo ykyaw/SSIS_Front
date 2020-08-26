@@ -43,7 +43,11 @@ namespace SSIS_FRONT.Middlewares
             if (exception != null)
             {
                 var response = context.Response;
-                var message = exception.InnerException == null ? exception.Message : exception.InnerException.Message;
+                string message = exception.InnerException == null ? exception.Message : exception.InnerException.Message;
+                if(message== CommonConstant.ErrorCode.NO_PERMISSION_MSG)
+                {
+                    response.Redirect("/Home/NoPermission");
+                }
                 response.ContentType = "application/json";
                 string tt = JsonConvert.SerializeObject(new { code = 400, msg = message });
                 await response.WriteAsync(JsonConvert.SerializeObject(new { code = 400, msg = message })).ConfigureAwait(false);

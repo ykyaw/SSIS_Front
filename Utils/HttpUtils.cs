@@ -76,7 +76,12 @@ namespace SSIS_FRONT.Utils
                                 sub_msg = "invalid token",
                                 msg = ""
                             };
-                            
+
+                        }
+                        else if (response.StatusCode.GetHashCode() == CommonConstant.ErrorCode.NO_PERMISSION)
+                        {
+                            throw new Exception(CommonConstant.ErrorCode.NO_PERMISSION_MSG);
+
                         }
                     }).Wait();
 
@@ -139,6 +144,11 @@ namespace SSIS_FRONT.Utils
                     };
 
                 }
+                else if (response.StatusCode.GetHashCode() == CommonConstant.ErrorCode.NO_PERMISSION)
+                {
+                    throw new Exception(CommonConstant.ErrorCode.NO_PERMISSION_MSG);
+
+                }
             }).Wait();
 
             return result;
@@ -188,6 +198,11 @@ namespace SSIS_FRONT.Utils
                             sub_msg = "invalid token",
                             msg = ""
                         };
+
+                    }
+                    else if (response.StatusCode.GetHashCode() == CommonConstant.ErrorCode.NO_PERMISSION)
+                    {
+                        throw new Exception(CommonConstant.ErrorCode.NO_PERMISSION_MSG);
 
                     }
                 }).Wait();
@@ -241,6 +256,11 @@ namespace SSIS_FRONT.Utils
                     };
 
                 }
+                else if (response.StatusCode.GetHashCode() == CommonConstant.ErrorCode.NO_PERMISSION)
+                {
+                    throw new Exception(CommonConstant.ErrorCode.NO_PERMISSION_MSG);
+
+                }
             }).Wait();
 
             return result;
@@ -285,6 +305,11 @@ namespace SSIS_FRONT.Utils
                             sub_msg = "invalid token",
                             msg = ""
                         };
+
+                    }
+                    else if (response.StatusCode.GetHashCode() == CommonConstant.ErrorCode.NO_PERMISSION)
+                    {
+                        throw new Exception(CommonConstant.ErrorCode.NO_PERMISSION_MSG);
 
                     }
                 }).Wait();
@@ -333,6 +358,11 @@ namespace SSIS_FRONT.Utils
                     };
 
                 }
+                else if (response.StatusCode.GetHashCode() == CommonConstant.ErrorCode.NO_PERMISSION)
+                {
+                    throw new Exception(CommonConstant.ErrorCode.NO_PERMISSION_MSG);
+
+                }
             }).Wait();
 
             return result;
@@ -377,6 +407,11 @@ namespace SSIS_FRONT.Utils
                             sub_msg = "invalid token",
                             msg = ""
                         };
+
+                    }
+                    else if (response.StatusCode.GetHashCode() == CommonConstant.ErrorCode.NO_PERMISSION)
+                    {
+                        throw new Exception(CommonConstant.ErrorCode.NO_PERMISSION_MSG);
 
                     }
                 }).Wait();
@@ -424,6 +459,11 @@ namespace SSIS_FRONT.Utils
                         sub_msg = "invalid token",
                         msg = ""
                     };
+
+                }
+                else if (response.StatusCode.GetHashCode() == CommonConstant.ErrorCode.NO_PERMISSION)
+                {
+                    throw new Exception(CommonConstant.ErrorCode.NO_PERMISSION_MSG);
 
                 }
             }).Wait();

@@ -96,5 +96,10 @@ namespace SSIS_FRONT.Controllers
             Result<Object> result = HttpUtils.Post(url, user, Request, Response);
             return result;
         }
+
+        public IActionResult NoPermission()
+        {
+            return View();
+        }
     }
 }
