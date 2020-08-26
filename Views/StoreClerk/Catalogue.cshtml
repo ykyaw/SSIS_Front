@@ -1,6 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Stationery Catalogue";
-    List<Product> products = (List<Product>)ViewData["products"];
+    List<Transaction> products = (List<Transaction>)ViewData["products"];
     List<string> categories = (List<string>)ViewData["categories"];
 }
 
@@ -32,17 +32,17 @@
 </div>
 
 @*<div class="input-group">
-    <span class="input-group-addon">Search</span>
-    <input type="text" id="search" class="form-control" placeholder="Type here" />
-    <span class="input-group-addon">Filter by</span>
-    <select id="select" class="form-control">
-        <option value="">Select Category</option>
-        @foreach (var c in categories)
-        {
-            <option>@c</option>
-        }
-    </select>
-</div>*@
+        <span class="input-group-addon">Search</span>
+        <input type="text" id="search" class="form-control" placeholder="Type here" />
+        <span class="input-group-addon">Filter by</span>
+        <select id="select" class="form-control">
+            <option value="">Select Category</option>
+            @foreach (var c in categories)
+            {
+                <option>@c</option>
+            }
+        </select>
+    </div>*@
 
 <table id="form" class="table table-striped" style="margin-top: 20px">
     <thead>
@@ -50,6 +50,7 @@
             <th>Item Code</th>
             <th>Category</th>
             <th>Description</th>
+            <th>Current Stock</th>
             <th>Reorder Level</th>
             <th>Reorder Quantity</th>
             <th>Unit of Measurement</th>
@@ -60,44 +61,45 @@
         @foreach (var p in products)
         {
             <tr class="search">
-                <td>@p.Id</td>
-                <td class="select">@p.Category.Name</td>
-                <td>@p.Description</td>
-                <td>@p.ReorderLvl</td>
-                <td>@p.ReorderQty</td>
-                <td>@p.Uom</td>
-                <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="StockCard" asp-route-id="@p.Id">Stock Card</a></td>
+                <td>@p.ProductId</td>
+                <td class="select">@p.Product.Category.Name</td>
+                <td>@p.Product.Description</td>
+                <td>@p.Balance</td>
+                <td>@p.Product.ReorderLvl</td>
+                <td>@p.Product.ReorderQty</td>
+                <td>@p.Product.Uom</td>
+                <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="StockCard" asp-route-id="@p.ProductId">Stock Card</a></td>
             </tr>
         }
     </tbody>
 </table>
 
 @*<table id="form" class="table table-striped">
-    <thead>
-        <tr>
-            <th>Item Code</th>
-            <th>Category</th>
-            <th>Description</th>
-            <th>Reorder Level</th>
-            <th>Reorder Quantity</th>
-            <th>Unit of Measure</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var p in products)
-        {
-            <tr class="search">
-                <td>@p.Id</td>
-                <td class="select">@p.Category.Name</td>
-                <td>@p.Description</td>
-                <td>@p.ReorderLvl</td>
-                <td>@p.ReorderQty</td>
-                <td>@p.Uom</td>
-                <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="StockCard" asp-route-id="@p.Id">Stock Card</a></td>
+        <thead>
+            <tr>
+                <th>Item Code</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Reorder Level</th>
+                <th>Reorder Quantity</th>
+                <th>Unit of Measure</th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>*@
+        </thead>
+        <tbody>
+            @foreach (var p in products)
+            {
+                <tr class="search">
+                    <td>@p.Id</td>
+                    <td class="select">@p.Category.Name</td>
+                    <td>@p.Description</td>
+                    <td>@p.ReorderLvl</td>
+                    <td>@p.ReorderQty</td>
+                    <td>@p.Uom</td>
+                    <td><a class="btn btn-primary" asp-controller="StoreClerk" asp-action="StockCard" asp-route-id="@p.Id">Stock Card</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>*@
 
 <script src="~/js/Search.js"></script>

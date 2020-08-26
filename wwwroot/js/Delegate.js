@@ -1,6 +1,12 @@
 ﻿$(document).ready(function () {
     fromdate.min = new Date().toISOString().split("T")[0];
-    todate.min = $("#fromdate").val();
+    todate.min = new Date().toISOString().split("T")[0];
+    $('#fromdate').on('input', function () {
+        todate.min = $(this).val();
+    })
+    $('#todate').on('input', function () {
+        fromdate.max = $(this).val();
+    })
 
     $("#assign").on("click", function () {
         let Id = +$('input[type=radio]:checked', '#employee').val();
@@ -24,14 +30,15 @@
             Put(`/Department/AssignDelegate`, employee)
                 .then(function (response) {
                     console.log(response);
+                    location.reload();
                     //alert("success: " + response);
-                    $('.hide').hide();
-                    $('<tr>' + '<input class="empid" type="hidden" value="' + Id + '" />' +
-                        '<td>' + name +
-                        '</td><td>' + fromdatestring +
-                        '</td><td>' + todatestring +
-                        '</td><td>' + '<button class="btn btn-warning" style="margin-right: 10px;">Edit</button><button class="btn btn-danger">Delete</button>' +
-                        '</td></tr>').hide().appendTo('#delegates').fadeIn();
+                    //$('.hide').hide();
+                    //$('<tr>' + '<input class="empid" type="hidden" value="' + Id + '" />' +
+                    //    '<td>' + name +
+                    //    '</td><td class="fromdate">' + fromdatestring +
+                    //    '</td><td class="todate">' + todatestring +
+                    //    '</td><td>' + '<button class="edit btn btn-warning" style="margin-right: 10px;">Edit</button><button class="delete btn btn-danger">Delete</button>' +
+                    //    '</td></tr>').hide().appendTo('#delegates').fadeIn();
                 })
                 .catch(function (err) {
                     //alert("error: " + JSON.parse(err));
@@ -67,19 +74,37 @@
         return false;
     })
 
-    //$('#delegates').on('click', 'button.edit', function () {
-    //    let employee = {
-    //        Id: +$(this).parent().siblings('.empid').val()
-    //    }
-    //    Put(`/Department/AssignDelegate`, employee)
-    //        .then(function (response) {
-    //            console.log(response);
-    //            $(this).closest('tr').fadeOut(200, function () {
-    //                $(this).remove();
-    //            });
-    //        })
-    //        .catch(function (err) {
-    //            //alert("error: " + JSON.parse(err));
-    //        })
-    //})
+    $('#delegates').on('click', 'button.edit', function () {
+        let mindate = new Date().toISOString().split("T")[0];
+        $(this).parent().prevAll('.fromdate').hide().html('<input id="fromdateedit" type="date" min=' + mindate + ' />').fadeIn();
+        $(this).parent().prevAll('.todate').hide().html('<input id="todateedit" type="date" min=' + mindate + ' />').fadeIn();
+        $(this).hide().text("Confirm").fadeIn().toggleClass('edit confirm').toggleClass('btn-warning btn-success');
+        $(this).next().hide().text("Cancel").fadeIn().toggleClass('delete cancel');
+    })
+
+    $('#delegates').on('click', 'button.confirm', function () {
+        let btn = $(this);
+        let Id = +$(this).parent().prevAll('.empid').val()
+        let fromdate = $("#fromdateedit").val();
+        let delegateFromDate = new Date(fromdate);
+        let fromdatestring = delegateFromDate.getFullYear() + "/" + ('0' + (delegateFromDate.getMonth() + 1)).slice(-2) + "/" + ('0' + delegateFromDate.getDate()).slice(-2);
+        let todate = $("#todateedit").val();
+        let delegateToDate = new Date(todate);
+        let todatestring = delegateToDate.getFullYear() + "/" + ('0' + (delegateToDate.getMonth() + 1)).slice(-2) + "/" + ('0' + delegateToDate.getDate()).slice(-2);
+        let employee = {
+            Id,
+            DelegateFromDate: delegateFromDate.getTime(),
+            DelegateToDate: delegateToDate.getTime() + (1000 * 24 * 60 * 60) - 1000
+        }
+        Put(`/Department/AssignDelegate`, employee)
+            .then(function (response) {
+                console.log(response);
+                //alert("success: " + response);
+                location.reload();
+            })
+    })
+
+    $('#delegates').on('click', 'button.cancel', function () {
+        location.reload();
+    })
 })

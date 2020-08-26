@@ -117,11 +117,11 @@ namespace SSIS_FRONT.Controllers
             ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
             ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
 
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/catalogue";
-            Result<List<Product>> result = HttpUtils.Get(url, new List<Product>(), Request, Response);
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/glt";
+            Result<List<Transaction>> result = HttpUtils.Get(url, new List<Transaction>(), Request, Response);
             ViewData["products"] = result.data;
 
-            List<string> categories = result.data.Select(x => x.Category.Name).Distinct().ToList();
+            List<string> categories = result.data.Select(x => x.Product.Category.Name).Distinct().ToList();
             ViewData["categories"] = categories;
 
             return View();
@@ -324,6 +324,10 @@ namespace SSIS_FRONT.Controllers
             ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
             ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
 
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/allrf";
+            Result<List<Retrieval>> result = HttpUtils.Get(url, new List<Retrieval>(), Request, Response);
+            ViewData["retrievals"] = result.data;
+
             ViewData["errMsg"] = errMsg;
             return View();
         }
@@ -353,6 +357,38 @@ namespace SSIS_FRONT.Controllers
                 ViewData["categoryByProduct"] = categoryByProduct;
                 ViewData["Retrieval"] = result.data;
                 return View();
+            }
+            else
+            {
+                return RedirectToAction("GenerateRetrievalForm", "StoreClerk", new { errMsg = result.msg });
+            }
+        }
+
+        public IActionResult RetrievalDetail(int id)
+        {
+            ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
+            ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/retid/" + id;
+            Result<Retrieval> result = HttpUtils.Get(url, new Retrieval(), Request, Response);
+            if (result.code == 200)
+            {
+                Dictionary<string, List<RequisitionDetail>> categoryByProduct = new Dictionary<string, List<RequisitionDetail>>();
+                foreach (RequisitionDetail detail in result.data.RequisitionDetails)
+                {
+                    if (categoryByProduct.ContainsKey(detail.Product.Id))
+                    {
+                        categoryByProduct[detail.Product.Id].Add(detail);
+                    }
+                    else
+                    {
+                        categoryByProduct.Add(detail.Product.Id, new List<RequisitionDetail>());
+                        categoryByProduct[detail.Product.Id].Add(detail);
+                    }
+                }
+                ViewData["categoryByProduct"] = categoryByProduct;
+                ViewData["Retrieval"] = result.data;
+                return View("RetrievalForm");
             }
             else
             {

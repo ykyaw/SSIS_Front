@@ -6,14 +6,14 @@
         $('#uom').text($(this).find(':selected').data('uom'))
     });
     $('#add').click(function () {
-        if (!$.isNumeric($('#qty').val())) {
-            alert("Quantity must be a number");
-            return;
-        } else if ($('#qty').val() == 0) {
-            alert("Quantity must be more than 0");
-            return;
-        } else if ($('#product').val() == 0) {
+        if ($('#product').val() == 0) {
             alert("Please select a product");
+            return;
+        } else if ($('#qty').val() > 99 || $('#qty').val() < 1) {
+            alert("Quantity must be between 1 and 99");
+            return;
+        } else if (isNaN($('#qty').val())) {
+            alert("Quantity must be a number");
             return;
         } else {
             $('#submit').prop('disabled', false);
