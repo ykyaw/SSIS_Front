@@ -85,6 +85,7 @@ namespace SSIS_FRONT.Controllers
             string role = GetRole();
             ViewData["Role"] = role;
             ViewData["Name"] = GetName();
+            ViewData["Id"] = HttpContext.Session.GetInt32("Id");
 
             string url;
             if (role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_HEAD] || role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.DEPARTMENT_DELEGATE])
@@ -100,6 +101,15 @@ namespace SSIS_FRONT.Controllers
 
             return View();
         }
+        [HttpDelete]
+        [Route("/Department/Requisition/{Id}")]
+        public bool DeleteRequisition(int id)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/dreq/" + id;
+            Result<Object> result = HttpUtils.Delete(url, Request, Response);
+            return (bool)result.data;
+        }
+        [HttpGet]
         [Route("Department/Requisition/{Id}")]
         public IActionResult RequisitionDetail(int Id)
         {

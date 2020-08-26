@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Requisition Forms";
     string role = (string)ViewData["Role"];
+    int empid = (int)ViewData["Id"];
     List<Requisition> requisitions = (List<Requisition>)ViewData["requisitions"];
 }
 
@@ -44,15 +45,21 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="list">
         @foreach (var r in requisitions)
         {
             <tr class="search">
-                <td>@r.Id</td>
+                <td class="listid">@r.Id</td>
                 <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(r.CreatedDate)</td>
                 <td>@r.ReqByEmp.Name</td>
                 <td>@r.Status</td>
-                <td><a class="btn btn-info" asp-controller="Department" asp-action="Requisition" asp-route-id="@r.Id">Details</a></td>
+                <td>
+                    <a class="btn btn-info" asp-controller="Department" asp-action="Requisition" asp-route-id="@r.Id">Details</a>
+                    @if (r.Status == CommonConstant.RequsitionStatus.created && r.ReqByEmpId == empid)
+                    {
+                        <button class="delete btn btn-danger">Delete</button>
+                    }
+                </td>
             </tr>
         }
     </tbody>

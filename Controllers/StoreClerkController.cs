@@ -183,6 +183,7 @@ namespace SSIS_FRONT.Controllers
 
             ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
             ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
+            ViewData["ClerkId"] = (int)HttpContext.Session.GetInt32("Id");
 
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/pr";
             Result<List<PurchaseRequestDetail>> result = HttpUtils.Get(url, new List<PurchaseRequestDetail>(), Request, Response);
@@ -203,6 +204,14 @@ namespace SSIS_FRONT.Controllers
             ViewData["prDetailsByPr"] = prDetailsByPr;
 
             return View();
+        }
+        [HttpDelete]
+        [Route("/StoreClerk/PurchaseRequest/{Id}")]
+        public bool DeletePurchaseRequest(long id)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/dpreq/" + id;
+            Result<Object> result = HttpUtils.Delete(url, Request, Response);
+            return (bool)result.data;
         }
         [HttpPost]
         public bool GenerateQuote([FromBody] List<PurchaseRequestDetail> details)

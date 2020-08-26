@@ -4,11 +4,12 @@
     ViewData["Title"] = "Purchase Request List";
     Dictionary<long, List<PurchaseRequestDetail>> prDetailsByPr = (Dictionary<long, List<PurchaseRequestDetail>>)ViewData["prDetailsByPr"];
     string role = (string)ViewData["Role"];
+    int clerkid = (int)ViewData["ClerkId"];
 }
 
 @if (role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.STORE_CLERK])
 {
-    <div class="container" style="margin-top: 20px;"> 
+    <div class="container" style="margin-top: 20px;">
         <a class="btn btn-primary font-weight-bold" asp-controller="StoreClerk" asp-action="GeneratePurchaseRequest">Raise Purchase Request</a>
     </div>
 }
@@ -27,15 +28,23 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="list">
         @foreach (KeyValuePair<long, List<PurchaseRequestDetail>> kvp in prDetailsByPr)
         {
             <tr class="Search">
-                <td>@kvp.Key</td>
+                <td class="listid">@kvp.Key</td>
                 <td>@kvp.Value[0].CreatedByClerk.Name</td>
                 <td>@kvp.Value[0].Status</td>
-                <td><a class="btn btn-info" asp-controller="StoreClerk" asp-action="PurchaseRequest" asp-route-id="@kvp.Key">Details</a></td>
+                <td>
+                    <a class="btn btn-info" asp-controller="StoreClerk" asp-action="PurchaseRequest" asp-route-id="@kvp.Key">Details</a>
+                    @if (kvp.Value[0].Status == CommonConstant.PurchaseRequestStatus.created && kvp.Value[0].CreatedByClerkId == clerkid)
+                    {
+                        <button class="delete btn btn-danger">Delete</button>
+                    }
+                </td>
             </tr>
         }
     </tbody>
 </table>
+
+<script src="~/js/PurchaseRequest.js"></script>

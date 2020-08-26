@@ -29,6 +29,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
+                <th>Requisition ID</th>
                 <th>Item Description</th>
                 <th>Qty Requisited</th>
                 <th>Qty Disbursed</th>
@@ -43,6 +44,7 @@
             {
                 <tr>
                     <input class="detailid" data-rid="@d.RequisitionId" type="hidden" value="@d.Id" />
+                    <td>@d.RequisitionId</td>
                     <td>@d.Product.Description</td>
                     <td>@d.QtyNeeded</td>
                     <td>@d.QtyDisbursed</td>
