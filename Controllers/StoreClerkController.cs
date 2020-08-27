@@ -457,7 +457,7 @@ namespace SSIS_FRONT.Controllers
             ViewData["products"] = result2.data;
 
             string url3 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/retformav";
-            Result<List<Product>> result3 = HttpUtils.Get(url3, new List<Product>(), Request, Response);
+            Result<List<Retrieval>> result3 = HttpUtils.Get(url3, new List<Retrieval>(), Request, Response);
             ViewData["retforms"] = result3.data;
 
             return View();
@@ -477,7 +477,7 @@ namespace SSIS_FRONT.Controllers
             ViewData["products"] = result2.data;
 
             string url3 = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/retformav";
-            Result<List<Product>> result3 = HttpUtils.Get(url3, new List<Product>(), Request, Response);
+            Result<List<Retrieval>> result3 = HttpUtils.Get(url3, new List<Retrieval>(), Request, Response);
             ViewData["retforms"] = result3.data;
 
             return View();

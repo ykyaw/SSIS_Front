@@ -5,6 +5,7 @@
     ViewData["Title"] = "Adjustment Voucher Details";
     List<Product> products = (List<Product>)ViewData["products"];
     AdjustmentVoucher av = (AdjustmentVoucher)ViewData["adjustmentVoucher"];
+    List<Retrieval> retrievals = (List<Retrieval>)ViewData["retforms"];
     int clerkid = (int)ViewData["clerkid"];
 }
 
@@ -195,10 +196,32 @@
         </div>
     </div>
 
+    <div class="container" style="margin-top: 50px;">
+        <h4 class="titlecenter">Retrieval Forms that Require Adjustment</h4>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Retrieval ID</th>
+                    <th>Retrieved Date</th>
+                    <th>Remark</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var r in retrievals)
+                {
+                    <tr>
+                        <td>@r.Id</td>
+                        <td>@TimeUtil.convertTimestampToyyyyMMdd(r.RetrievedDate)</td>
+                        <td>@r.Remark</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
     @*<div>
-        <button class="btn btn-primary" type="button" id="save"> Save</button>
-        <button class="btn btn-primary" type="button" id="submit">Submit</button>
-    </div>*@
+            <button class="btn btn-primary" type="button" id="save"> Save</button>
+            <button class="btn btn-primary" type="button" id="submit">Submit</button>
+        </div>*@
 }
 
 @*<div>
