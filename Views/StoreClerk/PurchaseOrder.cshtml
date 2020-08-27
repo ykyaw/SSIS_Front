@@ -27,6 +27,7 @@
             <tr>
                 <th>PO Number</th>
                 <th>Order Date</th>
+                <th>Supplier</th>
                 <th>Status</th>
                 <th></th>
             </tr>
@@ -37,6 +38,7 @@
                 <tr class="search">
                     <td>@po.Id</td>
                     <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(po.OrderedDate)</td>
+                    <td>@po.Supplier.Name</td>
                     <td>@po.Status</td>
                     <td><a class="btn btn-info" asp-controller="StoreClerk" asp-action="PurchaseOrder" asp-route-id="@po.Id">Details</a></td>
                 </tr>

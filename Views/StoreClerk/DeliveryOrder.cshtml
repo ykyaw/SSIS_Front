@@ -29,6 +29,7 @@
             <tr>
                 <th>PO Number</th>
                 <th>Order Date</th>
+                <th>Supplier</th>
                 <th>Status</th>
                 <th></th>
             </tr>
@@ -39,6 +40,7 @@
                 <tr class="search">
                     <td>@d.Id</td>
                     <td>@TimeUtil.convertTimestampToyyyyMMdd(d.OrderedDate)</td>
+                    <td>@d.Supplier.Name</td>
                     <td>@d.Status</td>
                     @if (d.Status == CommonConstant.PurchaseOrderStatus.pending)
                     {
