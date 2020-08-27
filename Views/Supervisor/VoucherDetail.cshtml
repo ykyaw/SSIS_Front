@@ -81,7 +81,7 @@
 
 <div class="container" style="margin-top: 20px;">
 
-    @if (voucher.Status == CommonConstant.AdjVoucherStatus.PENDING_APPROVE || (emp.Role == CommonConstant.ROLE_NAME[CommonConstant.ROLE.STORE_MANAGER] && voucher.Status == CommonConstant.AdjVoucherStatus.PENDING_MANAGER_APPROVE))
+    @if (voucher.Status == CommonConstant.AdjVoucherStatus.PENDING_APPROVE || (emp.Role == CommonConstant.ROLE.STORE_MANAGER && voucher.Status == CommonConstant.AdjVoucherStatus.PENDING_MANAGER_APPROVE))
     {
         @*<div id="operation">
             <textarea rows="3" placeholder="Reason" id="reason"></textarea>

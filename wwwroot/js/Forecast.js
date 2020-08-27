@@ -35,7 +35,7 @@ $(document).ready(function () {
             .then(function (response) {
                 console.log(response);
                 let { forecast, img } = response;
-                $("img").attr("src", `data:image/png;base64,${img}`)
+                $("#forecastimg").attr("src", `data:image/png;base64,${img}`)
                 forecast = JSON.parse(forecast);
                 console.log(forecast);
                 let $forecast = "";

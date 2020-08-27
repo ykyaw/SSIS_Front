@@ -36,6 +36,7 @@
                 $('#updaterequisition').fadeOut();
                 $('#status').hide().text("Rejected").fadeIn();
                 $('<tr><td>' + 'Reason' +
+                    '</td><td>&nbsp;&nbsp;&nbsp;' +
                     '</td><td>' + Remarks +
                     '</td></tr>').hide().appendTo('#form').fadeIn();
             })

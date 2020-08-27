@@ -16,7 +16,7 @@
             <select class="form-control">
                 @foreach (Product product in products)
                 {
-                    <option value="@product.Id">@(product.Description+"/"+product.Id)</option>
+                    <option value="@product.Id">[@product.Id] @product.Description</option>
                 }
             </select>
         </div>
@@ -51,7 +51,7 @@
 
 <div class="container" style="margin-top: 20px;">
 
-    <img id="forecast" />
+    <img id="forecastimg" />
 </div>
 
 <script src="~/js/Forecast.js"></script>

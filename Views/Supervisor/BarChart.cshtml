@@ -16,7 +16,7 @@
             <select id="itemCode" class="form-control">
                 @foreach (Product product in products)
                 {
-                    <option value="@product.Id">@product.Id</option>
+                    <option value="@product.Id">[@product.Id] @product.Description</option>
                 }
             </select>
         </div>

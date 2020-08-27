@@ -1,4 +1,8 @@
 ﻿$(document).ready(function () {
+    $('#legends').hide();
+    $('#legendsbtn').on('click', function () {
+        $('#legends').fadeToggle();
+    })
     let clerkid = $('#select').attr('data-cid');
     $('#search').on('input', function () {
         $('.search').each(function (index) {

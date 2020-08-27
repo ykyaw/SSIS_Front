@@ -30,15 +30,6 @@
             Put(`/Department/AssignDelegate`, employee)
                 .then(function (response) {
                     console.log(response);
-                    location.reload();
-                    //alert("success: " + response);
-                    //$('.hide').hide();
-                    //$('<tr>' + '<input class="empid" type="hidden" value="' + Id + '" />' +
-                    //    '<td>' + name +
-                    //    '</td><td class="fromdate">' + fromdatestring +
-                    //    '</td><td class="todate">' + todatestring +
-                    //    '</td><td>' + '<button class="edit btn btn-warning" style="margin-right: 10px;">Edit</button><button class="delete btn btn-danger">Delete</button>' +
-                    //    '</td></tr>').hide().appendTo('#delegates').fadeIn();
                 })
                 .catch(function (err) {
                     //alert("error: " + JSON.parse(err));
