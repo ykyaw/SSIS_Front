@@ -8,7 +8,7 @@
             let detail = {
                 Id: +$(this).val(),
                 RequisitionId: +$(this).data('rid'),
-                ClerkRemark: $(this).nextAll().eq(6).find('input').val()
+                ClerkRemark: $(this).nextAll().eq(7).find('input').val()
             }
             details.push(detail);
         })
