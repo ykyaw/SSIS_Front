@@ -34,7 +34,7 @@
         Post("/StoreClerk/GenerateQuote", details)
             .then(function (response) {
                 console.log(response);
-                alert("generated: " + response);
+                alert("Request for Quotation sent out to suppliers");
             })
             .catch(function (err) {
                 console.log(err);
@@ -62,7 +62,7 @@
         Put("/StoreClerk/PurchaseRequest", details)
             .then(function (response) {
                 console.log(response);
-                alert("updated: " + response);
+                alert("Successfully updated");
             })
             .catch(function (err) {
                 console.log(err);
