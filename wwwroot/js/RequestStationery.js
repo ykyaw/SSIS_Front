@@ -40,7 +40,7 @@
         Post(`/Department/SaveRequest`, details)
             .then(function (response) {
                 console.log(response);
-                alert("success: " + response);
+                alert("Draft saved.");
             })
             .catch(function (err) {
                 alert("error: " + JSON.parse(err));
@@ -52,7 +52,8 @@
         Post(`/Department/SubmitRequest`, details)
             .then(function (response) {
                 console.log(response);
-                alert("success: " + response);
+                //alert("success: " + response);
+                window.location.href = "/Department/Requisition/" + details[0].RequisitionId;
             })
             .catch(function (err) {
                 alert("error: " + JSON.parse(err));

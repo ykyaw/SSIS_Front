@@ -74,6 +74,14 @@
         let mindate = new Date().toISOString().split("T")[0];
         $(this).parent().prevAll('.fromdate').hide().html('<input id="fromdateedit" type="date" min=' + mindate + ' />').fadeIn();
         $(this).parent().prevAll('.todate').hide().html('<input id="todateedit" type="date" min=' + mindate + ' />').fadeIn();
+        fromdateedit.min = new Date().toISOString().split("T")[0];
+        todateedit.min = new Date().toISOString().split("T")[0];
+        $('#fromdateedit').on('input', function () {
+            todateedit.min = $(this).val();
+        })
+        $('#todateedit').on('input', function () {
+            fromdateedit.max = $(this).val();
+        })
         $(this).hide().text("Confirm").fadeIn().toggleClass('edit confirm').toggleClass('btn-warning btn-success');
         $(this).next().hide().text("Cancel").fadeIn().toggleClass('delete cancel');
     })
