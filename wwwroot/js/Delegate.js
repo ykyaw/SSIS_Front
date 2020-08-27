@@ -30,6 +30,7 @@
             Put(`/Department/AssignDelegate`, employee)
                 .then(function (response) {
                     console.log(response);
+                    location.reload();
                 })
                 .catch(function (err) {
                     //alert("error: " + JSON.parse(err));
