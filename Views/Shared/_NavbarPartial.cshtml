@@ -15,7 +15,7 @@
         <a class="nav-link text-light" asp-controller="StoreClerk" asp-action="Catalogue">Catalogue</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-light" asp-controller="StoreClerk" asp-action="PurchaseRequest">Purchase Request</a>
+        <a class="nav-link text-light" asp-controller="StoreClerk" asp-action="PurchaseRequest">PR</a>
     </li>
     <li class="nav-item">
         <a class="nav-link text-light" asp-controller="StoreClerk" asp-action="PurchaseOrder">PO</a>
@@ -25,6 +25,13 @@
     </li>
     <li class="nav-item">
         <a class="nav-link text-light" asp-controller="StoreClerk" asp-action="AdjustmentVoucher">Adjustment Voucher</a>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link text-light dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Data Analysis</a>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" asp-controller="Supervisor" asp-action="Forecast">Forecast</a>
+            <a class="dropdown-item" asp-controller="Supervisor" asp-action="BarChart">BarChart</a>
+        </div>
     </li>
 }
 
@@ -36,11 +43,12 @@
     <li class="nav-item">
         <a class="nav-link text-light" asp-controller="StoreClerk" asp-action="PurchaseRequest">Purchase Request</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link text-light" asp-controller="Supervisor" asp-action="Forecast">Forecast</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-light" asp-controller="Supervisor" asp-action="BarChart">BarChart</a>
+    <li class="nav-item dropdown">
+        <a class="nav-link text-light dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Data Analysis</a>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" asp-controller="Supervisor" asp-action="Forecast">Forecast</a>
+            <a class="dropdown-item" asp-controller="Supervisor" asp-action="BarChart">BarChart</a>
+        </div>
     </li>
 }
 
