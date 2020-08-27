@@ -229,11 +229,11 @@ namespace SSIS_FRONT.Controllers
 
             return View();
         }
-        public bool AssignDelegate([FromBody] Employee employee)
+        public string AssignDelegate([FromBody] Employee employee)
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/depthead/del";
             Result<Object> result = HttpUtils.Put(url, employee, Request, Response);
-            return (bool)result.data;
+            return (string)result.msg;
         }
         public IActionResult DeptRep()
         {

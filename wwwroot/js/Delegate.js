@@ -30,10 +30,14 @@
             Put(`/Department/AssignDelegate`, employee)
                 .then(function (response) {
                     console.log(response);
-                    location.reload();
+                    if (response == "") {
+                        location.reload();
+                    } else {
+                        alert(response);
+                    }
                 })
                 .catch(function (err) {
-                    //alert("error: " + JSON.parse(err));
+                    alert("error: " + JSON.parse(err));
                 })
         }
 
@@ -92,7 +96,11 @@
             .then(function (response) {
                 console.log(response);
                 //alert("success: " + response);
-                location.reload();
+                if (response == "") {
+                    location.reload();
+                } else {
+                    alert(response);
+                }
             })
     })
 
