@@ -7,7 +7,6 @@
         }
     })
 
-
     $("#update").on("click", function () {
         let retrieval = getUpdateRetriveal();
         console.log("retrieval", retrieval);

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace SSIS_FRONT.Models
+﻿namespace SSIS_FRONT.Models
 {
     public class AdjustmentVoucherDetail
     {
@@ -16,6 +9,7 @@ namespace SSIS_FRONT.Models
         public double TotalPrice { get; set; }
         public double Unitprice { get; set; }
         public string Reason { get; set; }
+
         // FKs
         public AdjustmentVoucher AdjustmentVoucher { get; set; }
         public Product Product { get; set; }

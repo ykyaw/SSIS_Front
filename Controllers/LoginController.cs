@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 using SSIS_FRONT.Components;
 using SSIS_FRONT.Models;
 using SSIS_FRONT.Utils;
@@ -34,7 +29,7 @@ namespace SSIS_FRONT.Controllers
         public IActionResult Verify(Employee user)
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/Login/Verify";
-            Result<Dictionary<string,Object>> result = HttpUtils.Post(url, user,new Dictionary<string, object>(),Request,Response);
+            Result<Dictionary<string, Object>> result = HttpUtils.Post(url, user, new Dictionary<string, object>(), Request, Response);
             if (result.code != 200)
             {
                 return RedirectToAction("Index", "Home", new { isLogin = false });
@@ -56,7 +51,7 @@ namespace SSIS_FRONT.Controllers
             {
                 Response.Cookies.Append("token", "");
             }
-            return RedirectToAction("Index", "Home", new { isLogin = false,isLogout=true });
+            return RedirectToAction("Index", "Home", new { isLogin = false, isLogout = true });
         }
     }
 }

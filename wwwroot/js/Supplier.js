@@ -15,7 +15,7 @@
                 $("table").fadeIn();
 
 
-                let $suppliers=quotations.map(function (item) {
+                let $suppliers = quotations.map(function (item) {
                     return `<option value='${item.supplier.id}/${item.supplier.name}'>${item.supplier.name}</option>`;
                 })
                 $(".rankSelect").children().remove();
@@ -30,9 +30,9 @@
     })
 
     $("#save").on("click", function () {
-        let [first,firstName] = $("#1st").val().split("/");
-        let [second,secondName] = $("#2nd").val().split("/");
-        let [third,thirdName] = $("#3rd").val().split("/");
+        let [first, firstName] = $("#1st").val().split("/");
+        let [second, secondName] = $("#2nd").val().split("/");
+        let [third, thirdName] = $("#3rd").val().split("/");
         console.log(first, second, third);
         if (first == third || first == second || second == third) {
             alert("suplier can not be same");

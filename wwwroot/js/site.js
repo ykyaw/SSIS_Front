@@ -18,7 +18,7 @@ function Post(url, value) {
         type: "POST",
         contentType: "application/json",
         url: url,
-        data: JSON.stringify( value ),
+        data: JSON.stringify(value),
         success: function (response) {
             if (response.includes("No permission to access function")) {
                 window.location.href = "/Home/NoPermission";

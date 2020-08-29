@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -36,7 +34,7 @@ namespace SSIS_FRONT.Controllers
             ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
 
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/catalogue";
-            Result<List<Product>> result = HttpUtils.Get(url,new List<Product>(), Request, Response);
+            Result<List<Product>> result = HttpUtils.Get(url, new List<Product>(), Request, Response);
             ViewData["Items"] = result.data;
             return View();
         }
@@ -45,12 +43,10 @@ namespace SSIS_FRONT.Controllers
         [Route("TenderQuotations/{id}")]
         public List<TenderQuotation> TenderQuotations(string id)
         {
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/storemgmt/retrievesuppliers/"+id;
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storemgmt/retrievesuppliers/" + id;
             Result<List<TenderQuotation>> result = HttpUtils.Get(url, new List<TenderQuotation>(), Request, Response);
             return result.data;
         }
-
-
 
         [HttpPut]
         [Route("TenderQuotations/{id}")]
@@ -60,6 +56,5 @@ namespace SSIS_FRONT.Controllers
             Result<Object> result = HttpUtils.Put(url, quotations, Request, Response);
             return (bool)result.data;
         }
-
     }
 }

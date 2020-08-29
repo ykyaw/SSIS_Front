@@ -1,4 +1,6 @@
-﻿@{
+﻿@using SSIS_FRONT.Utils;
+
+@{
     ViewData["Title"] = "Purchase Order Form";
     List<PurchaseOrderDetail> pods = (List<PurchaseOrderDetail>)ViewData["purchaseOrderDetails"];
 }
@@ -28,31 +30,10 @@
     </table>
 </div>
 
-@*<div>
-    <table>
-        <tr>
-            <td>PO Number</td>
-            <td>@pods[0].PurchaseOrderId</td>
-        </tr>
-        <tr>
-            <td>Supplier</td>
-            <td>@pods[0].PurchaseOrder.Supplier.Name</td>
-        </tr>
-        <tr>
-            <td>Deliver to</td>
-            <td>@pods[0].PurchaseOrder.CollectionPoint.Location</td>
-        </tr>
-        <tr>
-            <td>Attn</td>
-            <td>@pods[0].PurchaseOrder.Supplier.ContactPersonName</td>
-        </tr>
-    </table>
-</div>*@
-
 <div class="container" style="margin-top: 20px;">
     <h5>
-        Please supply the following items by @SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(pods[0].PurchaseOrder.SupplyByDate).
-    </h5> 
+        Please supply the following items by @TimeUtil.convertTimestampToyyyyMMdd(pods[0].PurchaseOrder.SupplyByDate).
+    </h5>
 </div>
 
 <div class="container" style="margin-top: 20px;">
@@ -67,7 +48,6 @@
             </tr>
         </thead>
         <tbody>
-
             @foreach (PurchaseOrderDetail pod in pods)
             {
                 <tr>
@@ -78,23 +58,21 @@
                     <td>@pod.TotalPrice.ToString("C")</td>
                 </tr>
             }
-        <tr class="table-dark">
-            <td colspan="4">
-            </td>
-            <td>
-                <big><b>
-                     <span style="color: black;">Total: @pods.Sum(x => x.TotalPrice).ToString("C")</span>
-                </b></big>
-            </td>
+            <tr class="table-dark">
+                <td colspan="4">
+                </td>
+                <td>
+                    <big>
+                        <b>
+                            <span style="color: black;">Total: @pods.Sum(x => x.TotalPrice).ToString("C")</span>
+                        </b>
+                    </big>
+                </td>
 
-        </tr>
+            </tr>
         </tbody>
     </table>
 </div>
-
-@*<div class="container">
-    <b>Total @pods.Sum(x => x.TotalPrice).ToString("C")</b>
-</div>*@
 
 <div class="container" style="margin-top: 30px;">
     <div class="row justify-content-center">
@@ -108,23 +86,7 @@
             <label class="form-control" style="border: 0;">Date:</label>
         </div>
         <div class="col-2">
-            <label class="form-control" style="border: 0;">@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(pods[0].PurchaseOrder.OrderedDate)</label>
+            <label class="form-control" style="border: 0;">@TimeUtil.convertTimestampToyyyyMMdd(pods[0].PurchaseOrder.OrderedDate)</label>
         </div>
-
     </div>
 </div>
-
-@*<div class="container" style="margin-top: 20px;">
-    <table>
-        <tr>
-            <td>Ordered by: </td>
-            <td>&nbsp;&nbsp;&nbsp;</td>
-            <td>@pods[0].PurchaseOrder.OrderedByClerk.Name</td>
-        </tr>
-        <tr>
-            <td>Ordered Date: </td>
-            <td>&nbsp;&nbsp;&nbsp;</td>
-            <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(pods[0].PurchaseOrder.OrderedDate)</td>
-        </tr>
-    </table>
-</div>*@

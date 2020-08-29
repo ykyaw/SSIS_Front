@@ -6,7 +6,7 @@
         let dateString = $("input[type='date']").val();
         if (dateString == "") {
             alert("Please select a Disbursement Date to confirm!")
-            return 
+            return
         }
         console.log(dateString);
         let CollectionDate = new Date(dateString);

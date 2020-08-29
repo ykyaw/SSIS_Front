@@ -2,7 +2,6 @@
     @if (ViewData["Name"] == null)
     {
         <li>
-            @*<a class="nav-link text-light" asp-controller="Login" asp-action="Index">Login</a>*@
         </li>
     }
     else
@@ -11,7 +10,6 @@
             <a class="nav-link text-light" asp-controller="Home" asp-action="Welcome"><img src="~/images/user.png" width="20px" height="20px" /> @ViewData["Name"]</a>
         </li>
         <li>
-            @*TODO*@
             <a class="nav-link text-light" asp-controller="Login" asp-action="Logout">Logout</a>
         </li>
     }

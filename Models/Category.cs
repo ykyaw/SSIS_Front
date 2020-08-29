@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace SSIS_FRONT.Models
 {
@@ -11,7 +6,7 @@ namespace SSIS_FRONT.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string BinNo { get; set; } // Same value as Id?
+        public string BinNo { get; set; }
 
         public Category() { }
         public Category(string Name, string BinNo)

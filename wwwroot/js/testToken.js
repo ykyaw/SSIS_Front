@@ -1,8 +1,7 @@
-﻿
-$(document).ready(function () {
+﻿$(document).ready(function () {
 
     $("#withoutToken").on("click", function () {
-        Post("/Home/WithoutToken", {"Email":"123@123.com"})
+        Post("/Home/WithoutToken", { "Email": "123@123.com" })
             .then(function (response) {
                 //let result = JSON.parse(response);
                 console.log(response);

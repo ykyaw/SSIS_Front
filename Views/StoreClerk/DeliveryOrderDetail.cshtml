@@ -17,15 +17,10 @@
         <tr>
             <td>Supplier: </td>
             <td>&nbsp;&nbsp;&nbsp;</td>
-            <td >@dods[0].PurchaseOrder.Supplier.Name</td>
+            <td>@dods[0].PurchaseOrder.Supplier.Name</td>
         </tr>
     </table>
 </div>
-
-@*<div>
-        <span>PO Number:</span>
-        <span id="poid">@dods[0].PurchaseOrderId</span>
-    </div>*@
 
 <div class="container" style="margin-top: 20px;">
     <table class="table table-striped">
@@ -41,10 +36,8 @@
             </tr>
         </thead>
         <tbody>
-
             @foreach (PurchaseOrderDetail dod in dods)
             {
-
                 <tr>
                     <input class="detailId" type="hidden" value="@dod.Id" />
                     <td>@dod.ProductId</td>

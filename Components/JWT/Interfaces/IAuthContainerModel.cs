@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System.Security.Claims;
 
 /**
  * @author WUYUDING
@@ -13,7 +9,6 @@ namespace SSIS_FRONT.Components.JWT.Interfaces
     {
         string SecretKey { get; set; }
         string SecurityAlgorithm { get; set; }
-
         Claim[] Claims { get; set; }
     }
 }

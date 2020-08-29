@@ -18,12 +18,6 @@
     </table>
 </div>
 
-@*<div>
-    <span>Disbursement Date: </span>
-    <span>@TimeUtil.convertTimestampToyyyyMMdd(disbursementList[0].Requisition.CollectionDate)</span>
-</div>*@
-
-
 <div class="container" style="margin-top: 20px;">
 
     <table class="table table-striped">
@@ -61,12 +55,9 @@
                     }
                 </tr>
             }
-
         </tbody>
     </table>
-
 </div>
-
 
 <div class="container" style="margin-top: 20px;">
     <div class="row justify-content-center">
@@ -95,7 +86,6 @@
             <div class="col-2">
                 <label class="form-control" style="border: 0;">@TimeUtil.convertTimestampToyyyyMMdd(disbursementList[0].Requisition.ReceivedDate)</label>
             </div>
-
         }
         else
         {
@@ -109,7 +99,6 @@
                 <label class="form-control" style="border: 0;"></label>
             </div>
         }
-
     </div>
     <div class="row justify-content-center">
         <div class="col-2">
@@ -127,8 +116,6 @@
             <div class="col-2">
                 <label id="date" class="form-control" style="border: 0;"></label>
             </div>
-            
-
         }
         else
         {
@@ -141,41 +128,8 @@
             <div class="col-2">
                 <label class="form-control" style="border: 0;">@TimeUtil.convertTimestampToyyyyMMdd(disbursementList[0].Requisition.AckDate)</label>
             </div>
-
         }
-
     </div>
 </div>
-
-@*<table>
-    <tr>
-        <td><big>Received by (Rep):</big></td>
-        @if (disbursementList[0].Requisition.Status == CommonConstant.RequsitionStatus.received || disbursementList[0].Requisition.Status == CommonConstant.RequsitionStatus.completed)
-        {
-            <td><big>@disbursementList[0].Requisition.ReceivedByRep.Name</big></td>
-            <td><big>@TimeUtil.convertTimestampToyyyyMMdd(disbursementList[0].Requisition.ReceivedDate)</big></td>
-        }
-        else
-        {
-            <td></td>
-            <td></td>
-        }
-    </tr>
-    <tr>
-        <td><big>Acknowledged by (Clerk):</big></td>
-        @if (disbursementList[0].Requisition.Status != CommonConstant.RequsitionStatus.completed)
-        {
-            <td id="clerk"></td>
-            <input id="clerkname" value="@name" type="hidden" />
-            <td id="date"></td>
-        }
-        else
-        {
-            <td><big>@disbursementList[0].Requisition.AckByClerk.Name</big></td>
-            <td><big>@TimeUtil.convertTimestampToyyyyMMdd(disbursementList[0].Requisition.AckDate)</big></td>
-        }
-    </tr>
-</table>*@
-
 
 <script src="~/js/Disbursement.js"></script>

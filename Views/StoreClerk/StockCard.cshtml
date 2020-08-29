@@ -1,4 +1,6 @@
-﻿@{
+﻿@using SSIS_FRONT.Utils;
+
+@{
     ViewData["Title"] = "Stock Card";
     List<Transaction> transactions = (List<Transaction>)ViewData["transactions"];
     List<TenderQuotation> tenderQuotations = (List<TenderQuotation>)ViewData["tenderquotations"];
@@ -6,11 +8,8 @@
 <h2 class="titlecenter">@ViewData["Title"]</h2>
 
 <div class="container" style="margin-top: 20px;">
-
-
     @if (transactions.Count > 0)
     {
-
         <table>
             <tr>
                 <td>Item Code: </td>
@@ -48,6 +47,7 @@
                 <td>@tenderQuotations[2].Supplier.Name</td>
             </tr>
         </table>
+
         <br />
 
         <table class="table table-striped">
@@ -65,7 +65,7 @@
                 @foreach (var t in transactions)
                 {
                     <tr>
-                        <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(t.Date)</td>
+                        <td>@TimeUtil.convertTimestampToyyyyMMdd(t.Date)</td>
                         <td>@t.Description</td>
                         <td>@t.RefCode</td>
                         <td>@t.Qty</td>
@@ -75,20 +75,8 @@
                 }
             </tbody>
         </table>
-        <br />
 
-        @*<div>
-                <form id="newEntry">
-                    <span>Add Entry:</span>
-                    <input id="productId" type="hidden" value="@transactions[0].ProductId" />
-                    <input id="description" type="text" placeholder="Description" required />
-                    <input id="refcode" type="text" placeholder="Ref Code (optional)" />
-                    <input id="qty" type="number" value="0" />
-                    <input id="balance" type="hidden" value="@transactions.Last().Balance" />
-                    <input id="updatedByEmp" type="hidden" value="@ViewData["Name"]" />
-                    <button id="addEntry" type="button" class="btn btn-primary">Save</button>
-                </form>
-            </div>*@
+        <br />
 
         <form id="newEntry">
             <div class="row justify-content-center">
@@ -111,16 +99,13 @@
                 <div class="col-1">
                     <button id="addEntry" type="button" class="btn btn-primary form-control font-weight-bold">Save</button>
                 </div>
-
             </div>
         </form>
-
     }
     else
     {
         <span>There is no transaction history for this product.</span>
     }
 </div>
-
 
 <script src="~/js/StockCard.js"></script>

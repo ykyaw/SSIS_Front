@@ -32,12 +32,12 @@ namespace SSIS_FRONT.Middlewares
             string action = (string)context.Request.RouteValues["action"];
             //get sessionId from cookie
 
-            if ((controller != "Login" || action != "Verify") 
+            if ((controller != "Login" || action != "Verify")
                 && (controller != "Home" || action != "Error")
-                &&(controller!="Home" ||action!="Index"))
+                && (controller != "Home" || action != "Index"))
             {
                 string token = context.Request.Cookies["token"];
-                if (token != null||token!="")
+                if (token != null || token != "")
                 {
                     if (!authService.IsTokenValid(token))
                     {

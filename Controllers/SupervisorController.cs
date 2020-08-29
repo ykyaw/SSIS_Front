@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -48,7 +46,7 @@ namespace SSIS_FRONT.Controllers
             ViewData["Role"] = CommonConstant.ROLE_NAME[(string)HttpContext.Session.GetString("Role")];
             ViewData["Name"] = (string)HttpContext.Session.GetString("Name");
 
-            string url = cfg.GetValue<string>("Hosts:Boot") + "/storesup/voucher/"+Id;
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storesup/voucher/" + Id;
             Result<AdjustmentVoucher> result = HttpUtils.Get(url, new AdjustmentVoucher(), Request, Response);
             Employee employee = new Employee()
             {
@@ -66,7 +64,7 @@ namespace SSIS_FRONT.Controllers
 
         [HttpPut]
         [Route("Store/Voucher/{id}")]
-        public bool UpdateVoucherStatuc([FromBody]AdjustmentVoucher voucher)
+        public bool UpdateVoucherStatuc([FromBody] AdjustmentVoucher voucher)
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storesup/voucher/" + voucher.Id;
             Result<Object> result = HttpUtils.Put(url, voucher, Request, Response);//TODO need the exception message more detail
@@ -97,15 +95,8 @@ namespace SSIS_FRONT.Controllers
 
         [HttpPut]
         [Route("Store/PurchaseRequestDetail")]
-        public bool UpdatePurchaseRequestDetail([FromBody]List<PurchaseRequestDetail> details)
+        public bool UpdatePurchaseRequestDetail([FromBody] List<PurchaseRequestDetail> details)
         {
-            
-                    /* THIS DOES NOT WORK */
-            //string url = cfg.GetValue<string>("Hosts:Boot") + "﻿/storesup/updatepr";
-            //Result<Object> result = HttpUtils.Put(url, details, Request, Response);
-
-            
-                    /*BUT THIS ONE WORK. WHY?!*/
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storesup/updatepr";
             Result<Object> result = HttpUtils.Put(url, details, Request, Response);
 

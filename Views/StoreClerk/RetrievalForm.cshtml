@@ -1,5 +1,5 @@
 ﻿@using SSIS_FRONT.Common;
-@using SSIS_FRONT.Utils; 
+@using SSIS_FRONT.Utils;
 
 @{
     ViewData["Title"] = "Retrieval Form";
@@ -9,8 +9,6 @@
 }
 
 <h2 class="titlecenter">@ViewData["Title"]</h2>
-
-
 
 <div class="container" style="margin-top: 20px;">
     <table id="form">
@@ -41,8 +39,6 @@
         </tr>
     </table>
 </div>
-
-
 
 <div class="container" style="margin-top: 20px;">
     @{
@@ -132,61 +128,5 @@
         </div>
     </div>
 }
-
-
-
-
-@*<h1>@ViewData["Title"]</h1>
-    <span>For Date of disbursement: @disbursedDate</span>
-
-    <h6 id="retrievalId" value="@retrieval.Id">Retrieval Id: @retrieval.Id</h6>
-    <h6>Status:@retrieval.Status</h6>
-    <h6>Date of retrieval:</h6>
-    <h6>Retrieved By: @retrieval.Clerk.Name</h6>
-    @{
-        foreach (KeyValuePair<string, List<RequisitionDetail>> kvp in categoryByProduct)
-        {
-            <h5>@kvp.Value[0].Product.Description</h5>
-            <table>
-                <tr>
-                    <th>Bin</th>
-                    <th>Needed</th>
-                    <th>Retrieved</th>
-                    <th>RequisitionId</th>
-                    <th>Department</th>
-                    <th>Needed</th>
-                    <th>Actual</th>
-                    <th>Remarks</th>
-                </tr>
-                @for (int i = 0; i < kvp.Value.Count(); i++)
-                {
-            <tr id="@kvp.Value[i].Id">
-                @if (i == 0)
-                {
-                    <td rowspan="@kvp.Value.Count()"> @kvp.Value[i].Product.Category.BinNo</td>
-                    <td rowspan="@kvp.Value.Count()">@kvp.Value.Sum(item => item.QtyNeeded)</td>
-                    <td rowspan="@kvp.Value.Count()" class="retrieved">@kvp.Value.Sum(item => item.QtyNeeded)</td>
-                }
-                <td> @kvp.Value[i].RequisitionId</td>
-                <td>@kvp.Value[i].Requisition.Department.Name</td>
-                <td>@kvp.Value[i].QtyNeeded</td>
-                <td><input type="number" class="actualNumber" value="@kvp.Value[i].QtyNeeded" /></td>
-                <td><input type="text" class="remarks" /></td>
-            </tr>
-                }
-
-            </table>
-        }
-    }
-
-    <textarea rows="3" id="comments" style="display:none"></textarea>
-
-    <label>Adjustment Voucher needed?: </label>
-    <input type="checkbox" id="needVoucher"/>
-
-    <button type="button" id="update">Update</button>
-    <button type="button" id="finalise">Finalise Retrieval</button>*@
-
-
 
 <script src="~/js/RetrievalForm.js" asp-append-version="true"></script>

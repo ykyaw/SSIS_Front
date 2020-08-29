@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace SSIS_FRONT.Models
 {
@@ -16,8 +11,9 @@ namespace SSIS_FRONT.Models
         public string Status { get; set; }
         public string Remark { get; set; }
         public bool NeedAdjustment { get; set; }
-        public List<RequisitionDetail> RequisitionDetails { get; set; }
 
+        // FKs
+        public List<RequisitionDetail> RequisitionDetails { get; set; }
         public Employee Clerk { get; set; }
     }
 }

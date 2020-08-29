@@ -1,7 +1,5 @@
 ﻿
 $(document).ready(function () {
-
-   
 });
 
 function validate() {
@@ -17,5 +15,4 @@ function validate() {
         return false;
     }
     return true;
-
 };

@@ -1,4 +1,6 @@
-﻿@{
+﻿@using SSIS_FRONT.Utils;
+
+@{
     ViewData["Title"] = "Requisition Form";
     Requisition requisition = (Requisition)ViewData["requisition"];
 }
@@ -24,7 +26,7 @@
         <tr>
             <td>Requested Date: </td>
             <td>&nbsp;&nbsp;&nbsp;</td>
-            <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(requisition.CreatedDate)</td>
+            <td>@TimeUtil.convertTimestampToyyyyMMdd(requisition.CreatedDate)</td>
         </tr>
         <tr>
             <td>Collection Point: </td>
@@ -46,7 +48,7 @@
             <tr>
                 <td>Disbursement Date: </td>
                 <td>&nbsp;&nbsp;&nbsp;</td>
-                <td>@SSIS_FRONT.Utils.TimeUtil.convertTimestampToyyyyMMdd(requisition.CollectionDate)</td>
+                <td>@TimeUtil.convertTimestampToyyyyMMdd(requisition.CollectionDate)</td>
             </tr>
         }
     </table>
@@ -72,23 +74,21 @@
     </table>
 </div>
 
-
 @if (requisition.Status == "Approved")
 {
     <div id="confirmDate" class="container">
-            <div class="row justify-content-center">
-                <div class="col-2">
-                    <label class="form-control font-weight-bold" style="border: 0;">DisbursementDate:</label>
-                </div>
-                <div class="col-3">
-                    <input id="date" type="date" min="1990-05-30" class="form-control" />
-                </div>
-                <div class="col-1">
-                    <button id="confirm" class="btn btn-success font-weight-bold">Confirm</button>
-                </div>
-            </div> 
+        <div class="row justify-content-center">
+            <div class="col-2">
+                <label class="form-control font-weight-bold" style="border: 0;">DisbursementDate:</label>
+            </div>
+            <div class="col-3">
+                <input id="date" type="date" min="1990-05-30" class="form-control" />
+            </div>
+            <div class="col-1">
+                <button id="confirm" class="btn btn-success font-weight-bold">Confirm</button>
+            </div>
+        </div>
     </div>
-    
 }
 
 <script src="~/js/Requisition.js"></script>

@@ -1,5 +1,4 @@
-﻿@using SSIS_FRONT.Common;
-@using SSIS_FRONT.Utils; 
+﻿@using SSIS_FRONT.Utils;
 
 @{
     ViewData["Title"] = "Retrieve Disbursement List";
@@ -16,7 +15,6 @@
         <div class="row justify-content-center">
             <div class="col-3">
                 <label class="form-control font-weight-bold" style="border: 0;">Date of Disbursement:</label>
-
             </div>
             <div class="col-3">
                 <input type="date" class="form-control" />
@@ -80,23 +78,5 @@
         </tbody>
     </table>
 </div>
-
-@*<div>
-        <div>
-            <span>Date of Disbursement: </span>
-            <input id="date" type="date" />
-        </div>
-        <div>
-            <span>Department: </span>
-            <select id="departmentid">
-                @foreach (var d in departments)
-                {
-                    <option value="@d.Id">@d.Name</option>
-                }
-            </select>
-        </div>
-        <div></div>
-        <button id="submit" class="btn btn-success">Submit</button>
-    </div>*@
 
 <script src="~/js/GenerateRetrieval.js"></script>

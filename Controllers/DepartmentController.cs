@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -22,10 +21,12 @@ namespace SSIS_FRONT.Controllers
             this.httpClient = httpClient;
             this.cfg = cfg;
         }
+
         public IActionResult Index()
         {
             return View();
         }
+
         public string GetRole()
         {
             string Role = HttpContext.Session.GetString("Role");
@@ -49,10 +50,12 @@ namespace SSIS_FRONT.Controllers
             }
             return CommonConstant.ROLE_NAME[Role];
         }
+
         public string GetName()
         {
             return HttpContext.Session.GetString("Name");
         }
+
         public IActionResult RequestStationery()
         {
             ViewData["Role"] = GetRole();
@@ -68,6 +71,8 @@ namespace SSIS_FRONT.Controllers
 
             return View();
         }
+
+        [HttpPost]
         public bool SaveRequest([FromBody] List<RequisitionDetail> requisitionDetail)
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/updateRF";
@@ -75,6 +80,7 @@ namespace SSIS_FRONT.Controllers
             return (bool)result.data;
         }
 
+        [HttpDelete]
         [Route("Department/SaveEmptyRequest/{reqId}")]
         public bool SaveEmptyRequest(string reqId)
         {
@@ -83,12 +89,14 @@ namespace SSIS_FRONT.Controllers
             return (bool)result.data;
         }
 
+        [HttpPost]
         public bool SubmitRequest([FromBody] List<RequisitionDetail> requisitionDetail)
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/submitrf";
             Result<Object> result = HttpUtils.Post(url, requisitionDetail, Request, Response);
             return (bool)result.data;
         }
+
         public IActionResult Requisition()
         {
             string role = GetRole();
@@ -110,6 +118,7 @@ namespace SSIS_FRONT.Controllers
 
             return View();
         }
+
         [HttpDelete]
         [Route("/Department/Requisition/{Id}")]
         public bool DeleteRequisition(int id)
@@ -118,6 +127,7 @@ namespace SSIS_FRONT.Controllers
             Result<Object> result = HttpUtils.Delete(url, Request, Response);
             return (bool)result.data;
         }
+
         [HttpGet]
         [Route("Department/Requisition/{Id}")]
         public IActionResult RequisitionDetail(int Id)
@@ -146,6 +156,8 @@ namespace SSIS_FRONT.Controllers
 
             return View();
         }
+
+        [HttpPut]
         public bool UpdateRequisition([FromBody] Requisition requisition)
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/depthead/arr";
@@ -153,6 +165,7 @@ namespace SSIS_FRONT.Controllers
             return (bool)result.data;
         }
 
+        [HttpPost]
         public Requisition RepeatRequisition([FromBody] List<RequisitionDetail> requisitionDetails)
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/hrf";
@@ -180,6 +193,7 @@ namespace SSIS_FRONT.Controllers
 
             return View();
         }
+
         public IActionResult DisbursementForm(long date)
         {
             ViewData["Role"] = GetRole();
@@ -191,12 +205,15 @@ namespace SSIS_FRONT.Controllers
 
             return View();
         }
+
+        [HttpPut]
         public bool AckDisbursement([FromBody] List<RequisitionDetail> requisitionDetails)
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/ack";
             Result<Object> result = HttpUtils.Put(url, requisitionDetails, Request, Response);
             return (bool)result.data;
         }
+
         public IActionResult CollectionPoint()
         {
             ViewData["Role"] = GetRole();
@@ -212,12 +229,15 @@ namespace SSIS_FRONT.Controllers
 
             return View();
         }
+
+        [HttpPut]
         public bool SetCollectionPoint([FromBody] CollectionPoint collectionPoint)
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/ucp";
             Result<Object> result = HttpUtils.Put(url, collectionPoint, Request, Response);
             return (bool)result.data;
         }
+
         public IActionResult Delegate()
         {
             ViewData["Role"] = GetRole();
@@ -238,12 +258,15 @@ namespace SSIS_FRONT.Controllers
 
             return View();
         }
+
+        [HttpPut]
         public string AssignDelegate([FromBody] Employee employee)
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/depthead/del";
             Result<Object> result = HttpUtils.Put(url, employee, Request, Response);
             return (string)result.msg;
         }
+
         public IActionResult DeptRep()
         {
             ViewData["Role"] = GetRole();
@@ -260,6 +283,7 @@ namespace SSIS_FRONT.Controllers
             return View();
         }
 
+        [HttpPut]
         public bool AssignDeptRep([FromBody] int Id)
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/depthead/adr/" + Id;

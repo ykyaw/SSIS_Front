@@ -64,27 +64,6 @@
     </table>
 </div>
 
-@*<h6 id="voucherId" value="@av.Id">Voucher# : @av.Id</h6>
-    <h6>Date Issued: @TimeUtil.convertTimestampToyyyyMMdd(av.InitiatedDate)</h6>
-    <h6>Status: @av.Status</h6>
-    <input type="hidden" value="@clerkid" />
-    @if (av.Status == CommonConstant.AdjVoucherStatus.REJECTED)
-    {
-        <h6>Reject Reason:@av.Reason</h6>
-    }
-    @if (av.ApprovedMgrId != null)
-    {
-        <h6>By:@av.ApprovedMgr.Name </h6>
-    }
-    else if (av.ApprovedSup != null)
-    {
-        <h6>By:@av.ApprovedSup.Name </h6>
-    }
-    else
-    {
-        <h6></h6>
-    }*@
-
 @if (av.Status == CommonConstant.AdjVoucherStatus.CREATED && av.InitiatedClerkId == clerkid)
 {
     <div class="container" style="margin-top: 20px;">
@@ -118,22 +97,6 @@
             </div>
         </div>
     </div>
-
-    @*<div>
-            <label> Item</label>
-            <select id="product">
-                <option value="0">Choose Item</option>
-                @foreach (var p in products)
-                {
-                    <option type="text" data-uom="@p.Uom" data-desc="@p.Description" value="@p.Id">[@p.Id] @p.Description</option>
-                }
-            </select>
-            <label>QTY</label>
-            <input type="number" id="qtyAdjusted" value="0" />
-            <label>Reason</label>
-            <input type="text" id="reason" />
-            <button id="generate" class="btn btn-primary">Generate</button>
-        </div>*@
 }
 
 <div class="container" style="margin-top: 20px;">
@@ -153,7 +116,6 @@
                 }
             </tr>
         </thead>
-
         <tbody id="avdetails">
             @foreach (AdjustmentVoucherDetail avd in av.AdjustmentVoucherDetails)
             {
@@ -218,15 +180,6 @@
             </tbody>
         </table>
     </div>
-    @*<div>
-            <button class="btn btn-primary" type="button" id="save"> Save</button>
-            <button class="btn btn-primary" type="button" id="submit">Submit</button>
-        </div>*@
 }
 
-@*<div>
-        <a class="btn btn-primary" asp-controller="StoreClerk" asp-action="AdjustmentVoucher">Back to Adjustment Voucher List</a>
-    </div>*@
-
 <script src="~/js/AdjustmentVoucherDetail.js"></script>
-

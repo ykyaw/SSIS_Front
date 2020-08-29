@@ -1,12 +1,9 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using SSIS_FRONT.Components.JWT.Interfaces;
-using SSIS_FRONT.Models;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 /**
  * JWT service
@@ -16,12 +13,12 @@ using System.Threading.Tasks;
  */
 namespace SSIS_FRONT.Components.JWT.Impl
 {
-    public class JWTService:IAuthService
+    public class JWTService : IAuthService
     {
         //The secret key we use to encrypt out token with.
-        public string SecretKey { get; set; }= "TW9zaGVFcmV6UHJpdmF0ZUtleQ==";
+        public string SecretKey { get; set; } = "TW9zaGVFcmV6UHJpdmF0ZUtleQ==";
 
-        public int ExpireMinutes { get; set; } = 60*24*7; //7 days
+        public int ExpireMinutes { get; set; } = 60 * 24 * 7; //7 days
 
         private SecurityKey GetSymmetricSecurityKey()
         {
@@ -52,7 +49,7 @@ namespace SSIS_FRONT.Components.JWT.Impl
             JwtSecurityTokenHandler jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
             try
             {
-                ClaimsPrincipal tokenValid = jwtSecurityTokenHandler.ValidateToken(token, 
+                ClaimsPrincipal tokenValid = jwtSecurityTokenHandler.ValidateToken(token,
                     tokenValidationParameters, out SecurityToken validatedToken);
                 return true;
             }
@@ -61,7 +58,6 @@ namespace SSIS_FRONT.Components.JWT.Impl
                 return false;
             }
         }
-
 
         //Receive the claims of token by given token as string.
         public IEnumerable<Claim> GetTokenClaims(string token)
@@ -79,11 +75,10 @@ namespace SSIS_FRONT.Components.JWT.Impl
                 ClaimsPrincipal tokenValid = jwtSecurityTokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken validatedToken);
                 return tokenValid.Claims;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
         }
-
     }
 }

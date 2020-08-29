@@ -4,12 +4,11 @@
     List<Product> products = (List<Product>)ViewData["Items"];
 }
 
-<h2 class="titlecenter">Forecast</h2>
+<h2 class="titlecenter">@ViewData["Title"]</h2>
 
 <div class="container" style="margin-top: 20px;">
     <div class="row justify-content-start">
         <div class="col-1">
-
             <label class="form-control font-weight-bold" style="border: 0;">Code:</label>
         </div>
         <div class="col-4">
@@ -26,14 +25,6 @@
     </div>
 </div>
 
-@*Code <select>
-    @foreach (Product product in products)
-    {
-        <option value="@product.Id">@(product.Description+"/"+product.Id)</option>
-    }
-</select>
-<button type="button" id="forecast">Forecast</button>*@
-
 <div class="container" style="margin-top: 20px;">
     <table class="table table-striped">
         <thead>
@@ -43,14 +34,11 @@
             </tr>
         </thead>
         <tbody>
-
         </tbody>
-
     </table>
 </div>
 
 <div class="container" style="margin-top: 20px;">
-
     <img id="forecastimg" />
 </div>
 

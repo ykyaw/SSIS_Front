@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace SSIS_FRONT.Models
 {
@@ -35,6 +30,5 @@ namespace SSIS_FRONT.Models
         public Employee AckByClerk { get; set; }
         public CollectionPoint CollectionPoint { get; set; }
         public List<RequisitionDetail> RequisitionDetails { get; set; }
-
     }
 }

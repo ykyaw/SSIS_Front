@@ -40,12 +40,6 @@ namespace SSIS_FRONT
             services.AddSession();
             //inject the service
             services.AddScoped<HttpClient>();
-            //services.AddScoped<DBUser>();
-            //inject dbcontext
-            //services.AddDbContext<UserContext>(opt =>
-            //   opt.UseLazyLoadingProxies()
-            //   .UseSqlServer(Configuration.GetConnectionString("DbConn")));
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,7 +55,6 @@ namespace SSIS_FRONT
             }
             app.UseStaticFiles();
 
-
             app.UseSession();
 
             app.UseRouting();
@@ -71,7 +64,6 @@ namespace SSIS_FRONT
             app.UseMiddlewareExtensions();
 
             app.UseAuthorization();
-
 
             app.UseEndpoints(endpoints =>
             {

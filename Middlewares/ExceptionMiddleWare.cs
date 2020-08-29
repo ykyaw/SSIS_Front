@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SSIS_FRONT.Common;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 /**
@@ -44,7 +41,7 @@ namespace SSIS_FRONT.Middlewares
             {
                 var response = context.Response;
                 string message = exception.InnerException == null ? exception.Message : exception.InnerException.Message;
-                if(message== CommonConstant.ErrorCode.NO_PERMISSION_MSG)
+                if (message == CommonConstant.ErrorCode.NO_PERMISSION_MSG)
                 {
                     response.Redirect("/Home/NoPermission");
                 }
