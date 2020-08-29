@@ -38,7 +38,7 @@
 
     $('#save').click(function () {
         let details = getUpdatedDetails();
-        if (details.length != 0) {
+        if (details.length > 0) {
             Put(`/StoreClerk/SaveVoucher`, details)
                 .then(function (response) {
                     console.log(response);
@@ -48,7 +48,14 @@
                     //alert("error: " + JSON.parse(err));
                 })
         } else {
-            alert("Adjustment Voucher Details Saved")
+            Delete(`/StoreClerk/SaveEmptyVoucher/` + $("#voucherId").attr('value'))
+                .then(function (response) {
+                    console.log(response);
+                    alert("Adjustment Voucher Details Saved");
+                })
+                .catch(function (err) {
+                    //alert("error: " + JSON.parse(err));
+                })
         }
     })
 

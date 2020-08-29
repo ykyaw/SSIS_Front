@@ -37,14 +37,25 @@
 
     $('#save').click(function () {
         let details = getUpdatedDetails();
-        Post(`/Department/SaveRequest`, details)
-            .then(function (response) {
-                console.log(response);
-                alert("Draft saved.");
-            })
-            .catch(function (err) {
-                alert("error: " + JSON.parse(err));
-            })
+        if (details.length > 0) {
+            Post(`/Department/SaveRequest`, details)
+                .then(function (response) {
+                    console.log(response);
+                    alert("Draft saved.");
+                })
+                .catch(function (err) {
+                    alert("error: " + JSON.parse(err));
+                })
+        } else {
+            Delete(`/Department/SaveEmptyRequest/` + +$('#formid').text())
+                .then(function (response) {
+                    console.log(response);
+                    alert("Draft saved.");
+                })
+                .catch(function (err) {
+                    //alert("error: " + JSON.parse(err));
+                })
+        }
     });
 
     $('#submit').click(function () {

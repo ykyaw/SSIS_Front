@@ -499,6 +499,14 @@ namespace SSIS_FRONT.Controllers
             return (bool)result.data;
         }
 
+        [Route("StoreClerk/SaveEmptyVoucher/{advId}")]
+        public bool SaveEmptyVoucher(string advId)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/eav/" + advId;
+            Result<Object> result = HttpUtils.Delete(url, Request, Response);
+            return (bool)result.data;
+        }
+
         public bool SubmitVoucher([FromBody] List<AdjustmentVoucherDetail> voucherDetails)
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/storeclerk/SubmitAdjustmentDetails/";

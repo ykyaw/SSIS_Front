@@ -74,6 +74,15 @@ namespace SSIS_FRONT.Controllers
             Result<Object> result = HttpUtils.Post(url, requisitionDetail, Request, Response);
             return (bool)result.data;
         }
+
+        [Route("Department/SaveEmptyRequest/{reqId}")]
+        public bool SaveEmptyRequest(string reqId)
+        {
+            string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/dreqdet/" + reqId;
+            Result<Object> result = HttpUtils.Delete(url, Request, Response);
+            return (bool)result.data;
+        }
+
         public bool SubmitRequest([FromBody] List<RequisitionDetail> requisitionDetail)
         {
             string url = cfg.GetValue<string>("Hosts:Boot") + "/deptemp/submitrf";
